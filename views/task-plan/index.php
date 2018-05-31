@@ -53,10 +53,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::tag('span',$model['plan_status']?'活动':'关闭',['class'=>$model['plan_status']?'text-success':'text-danger']) ;
                 }
             ],
-            'target_date',
-            'test_date',
-            'prod_date',
-
+            [
+                'attribute'=>'target_date',
+                'headerOptions'=>['width'=>'120px','class'=>'text-center'],
+            ],
+            [
+                'attribute'=>'test_date',
+                'headerOptions'=>['width'=>'120px','class'=>'text-center'],
+            ],
+            [
+                'attribute'=>'prod_date',
+                'headerOptions'=>['width'=>'120px','class'=>'text-center'],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

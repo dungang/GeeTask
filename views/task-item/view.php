@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\TaskItem */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '任务项', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '任务计划', 'url' => ['/task-item','TaskItemSearch[plan_id]'=>$model->plan_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-item-view">
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('添加', ['create','TaskItem[plan_id]'=>$model->plan_id], ['class' => 'btn btn-success']) ?>
         <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -35,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             'target_date',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

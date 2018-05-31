@@ -14,19 +14,25 @@ use app\models\User;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    
-    <?= $form->field($model, 'plan_id')->dropDownList(TaskPlan::allIdToName()) ?>
-    
-    <?= $form->field($model, 'user_id')->dropDownList(User::allIdToName('id','username')) ?>
+	<div class="row">
+		<div class="col-md-6">
+		    <?= $form->field($model, 'code')->textInput() ?>
 
-    <?= $form->field($model, 'code')->textInput() ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            
+            <?= $form->field($model, 'plan_id')->dropDownList(TaskPlan::allIdToName()) ?>
+            
+            <?= $form->field($model, 'user_id')->dropDownList(User::allIdToName('id','nick_name')) ?>
+		</div>
+		<div class="col-md-6">
 
-    <?= $form->field($model, 'status_code')->dropDownList(TaskStatus::allIdToName('code')) ?>
-
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'target_date')->textInput() ?>
+            <?= $form->field($model, 'status_code')->dropDownList(TaskStatus::allIdToName('code')) ?>
+        
+            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        
+            <?= $form->field($model, 'target_date')->textInput() ?>
+		</div>
+	</div>
 
     <div class="form-group">
         <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>

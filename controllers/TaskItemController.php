@@ -49,7 +49,7 @@ class TaskItemController extends BaseController
     public function actionCreate()
     {
         $model = new TaskItem();
-
+        $model->load(Yii::$app->request->get());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -69,7 +69,6 @@ class TaskItemController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

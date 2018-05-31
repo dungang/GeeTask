@@ -56,7 +56,7 @@ class TaskStatus extends BaseModel
         return new TaskStatusQuery(get_called_class());
     }
     
-    public static function allIdToName($key='id',$val='name'){
+    public static function allIdToName($key='code',$val='name'){
         $models = self::find()->orderBy('sort')->all();
         if(is_array($models)) {
             return ArrayHelper::map($models, $key,$val);

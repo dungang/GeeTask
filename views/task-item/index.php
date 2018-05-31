@@ -19,6 +19,7 @@ if(Yii::$app->request->get('title')) {
     }
 }
 $this->title = $planName . ' - 任务项';
+$this->params['breadcrumbs'][] = ['label' => '任务计划', 'url' => ['/task-plan']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-item-index">
@@ -27,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('添加任务项', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加任务项', ['create','TaskItem[plan_id]'=>$searchModel->plan_id], ['class' => 'btn btn-success']) ?>
     </p>
 	<?php $users = User::allIdToName('id','nick_name');?>
     <?= GridView::widget([

@@ -16,7 +16,7 @@ class TaskItemSearch extends TaskItem
     public function rules()
     {
         return [
-            [['id', 'plan_id', 'code', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'plan_id','user_id', 'code', 'created_at', 'updated_at'], 'integer'],
             [['status_code', 'name', 'description', 'target_date'], 'safe'],
         ];
     }
@@ -45,9 +45,19 @@ class TaskItemSearch extends TaskItem
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder'=>[
+                    'code'=>SORT_DESC
+                ]
+            ]
         ]);
+        
 
         $this->load($params);
+        
+        if(!empty($this->plan_id)) {
+            $dataProvider->pagination = false;
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -59,6 +69,7 @@ class TaskItemSearch extends TaskItem
         $query->andFilterWhere([
             'id' => $this->id,
             'plan_id' => $this->plan_id,
+            'user_id' => $this->user_id,
             'code' => $this->code,
             'target_date' => $this->target_date,
             'created_at' => $this->created_at,

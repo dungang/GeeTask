@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('添加', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -30,10 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
+            'nick_name',
             'email:email',
             [
                 'attribute'=>'status',
-                'format'=>function($model){
+                'value'=>function($model){
                     if($model['status']==10){
                         return "激活";
                     }  else {

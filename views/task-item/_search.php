@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\TaskPlan;
 use app\models\TaskStatus;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TaskItemSearch */
@@ -35,7 +36,10 @@ use app\models\TaskStatus;
     		<?= $form->field($model, 'plan_id')->dropDownList(TaskPlan::allIdToName(),['prompt'=>'请选择']) ?>
 		</div>
 		<div class="col-md-2">
-    		<?= $form->field($model, 'plan_id')->dropDownList(TaskPlan::allIdToName(),['prompt'=>'请选择']) ?>
+    		<?= $form->field($model, 'user_id')->dropDownList(User::allIdToName('id','nick_name'),['prompt'=>'请选择']) ?>
+		</div>
+		<div class="col-md-2">
+    		<?= $form->field($model, 'status_code')->dropDownList(TaskStatus::allIdToName('code'),['prompt'=>'请选择']) ?>
 		</div>
 		<div class="col-md-2">
 			<label>&nbsp;</label>

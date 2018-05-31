@@ -2,6 +2,7 @@
 namespace app\models;
 
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 /**
  * 添加修改用户的表单
@@ -25,7 +26,8 @@ class UserForm extends Model
     public function rules()
     {
         return [
-            [['username', 'password','email'], 'required'],
+            [['username','nick_name','email'], 'required'],
+            [['password'],'safe'],
             [
                 'status',
                 'default',
@@ -49,7 +51,7 @@ class UserForm extends Model
     {
         return [
             'id' => 'ID',
-            'username' => '用户名',
+            'username' => '工号',
             'nick_name' => '姓名',
             'status' => '状态',
             'email' => '邮箱',
@@ -64,6 +66,7 @@ class UserForm extends Model
     public function loadUser($model) {
         $this->id = $model->id;
         $this->username = $model->username;
+        $this->nick_name = $model->nick_name;
         $this->email = $model->email;
         $this->status = $model->status;
     }
@@ -75,12 +78,21 @@ class UserForm extends Model
     public function save() {
         $user = new User();
         $user->id = $this->id;
+        if($user->id) {
+            if(!$user = User::findOne(['id'=>$user->id])){
+                throw new NotFoundHttpException("用户不存在");
+            }
+            
+        } else {
+            $user->generateAuthKey();
+        }
         $user->username = $this->username;
         $user->nick_name = $this->nick_name;
-        $user->generateAuthKey();
-        $user->setPassword($this->password);
-        $user->status = User::STATUS_ACTIVE;
+        $user->status = $this->status;
         $user->email = $this->email;
+        if($this->password) {
+            $user->setPassword($this->password);
+        }
         if( $user->save() ) {
             $this->id = $user->id;
             return true;

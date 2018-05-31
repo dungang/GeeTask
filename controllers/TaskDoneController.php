@@ -33,8 +33,7 @@ class TaskDoneController extends BaseController
                 }
             }
         }
-        
-        $searchModel = new TaskDoneSearch();
+        $searchModel = new TaskDoneSearch(['item_id'=>$model->item_id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('create', [

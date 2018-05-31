@@ -105,6 +105,15 @@ class SaveRouteFilter extends Behavior
                 $permRelation->save(FALSE);
             }
             
+            // 添加所属关系 route 所属 默认的权限
+            $routeRelation = AuthItemChild::findOne(['parent'=>$permission,'child'=>$route]);
+            if ($routeRelation === null) {
+                $routeRelation = new AuthItemChild();
+                $routeRelation->parent = $permission;
+                $routeRelation->child = $route;
+                $routeRelation->save(FALSE);
+            }
+            
         }
         
         

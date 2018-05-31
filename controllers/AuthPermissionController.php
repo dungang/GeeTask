@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -13,7 +12,9 @@ use yii\filters\VerbFilter;
  */
 class AuthPermissionController extends BaseController
 {
+
     /**
+     *
      * {@inheritdoc}
      */
     public function behaviors()
@@ -22,29 +23,33 @@ class AuthPermissionController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+                    'delete' => [
+                        'POST'
+                    ]
+                ]
+            ]
         ];
     }
 
     /**
      * Lists all AuthPermission models.
+     *
      * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new AuthPermissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
     /**
      * Displays a single AuthPermission model.
+     *
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -52,31 +57,40 @@ class AuthPermissionController extends BaseController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
         ]);
     }
 
     /**
      * Creates a new AuthPermission model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
     {
         $model = new AuthPermission();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->rule_name == '') {
+                $model->rule_name = null;
+            }
+            if ($model->save()) {
+                return $this->redirect([
+                    'view',
+                    'id' => $model->name
+                ]);
+            }
         }
-
+        
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
      * Updates an existing AuthPermission model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -84,19 +98,28 @@ class AuthPermissionController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+        
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->rule_name == '') {
+                $model->rule_name = null;
+            }
+            if ($model->save()) {
+                return $this->redirect([
+                    'view',
+                    'id' => $model->name
+                ]);
+            }
         }
-
+        
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
      * Deletes an existing AuthPermission model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -104,13 +127,16 @@ class AuthPermissionController extends BaseController
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        
+        return $this->redirect([
+            'index'
+        ]);
     }
 
     /**
      * Finds the AuthPermission model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $id
      * @return AuthPermission the loaded model
      * @throws NotFoundHttpException if the model cannot be found
@@ -120,7 +146,7 @@ class AuthPermissionController extends BaseController
         if (($model = AuthPermission::findOne($id)) !== null) {
             return $model;
         }
-
+        
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
