@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
     echo Nav::widget([
@@ -41,7 +41,7 @@ AppAsset::register($this);
             ['label' => '首页', 'url' => ['/site/index']],
             ['label' => '团队', 'url' => ['/team']],
             ['label' => '任务计划', 'url' => ['/task-plan']],
-            ['label' => '项目', 'url' => ['/project']],
+            //['label' => '项目', 'url' => ['/project']],
             ['label' => '用户', 'url' => ['/user']],
             ['label' => '系统', 'items'=>[
                 ['label'=>'路由','url'=>['/ac-route']],

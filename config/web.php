@@ -58,6 +58,15 @@ $config = [
             'dateFormat' => 'yyyy-MM-dd',
             'timeFormat' => 'HH:mm:ss'
         ],
+        'assetManager'=>[
+            'bundles'=>[
+                'yii\bootstrap\BootstrapAsset' => [
+                    'baseUrl'=>'@web/css/',
+                    'css' => ['bootstrap.min.css'],  // 去除 bootstrap.css
+                    'sourcePath' => null, // 防止在 frontend/web/asset 下生产文件
+                ],
+            ]
+        ],
         
 //         'urlManager' => [
 //             'enablePrettyUrl' => true,

@@ -31,15 +31,14 @@ abstract class BaseController extends Controller
      */
     public function behaviors()
     {
-        // TODO Auto-generated method stub
-        return [
-            'saveRoute' => YII_ENV_DEV ? SaveRouteFilter::className(): null,
-            'access-filter'=>AccessFilter::className(),
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => $this->verbsActions,
-            ],
+        $defaultBehaviors = [];
+        if(YII_ENV_DEV) $defaultBehaviors['saveRoute'] = SaveRouteFilter::className();
+        $defaultBehaviors['access-filter'] = AccessFilter::className();
+        $defaultBehaviors['verbs'] = [
+            'class' => VerbFilter::className(),
+            'actions' => $this->verbsActions,
         ];
+        return $defaultBehaviors;
     }
 
     

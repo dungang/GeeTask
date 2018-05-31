@@ -24,11 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'username',
-            'nick_name',
+            [
+                'attribute' => 'username',
+                'headerOptions'=>['width'=>'120px']
+            ],
+            [
+                'attribute' => 'nick_name',
+                'headerOptions'=>['width'=>'120px']
+            ],
             'email:email',
             [
                 'attribute' => 'is_admin',
+                'headerOptions'=>['width'=>'80px'],
                 'filter' => [true=>'是',false=>'否'],
                 'format'=>'html',
                 'value'=>function ($model, $key, $index, $column){
@@ -41,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'status',
+                'headerOptions'=>['width'=>'80px'],
                 'filter'=>[0=>'未激活',10=>'已激活'],
                 'format'=>'html',
                 'value'=>function ($model, $key, $index, $column){
