@@ -46,7 +46,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->redirect(['/team']);
+        return $this->redirect(['/task-item']);
     }
 
     /**

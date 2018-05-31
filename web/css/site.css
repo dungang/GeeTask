@@ -113,3 +113,18 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+#fixed-table-header {
+	background:#fff;
+}
+#fixed-table-header.affix {
+	top:50px;
+	z-index:999;
+	width:1140px;
+}
+
+#fixed-table-header.affix-top {
+}
+
+#fixed-table-header.affix -bottom{
+	
+}

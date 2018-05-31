@@ -6,6 +6,7 @@ use app\components\StatusDataColumn;
 use app\models\TaskStatus;
 use app\models\User;
 use app\models\TaskPlan;
+use app\widgets\FixedTableHeader;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,22 +32,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('添加任务项', ['create','TaskItem[plan_id]'=>$searchModel->plan_id], ['class' => 'btn btn-success']) ?>
     </p>
 	<?php $users = User::allIdToName('id','nick_name');?>
-    <?= GridView::widget([
+    <?=  GridView::widget([
+        'headerRowOptions'=>['id'=>'fixed-table-header'],
         'dataProvider' => $dataProvider,
         'columns' => [
             [
                 'attribute'=>'code',
-                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
+                'headerOptions'=>['style'=>'width:65px;','class'=>'text-center'],
+                'contentOptions'=>['style'=>'width:65px;','class'=>'text-center'],
             ],
             [
                 'attribute'=>'user_id',
-                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
+                'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
+                'contentOptions'=>['style'=>'width:60px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
                     return $users[$model['user_id']];
                 }
             ],
             [
                 'attribute'=>'name',
+                'headerOptions'=>['style'=>'width:300px;'],
+                'contentOptions'=>['style'=>'width:300px;'],
                 'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
                     return Html::a($model['name'],['view','id'=>$model['id']],['data-pajx'=>'0','title'=>$model['description']]);
@@ -54,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class'=>StatusDataColumn::className(),
-                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
-                'contentOptions'=>['width'=>'50px','class'=>'text-center'],
+                'headerOptions'=>['style'=>'width:73px;','class'=>'text-center'],
+                'contentOptions'=>['style'=>'width:73px;','class'=>'text-center'],
                 'attribute'=>'status_code',
                 'allStatus'=>TaskStatus::allIdToName('code'),
                 'value'=>function($model,$key,$index,$column){
@@ -72,15 +78,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'last_user_id',
-                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
+                'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
                     return $users[$model['user_id']];
                 }
             ],
             [
                 'attribute'=>'target_date',
-                'headerOptions'=>['width'=>'90px','class'=>'text-center'],
+                'headerOptions'=>['sytle'=>'width:80px;','class'=>'text-center'],
+                'contentOptions'=>['sytle'=>'width:800px;','class'=>'text-center'],
             ],
         ],
-    ]); ?>
+    ]); 
+    ?>
+    <?php FixedTableHeader::widget(['options'=>['id'=>'fixed-table-header']]) ?>
 </div>
