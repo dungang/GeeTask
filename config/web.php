@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'loglass',
     'name'=> 'Loglass',
+    'version'=>'1.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     

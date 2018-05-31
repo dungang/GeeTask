@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Yii::$app->name . Yii::$app->version,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
@@ -78,7 +78,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; 螺哥纳斯, <?= date('Y') ?></p>
+        <p class="pull-left">&copy; 螺哥纳斯 <?= Yii::$app->version ?>, <?= date('Y') ?></p>
 
         <p class="pull-right">power by loglass.com</p>
     </div>
