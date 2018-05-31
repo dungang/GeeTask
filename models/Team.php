@@ -51,5 +51,19 @@ class Team extends BaseModel
         return new TeamQuery(get_called_class());
     }
     
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChildren()
+    {
+        return $this->hasMany(User::className(), [
+            'id' => 'user_id'
+        ])->viaTable(TeamUser::tableName(), [
+            'team_id' => 'id'
+        ]);
+    }
+    
+    
     
 }

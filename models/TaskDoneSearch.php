@@ -45,6 +45,7 @@ class TaskDoneSearch extends TaskDone
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>false,
             'sort'=>[
                 'defaultOrder'=>[
                     'created_at'=>SORT_DESC

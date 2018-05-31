@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -8,34 +7,45 @@ use app\models\LoginForm;
 
 class SiteController extends BaseController
 {
-    
-    public function init(){
+
+    public function init()
+    {
         
-        //设置游客直接访问的action
-        $this->guestActions = ['login','error','captcha'];
+        // 设置游客直接访问的action
+        $this->guestActions = [
+            'login',
+            'error',
+            'captcha'
+        ];
         
-        //设置认证用户可以访问的action
-        $this->userActions = ['logout','index'];
+        // 设置认证用户可以访问的action
+        $this->userActions = [
+            'logout',
+            'index'
+        ];
         
-        //设置action可以请求的方法
-        $this->verbsActions =  [
-            'logout' => ['post'],
+        // 设置action可以请求的方法
+        $this->verbsActions = [
+            'logout' => [
+                'post'
+            ]
         ];
     }
 
     /**
+     *
      * {@inheritdoc}
      */
     public function actions()
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => 'yii\web\ErrorAction'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null
+            ]
         ];
     }
 
@@ -46,7 +56,9 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->redirect(['/task-item']);
+        return $this->redirect([
+            '/task-item'
+        ]);
     }
 
     /**
@@ -56,18 +68,18 @@ class SiteController extends BaseController
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (! Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
+        
         $model->password = '';
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
@@ -79,8 +91,7 @@ class SiteController extends BaseController
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
+        
         return $this->goHome();
     }
-
 }

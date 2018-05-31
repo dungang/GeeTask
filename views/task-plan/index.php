@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
 use app\models\Team;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskPlanSearch */
@@ -14,13 +13,19 @@ if(Yii::$app->request->get('title')) {
     $teamName = $team->name;
 }
 $this->title = $teamName . ' - 计划';
+
+$this->params['breadcrumbs'][] = [
+    'label' => '团队',
+    'url' => [
+        '/team'
+    ]
+];
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-plan-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('添加计划', ['create'], ['class' => 'btn btn-success']) ?>
@@ -68,5 +73,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 </div>

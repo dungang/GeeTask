@@ -34,7 +34,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a('查看',['/task-plan','TaskPlanSearch[team_id]'=>$model['id'],'title'=>$model['name']]);
                 }
             ],
+            [
+                'label'=>'成员',
+                'format'=>'raw',
+                'value'=>function($model,$key,$index,$column){
+                    /* @var $model \app\models\Team */
+                    /* @var $user \app\models\User */
+                    $names = "";
+                    foreach ($model->getChildren()->all() as $user) {
+                        $names .= Html::tag('span',$user->nick_name,['class'=>'text-info']) . " ";
+                    }
+                    return $names;
+                }
+            ],
             'created_at:date',
+            [
+                'format'=>'raw',
+                'value'=>function($model,$key,$index,$column){
+                    return Html::a('设置成员',['/team-user','team_id'=>$model['id'],'title'=>$model['name']]);
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

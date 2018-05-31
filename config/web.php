@@ -1,54 +1,58 @@
 <?php
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'loglass',
-    'name'=> 'Loglass',
-    'version'=>'1.0',
+    'name' => 'Loglass',
+    'version' => '1.0',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log'
+    ],
     
     'language' => 'zh-CN',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset'
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'loglassSecret',
+            'cookieValidationKey' => 'loglassSecret'
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\FileCache'
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'site/error'
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => true
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
+                    'levels' => [
+                        'error',
+                        'warning'
+                    ]
+                ]
+            ]
         ],
         'db' => $db,
         'authManager' => [
-            'class' => 'yii\rbac\DbManager',
+            'class' => 'yii\rbac\DbManager'
             // uncomment if you want to cache RBAC items hierarchy
             // 'cache' => 'cache',
         ],
@@ -59,41 +63,56 @@ $config = [
             'dateFormat' => 'yyyy-MM-dd',
             'timeFormat' => 'HH:mm:ss'
         ],
-        'assetManager'=>[
-            'bundles'=>[
+        'assetManager' => [
+            'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
-                    'baseUrl'=>'@web/css/',
-                    'css' => ['bootstrap.min.css'],  // 去除 bootstrap.css
-                    'sourcePath' => null, // 防止在 frontend/web/asset 下生产文件
-                ],
+                    'baseUrl' => '@web/css/',
+                    'css' => [
+                        'bootstrap.min.css'
+                    ], // 去除 bootstrap.css
+                    'sourcePath' => null // 防止在 frontend/web/asset 下生产文件
+                ]
             ]
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.ndabooking.com',
+                'username' => 'noreply@ndabooking.com',
+                'password' => 'Noreply123',
+                'port'=>25,
+//                 'port' => '465',
+//                 'encryption' => 'ssl'
+            ]
+        ]
         
-//         'urlManager' => [
-//             'enablePrettyUrl' => true,
-//             'showScriptName' => false,
-            
-//             'rules' => [
-//             ],
-//         ],
+        // 'urlManager' => [
+        // 'enablePrettyUrl' => true,
+        // 'showScriptName' => false,
+        
+    // 'rules' => [
+        // ],
+        // ],
     ],
-    'params' => $params,
+    'params' => $params
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
+        'class' => 'yii\debug\Module'
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        // 'allowedIPs' => ['127.0.0.1', '::1'],
     ];
-
+    
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class' => 'yii\gii\Module'
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        // 'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

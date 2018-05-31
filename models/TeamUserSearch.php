@@ -4,11 +4,10 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 /**
- * TaskStatusSearch represents the model behind the search form of `app\models\TaskStatus`.
+ * TeamUserSearch represents the model behind the search form of `app\models\TeamUser`.
  */
-class TaskStatusSearch extends TaskStatus
+class TeamUserSearch extends TeamUser
 {
     /**
      * {@inheritdoc}
@@ -16,8 +15,7 @@ class TaskStatusSearch extends TaskStatus
     public function rules()
     {
         return [
-            [['code', 'name','description'], 'safe'],
-            [['sort'], 'integer'],
+            [['team_id', 'user_id'], 'integer'],
         ];
     }
 
@@ -39,17 +37,12 @@ class TaskStatusSearch extends TaskStatus
      */
     public function search($params)
     {
-        $query = TaskStatus::find();
+        $query = TeamUser::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'defaultOrder'=>[
-                    'sort'=>SORT_ASC
-                ]
-            ]
         ]);
 
         $this->load($params);
@@ -62,12 +55,9 @@ class TaskStatusSearch extends TaskStatus
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'sort' => $this->sort,
+            'team_id' => $this->team_id,
+            'user_id' => $this->user_id,
         ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code])
-        ->andFilterWhere(['like', 'name', $this->name])
-        ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

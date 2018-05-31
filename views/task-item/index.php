@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'last_user_id',
                 'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
-                    return $users[$model['user_id']];
+                return empty($model['last_user_id'])?'':$users[$model['last_user_id']];
                 }
             ],
             [

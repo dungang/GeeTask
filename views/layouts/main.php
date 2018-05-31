@@ -41,6 +41,7 @@ AppAsset::register($this);
             ['label' => '首页', 'url' => ['/site/index']],
             ['label' => '团队', 'url' => ['/team']],
             ['label' => '任务计划', 'url' => ['/task-plan']],
+            ['label' => '任务状态', 'url' => ['/task-status']],
             //['label' => '项目', 'url' => ['/project']],
             ['label' => '用户', 'url' => ['/user']],
             ['label' => '系统', 'items'=>[
