@@ -58,6 +58,20 @@ class TaskDoneController extends BaseController
             'dataProvider' => $dataProvider
         ]);
     }
+    
+    /**
+     * ajax获取日志
+     * @return string
+     */
+    public function actionIndex(){
+        $searchModel = new TaskDoneSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        return $this->renderAjax('modal-list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
 
     /**
      * Finds the TaskDone model based on its primary key value.

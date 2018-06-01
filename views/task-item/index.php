@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\components\StatusDataColumn;
@@ -7,6 +6,8 @@ use app\models\TaskStatus;
 use app\models\User;
 use app\models\TaskPlan;
 use app\widgets\FixedTableHeader;
+use app\widgets\ToolTips;
+use app\widgets\SimpleModal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -34,10 +35,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php $users = User::allIdToName('id','nick_name');?>
     <?=  GridView::widget([
         'headerRowOptions'=>['id'=>'fixed-table-header'],
+        'options'=>['id'=>'task-item-table','class' => 'grid-view'],
         'dataProvider' => $dataProvider,
         'columns' => [
             [
                 'attribute'=>'code',
+                'value'=>function($model,$key,$index,$column){
+                    if(empty($model['code'])) {
+                        return 'L'.$model['id'];
+                    } else {
+                        return $model['code'];
+                    }
+                },
                 'headerOptions'=>['style'=>'width:65px;','class'=>'text-center'],
                 'contentOptions'=>['style'=>'width:65px;','class'=>'text-center'],
             ],
@@ -55,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions'=>['style'=>'width:300px;'],
                 'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
-                    return Html::a($model['name'],['view','id'=>$model['id']],['data-pajx'=>'0','title'=>$model['description']]);
+                return Html::a($model['name'],['view','id'=>$model['id']],['data-pajx'=>'0','title'=>$model['description'],'data-toggle'=>'tooltip']);
                 }
             ],
             [
@@ -78,9 +87,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'last_user_id',
+                'format'=>'raw',
                 'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
-                return empty($model['last_user_id'])?'':$users[$model['last_user_id']];
+                    return empty($model['last_user_id'])?'': Html::a($users[$model['last_user_id']],['/task-done/index','TaskDoneSearch[item_id]'=>$model['id']],[
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#task-done-log',
+                    ]);
                 }
             ],
             [
@@ -91,5 +104,14 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); 
     ?>
-    <?php FixedTableHeader::widget(['options'=>['id'=>'fixed-table-header']]) ?>
+    <?php 
+    FixedTableHeader::widget(['options'=>['id'=>'fixed-table-header']]);
+    ToolTips::widget(['options'=>['id'=>'task-item-table [data-toggle="tooltip"]']]);
+    SimpleModal::begin([
+        'header'=>'任务更新状态记录',
+        'options'=>['id'=>'task-done-log']
+    ]);
+    echo "没有记录";
+    SimpleModal::end();
+    ?>
 </div>

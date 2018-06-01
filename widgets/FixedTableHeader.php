@@ -11,17 +11,6 @@ use yii\helpers\ArrayHelper;
  */
 class FixedTableHeader extends Widget
 {
-    /**
-     * 元素ID
-     * @var string $id
-     */
-    public $optoins=[];
-    
-    /**
-     * 客户端配置
-     * @var Array $clientOptions;
-     */
-    public $clientOptions=[];
     
     public function init(){
         $defClientOptions = [
