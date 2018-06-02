@@ -4,22 +4,20 @@ namespace app\models;
 
 
 /**
- * This is the model class for table "project".
+ * This is the model class for table "knowledge_category".
  *
  * @property int $id
  * @property string $name 名称
- * @property string $intro 介绍
- * @property int $created_at 添加时间
- * @property string $updated_at 更新时间
+ * @property int $sort 排序
  */
-class Project extends BaseModel
+class KnowledgeCategory extends \app\models\BaseModel
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'project';
+        return 'knowledge_category';
     }
 
     /**
@@ -29,10 +27,8 @@ class Project extends BaseModel
     {
         return [
             [['name'], 'required'],
-            [[ 'created_at'], 'integer'],
-            [['intro'], 'string'],
+            [['sort'], 'integer'],
             [['name'], 'string', 'max' => 64],
-            [['updated_at'], 'string', 'max' => 45],
         ];
     }
 
@@ -44,18 +40,16 @@ class Project extends BaseModel
         return [
             'id' => 'ID',
             'name' => '名称',
-            'intro' => '介绍',
-            'created_at' => '添加时间',
-            'updated_at' => '更新时间',
+            'sort' => '排序',
         ];
     }
 
     /**
      * {@inheritdoc}
-     * @return ProjectQuery the active query used by this AR class.
+     * @return KnowledgeCategoryQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ProjectQuery(get_called_class());
+        return new KnowledgeCategoryQuery(get_called_class());
     }
 }

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\ImRobot;
+use app\models\Project;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TeamSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -25,6 +27,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column){
                 return Html::a($model['name'],['/task-plan','TaskPlanSearch[team_id]'=>$model['id'],'title'=>$model['name']]);
+                }
+            ],
+            [
+                'attribute'=>'project_id',
+                'filter'=>Project::allIdToName(),
+                'value'=>function($model,$key,$index,$column){
+                    $filter = $column->filter;
+                    $project_id = $model['project_id'];
+                    return isset($filter[$project_id]) ? $filter[$project_id]:'';
+                }
+            ],
+            [
+                'attribute'=>'im_robot_id',
+                'filter'=>ImRobot::allIdToName(),
+                    'value'=>function($model,$key,$index,$column){
+                    $filter = $column->filter;
+                    $im_robot_id = $model['im_robot_id'];
+                    return isset($filter[$im_robot_id]) ? $filter[$im_robot_id]:'';
                 }
             ],
             [

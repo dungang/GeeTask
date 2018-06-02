@@ -2,14 +2,13 @@
 
 namespace app\models;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * TeamSearch represents the model behind the search form of `app\models\Team`.
+ * ImRobotSearch represents the model behind the search form of `app\models\ImRobot`.
  */
-class TeamSearch extends Team
+class ImRobotSearch extends ImRobot
 {
     /**
      * {@inheritdoc}
@@ -17,8 +16,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'project_id', 'im_robot_id', 'created_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'im_name', 'webhook', 'code_full_class'], 'safe'],
         ];
     }
 
@@ -40,7 +39,7 @@ class TeamSearch extends Team
      */
     public function search($params)
     {
-        $query = Team::find();
+        $query = ImRobot::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +58,12 @@ class TeamSearch extends Team
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'project_id' => $this->project_id,
-            'im_robot_id' => $this->im_robot_id, 
-            'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'im_name', $this->im_name])
+            ->andFilterWhere(['like', 'webhook', $this->webhook])
+            ->andFilterWhere(['like', 'code_full_class', $this->code_full_class]);
 
         return $dataProvider;
     }

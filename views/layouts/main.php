@@ -39,11 +39,18 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => '首页', 'url' => ['/site/index']],
-            ['label' => '团队', 'url' => ['/team']],
-            ['label' => '任务计划', 'url' => ['/task-plan']],
-            ['label' => '任务状态', 'url' => ['/task-status']],
+            ['label' => '计划', 'url' => ['/task-plan']],
+            ['label' => '需求文档', 'url' => ['/requirement']],
             ['label' => '会议', 'url' => ['/meet']],
-            //['label' => '项目', 'url' => ['/project']],
+            ['label' => '项目管理', 'items' => [            
+                ['label' => '项目', 'url' => ['/project']],
+                ['label' => '团队', 'url' => ['/team']],
+                ['label' => '任务状态', 'url' => ['/task-status']],
+            ]],
+            ['label' => '知识', 'items' => [
+                ['label' => '知识库', 'url' => ['/knowledge']],
+                ['label' => '知识分类', 'url' => ['/knowledge-category']],
+            ]],
             ['label' => '系统', 'items'=>[
                 ['label' => '用户', 'url' => ['/user']],
                 ['label'=>'路由','url'=>['/ac-route']],

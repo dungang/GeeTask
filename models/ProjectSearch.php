@@ -2,14 +2,13 @@
 
 namespace app\models;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * TeamSearch represents the model behind the search form of `app\models\Team`.
+ * ProjectSearch represents the model behind the search form of `app\models\Project`.
  */
-class TeamSearch extends Team
+class ProjectSearch extends Project
 {
     /**
      * {@inheritdoc}
@@ -17,8 +16,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'project_id', 'im_robot_id', 'created_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id','created_at'], 'integer'],
+            [['name', 'intro', 'updated_at'], 'safe'],
         ];
     }
 
@@ -40,7 +39,7 @@ class TeamSearch extends Team
      */
     public function search($params)
     {
-        $query = Team::find();
+        $query = Project::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +58,12 @@ class TeamSearch extends Team
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'project_id' => $this->project_id,
-            'im_robot_id' => $this->im_robot_id, 
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'intro', $this->intro])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
 
         return $dataProvider;
     }

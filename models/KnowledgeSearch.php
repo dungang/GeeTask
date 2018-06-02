@@ -2,14 +2,12 @@
 
 namespace app\models;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 /**
- * TeamSearch represents the model behind the search form of `app\models\Team`.
+ * KnowledgeSearch represents the model behind the search form of `app\models\Knowledge`.
  */
-class TeamSearch extends Team
+class KnowledgeSearch extends Knowledge
 {
     /**
      * {@inheritdoc}
@@ -17,8 +15,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'project_id', 'im_robot_id', 'created_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'category_id', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'tags', 'content'], 'safe'],
         ];
     }
 
@@ -40,7 +38,7 @@ class TeamSearch extends Team
      */
     public function search($params)
     {
-        $query = Team::find();
+        $query = Knowledge::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +57,15 @@ class TeamSearch extends Team
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'project_id' => $this->project_id,
-            'im_robot_id' => $this->im_robot_id, 
+            'category_id' => $this->category_id,
+            'user_id' => $this->user_id,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'tags', $this->tags])
+            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

@@ -6,8 +6,9 @@ namespace app\models;
  * This is the model class for table "team".
  *
  * @property int $id
- * @property string $name
- * @property string $dingtalk_webook
+ * @property string $name 名称
+ * @property int $project_id 项目 
+ * @property int $im_robot_id IM机器人
  * @property int $created_at
  */
 class Team extends BaseModel
@@ -26,9 +27,9 @@ class Team extends BaseModel
     public function rules()
     {
         return [
-            [['created_at'], 'integer'],
-            [['name'], 'string', 'max' => 64],
-            [['dingtalk_webhook'], 'string', 'max' => 255],
+            [['name'], 'required'],
+            [['project_id', 'im_robot_id', 'created_at'], 'integer'],
+            [['name'], 'string', 'max' => 64],  
         ];
     }
 
@@ -40,7 +41,8 @@ class Team extends BaseModel
         return [
             'id' => 'ID',
             'name' => '名称',
-            'dingtalk_webhook' => '机器人',
+            'project_id' => '项目',
+            'im_robot_id' => 'IM机器人',
             'created_at' => '添加日期',
         ];
     }

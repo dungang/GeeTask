@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Team */
+/* @var $model app\models\Requirement */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '团队', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => '需求文档', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="team-view">
+<div class="requirement-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',            
+            'pid',
+            'title',
             'project_id',
-            'im_robot_id',
-            'created_at:date',
+            'user_id',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

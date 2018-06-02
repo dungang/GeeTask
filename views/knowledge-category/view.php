@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Team */
+/* @var $model app\models\KnowledgeCategory */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '团队', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '知识分类', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="team-view">
+<div class="knowledge-category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',            
-            'project_id',
-            'im_robot_id',
-            'created_at:date',
+            'name',
+            'sort',
         ],
     ]) ?>
 
