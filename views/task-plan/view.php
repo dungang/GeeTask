@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'name',
+            'target_version',
             'target_date',
             'test_date',
             'prod_date',

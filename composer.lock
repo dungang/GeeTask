@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "11dc19ae1bd8fd0737fec254fc20f7de",
+    "content-hash": "c4ed7e158f4165bd0178c5e9538b0299",
     "packages": [
+        {
+            "name": "aliyuncs/oss-sdk-php",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
+                "reference": "e69f57916678458642ac9d2fd341ae78a56996c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/aliyun/aliyun-oss-php-sdk/e69f57916678458642ac9d2fd341ae78a56996c8.zip",
+                "reference": "e69f57916678458642ac9d2fd341ae78a56996c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OSS\\": "src/OSS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aliyuncs",
+                    "homepage": "http://www.aliyun.com"
+                }
+            ],
+            "description": "Aliyun OSS SDK for PHP",
+            "homepage": "http://www.aliyun.com/product/oss/",
+            "time": "2018-01-08T06:59:35+00:00"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.7",
@@ -26,6 +67,28 @@
             "type": "bower-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/fex-webuploader",
+            "version": "0.1.5",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:fex-team/webuploader.git",
+                "reference": "5e1a9270facbb9ab90af1b30190c9668120dc1e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fex-team/webuploader/zipball/5e1a9270facbb9ab90af1b30190c9668120dc1e7",
+                "reference": "5e1a9270facbb9ab90af1b30190c9668120dc1e7",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.9.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "BSD"
             ]
         },
         {
@@ -168,6 +231,127 @@
             "time": "2017-07-16T21:13:23+00:00"
         },
         {
+            "name": "dungang/yii2-fex-webuploader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dungang/yii2-fex-webuploader.git",
+                "reference": "97762f17e71b17b1b1b2c6e5ccc2f1d49e566edf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/dungang/yii2-fex-webuploader/97762f17e71b17b1b1b2c6e5ccc2f1d49e566edf.zip",
+                "reference": "97762f17e71b17b1b1b2c6e5ccc2f1d49e566edf",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fex-webuploader": "^0.1.5",
+                "dungang/yii2-file-storage": "dev-master",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "~2.0.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "dungang\\webuploader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dun gang",
+                    "email": "dungang@126.com",
+                    "homepage": "https://github.com/dungang",
+                    "role": "Creator"
+                }
+            ],
+            "description": "A  webuploader for Yii2",
+            "time": "2017-04-11T01:37:59+00:00"
+        },
+        {
+            "name": "dungang/yii2-file-storage",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dungang/yii2-file-storage.git",
+                "reference": "b64cbe8e706191b5f5d2f166c8596fb704dc74f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/dungang/yii2-file-storage/b64cbe8e706191b5f5d2f166c8596fb704dc74f1.zip",
+                "reference": "b64cbe8e706191b5f5d2f166c8596fb704dc74f1",
+                "shasum": ""
+            },
+            "require": {
+                "aliyuncs/oss-sdk-php": "~2.0",
+                "php": ">=5.4.0",
+                "qiniu/php-sdk": "~v7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "dungang\\storage\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dun gang",
+                    "email": "dungang@126.com",
+                    "homepage": "https://github.com/dungang",
+                    "role": "Creator"
+                }
+            ],
+            "description": "文件存储集合，本地存储，阿里云oss，七牛 ",
+            "time": "2017-04-11T06:38:24+00:00"
+        },
+        {
+            "name": "dungang/yii2-ueditor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dungang/yii2-ueditor.git",
+                "reference": "805f697da4889e16ba4e1138b43fd1f0e3d37bc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/dungang/yii2-ueditor/805f697da4889e16ba4e1138b43fd1f0e3d37bc9.zip",
+                "reference": "805f697da4889e16ba4e1138b43fd1f0e3d37bc9",
+                "shasum": ""
+            },
+            "require": {
+                "dungang/yii2-file-storage": "dev-master",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "~2.0.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "dungang\\ueditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dun gang",
+                    "email": "dungang@126.com",
+                    "homepage": "https://github.com/dungang",
+                    "role": "Creator"
+                }
+            ],
+            "description": "A ueditor module of Yii2",
+            "time": "2017-06-05T05:38:15+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.10.0",
             "source": {
@@ -213,6 +397,57 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
+        },
+        {
+            "name": "qiniu/php-sdk",
+            "version": "v7.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qiniu/php-sdk.git",
+                "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/qiniu/php-sdk/305ce1c1c0c71f794661fe45a96facf61ef96c5d.zip",
+                "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Qiniu\\": "src/Qiniu"
+                },
+                "files": [
+                    "src/Qiniu/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Qiniu",
+                    "email": "sdk@qiniu.com",
+                    "homepage": "http://www.qiniu.com"
+                }
+            ],
+            "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+            "homepage": "http://developer.qiniu.com/",
+            "keywords": [
+                "cloud",
+                "qiniu",
+                "sdk",
+                "storage"
+            ],
+            "time": "2018-05-18T04:37:29+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -481,6 +716,53 @@
                 "yii2"
             ],
             "time": "2018-03-21T16:15:55+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-httpclient",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-httpclient.git",
+                "reference": "95fc8a943e8abb86e3d0f4eace6f6d1f4ba4f028"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/yiisoft/yii2-httpclient/95fc8a943e8abb86e3d0f4eace6f6d1f4ba4f028.zip",
+                "reference": "95fc8a943e8abb86e3d0f4eace6f6d1f4ba4f028",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\httpclient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "HTTP client extension for the Yii framework",
+            "keywords": [
+                "curl",
+                "http",
+                "httpclient",
+                "yii2"
+            ],
+            "time": "2018-02-13T15:11:30+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -3093,8 +3375,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "dungang/yii2-fex-webuploader": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

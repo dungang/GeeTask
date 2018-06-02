@@ -14,6 +14,7 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
+ * @property string $mobile
  * @property string $auth_key
  * @property integer $status
  * @property int $is_admin
@@ -50,6 +51,7 @@ class User extends BaseModel implements IdentityInterface
             'status' => '状态',
             'is_admin'=> '是超管',
             'email' => '邮箱',
+            'mobile' => '手机',
             'password'=>'密碼',
             'created_at' => '添加时间',
             'updated_at' => '更新时间',

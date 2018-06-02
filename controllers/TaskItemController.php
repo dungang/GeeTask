@@ -6,6 +6,9 @@ use Yii;
 use app\models\TaskItem;
 use app\models\TaskItemSearch;
 use yii\web\NotFoundHttpException;
+use app\helpers\SendMessageHelper;
+use app\models\TaskStatus;
+use app\models\User;
 
 /**
  * TaskItemController implements the CRUD actions for TaskItem model.
@@ -36,9 +39,30 @@ class TaskItemController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+    
+    /**
+     * 
+     * @param TaskItem $item
+     */
+    private function sendMsg($item){
+        //if ($item->user_id == \Yii::$app->user->id ) return;
+        $name = \Yii::$app->user->identity->nick_name;
+        $taskStatus = TaskStatus::findOne([
+            'code' => $item->status_code
+        ]);
+        $user = User::findOne(['id'=>$item->user_id]);
+        // 发送钉钉
+        $title = $name . "在loglass上指派任务给了".$user->nick_name;
+        $msg = [];
+        $msg[] = "> **编号：** " . $item->code;
+        $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态为 (" . $taskStatus->name . ")";
+        $msg[] = "### 勇敢的人，不畏惧挑战！继续加油！^^";
+        
+        SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));
     }
 
     /**
@@ -51,10 +75,11 @@ class TaskItemController extends BaseController
         $model = new TaskItem();
         $model->load(Yii::$app->request->get());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $this->sendMsg($model);
+            return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -70,10 +95,11 @@ class TaskItemController extends BaseController
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $this->sendMsg($model);
+            return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }

@@ -17,6 +17,8 @@ use app\models\Team;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'target_version')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'target_date')->textInput()?>
 
     <?= $form->field($model, 'test_date')->textInput() ?>

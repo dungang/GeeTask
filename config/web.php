@@ -31,13 +31,6 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error'
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true
-        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -73,22 +66,22 @@ $config = [
                     'sourcePath' => null // 防止在 frontend/web/asset 下生产文件
                 ]
             ]
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => false,
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.ndabooking.com',
-                'username' => '',
-                'password' => '',
-                'port'=>25,
-//                 'port' => '465',
-//                 'encryption' => 'ssl'
-            ]
         ]
+        // 'mailer' => [
+        // 'class' => 'yii\swiftmailer\Mailer',
+        // 'useFileTransport' => false,
+        // 'transport' => [
+        // 'class' => 'Swift_SmtpTransport',
+        // 'host' => 'smtp.ndabooking.com',
+        // 'username' => '',
+        // 'password' => '',
+        // 'port'=>25,
+        // // 'port' => '465',
+        // // 'encryption' => 'ssl'
+        // ]
+        // ]
         
-        // 'urlManager' => [
+    // 'urlManager' => [
         // 'enablePrettyUrl' => true,
         // 'showScriptName' => false,
         

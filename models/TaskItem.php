@@ -49,7 +49,7 @@ class TaskItem extends BaseModel
     {
         return [
             'id' => 'ID',
-            'user_id' => '开发者', 
+            'user_id' => '指派给', 
             'plan_id' => '计划',
             'status_code' => '状态',
             'code' => '编号',

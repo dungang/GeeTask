@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('添加任务项', ['create','TaskItem[plan_id]'=>$searchModel->plan_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加任务项', ['create','TaskItem[plan_id]'=>$searchModel->plan_id], ['class' => 'btn btn-success',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#task-done-dailog']) ?>
     </p>
 	<?php $users = User::allIdToName('id','nick_name');?>
     <?=  GridView::widget([
@@ -47,30 +49,36 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model['code'];
                     }
                 },
-                'headerOptions'=>['style'=>'width:65px;','class'=>'text-center'],
-                'contentOptions'=>['style'=>'width:65px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'65px;','class'=>'text-center'],
+                'contentOptions'=>['width'=>'65px;','class'=>'text-center'],
             ],
             [
                 'attribute'=>'user_id',
-                'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
-                'contentOptions'=>['style'=>'width:60px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'60px;','class'=>'text-center'],
+                'contentOptions'=>['width'=>'60px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
                     return $users[$model['user_id']];
                 }
             ],
             [
                 'attribute'=>'name',
-                'headerOptions'=>['style'=>'width:300px;'],
-                'contentOptions'=>['style'=>'width:300px;'],
+                'headerOptions'=>['width'=>'260px;'],
+                'contentOptions'=>['width'=>'260px;'],
                 'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
-                return Html::a($model['name'],['view','id'=>$model['id']],['data-pajx'=>'0','title'=>$model['description'],'data-toggle'=>'tooltip']);
+                    return Html::a($model['name'],['update','id'=>$model['id']],
+                        [
+                            'data-pajx'=>'0',
+                            'title'=>$model['description'],
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#task-done-dailog'
+                        ]);
                 }
             ],
             [
                 'class'=>StatusDataColumn::className(),
-                'headerOptions'=>['style'=>'width:73px;','class'=>'text-center'],
-                'contentOptions'=>['style'=>'width:73px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'74px;','class'=>'text-center'],
+                'contentOptions'=>['width'=>'74px;','class'=>'text-center'],
                 'attribute'=>'status_code',
                 'allStatus'=>TaskStatus::allIdToName('code'),
                 'value'=>function($model,$key,$index,$column){
@@ -82,24 +90,30 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title'=>$model['name']
                            
                         ],
-                        ['data-pajx'=>'0','title'=>'请添加操作日志']);
+                        [
+                            'data-pajx'=>'0','title'=>'请添加操作日志',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#task-done-dailog'
+                        ]);
                 }
             ],
             [
                 'attribute'=>'last_user_id',
                 'format'=>'raw',
-                'headerOptions'=>['style'=>'width:60px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'65px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'65px;','class'=>'text-center'],
                 'value'=>function($model,$key,$index,$column) use($users){
-                    return empty($model['last_user_id'])?'': Html::a($users[$model['last_user_id']],['/task-done/index','TaskDoneSearch[item_id]'=>$model['id']],[
+                    return empty($model['last_user_id'])?'': Html::a($users[$model['last_user_id']]
+                        ,['/task-done/index','TaskDoneSearch[item_id]'=>$model['id']],[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-done-log',
+                        'data-target'=>'#task-done-dailog',
                     ]);
                 }
             ],
             [
                 'attribute'=>'target_date',
-                'headerOptions'=>['sytle'=>'width:80px;','class'=>'text-center'],
-                'contentOptions'=>['sytle'=>'width:800px;','class'=>'text-center'],
+                'headerOptions'=>['width'=>'100px;','class'=>'text-center'],
+                'contentOptions'=>['width'=>'100px;','class'=>'text-center'],
             ],
         ],
     ]); 
@@ -109,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ToolTips::widget(['options'=>['id'=>'task-item-table [data-toggle="tooltip"]']]);
     SimpleModal::begin([
         'header'=>'任务更新状态记录',
-        'options'=>['id'=>'task-done-log']
+        'options'=>['id'=>'task-done-dailog']
     ]);
     echo "没有记录";
     SimpleModal::end();

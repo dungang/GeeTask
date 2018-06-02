@@ -1,30 +1,34 @@
 <?php
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
-/* @var $form yii\widgets\ActiveForm */
-?>
 
-<div class="user-form">
+$this->title = '用户中心';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="user-update">
+
+	<h1><?= Html::encode($this->title) ?></h1>
+
+	<div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput() ?>
+    <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'nick_name')->textInput() ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'mobile')->textInput() ?>
-    <?= $form->field($model, 'status')->dropDownList([
-        0=>'未激活',
-        10=>'已激活'
-    ]) ?>
+    <?=$form->field($model, 'status')->hiddenInput()->label(false)?>
 
     <div class="form-group">
-        <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('更新', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+</div>
 
 </div>

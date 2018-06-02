@@ -2,14 +2,13 @@
 
 namespace app\models;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * TaskPlanSearch represents the model behind the search form of `app\models\TaskPlan`.
+ * MeetSearch represents the model behind the search form of `app\models\Meet`.
  */
-class TaskPlanSearch extends TaskPlan
+class MeetSearch extends Meet
 {
     /**
      * {@inheritdoc}
@@ -17,8 +16,8 @@ class TaskPlanSearch extends TaskPlan
     public function rules()
     {
         return [
-            [['id', 'team_id','plan_status', 'created_at', 'updated_at'], 'integer'],
-            [['name','target_version', 'target_date', 'test_date', 'prod_date'], 'safe'],
+            [['id', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'actors', 'content', 'meet_date'], 'safe'],
         ];
     }
 
@@ -40,17 +39,12 @@ class TaskPlanSearch extends TaskPlan
      */
     public function search($params)
     {
-        $query = TaskPlan::find();
+        $query = Meet::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'defaultOrder'=>[
-                    'name'=>SORT_ASC
-                ]
-            ]
         ]);
 
         $this->load($params);
@@ -64,16 +58,15 @@ class TaskPlanSearch extends TaskPlan
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'team_id' => $this->team_id,
-            'target_date' => $this->target_date,
-            'test_date' => $this->test_date,
-            'prod_date' => $this->prod_date,
+            'user_id' => $this->user_id,
+            'meet_date' => $this->meet_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-        ->andFilterWhere(['like', 'target_version', $this->target_version]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'actors', $this->actors])
+            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

@@ -12,6 +12,8 @@ class SimpleModal extends Modal
         echo "\n" . Html::endTag('div'); // modal-content
         echo "\n" . Html::endTag('div'); // modal-dialog
         echo "\n" . Html::endTag('div');
+        $view = $this->getView();
+        $view->registerJs("$('#".$this->options['id']."').on('hidden.bs.modal', function() { $(this).removeData('bs.modal')});");
     }
 }
 

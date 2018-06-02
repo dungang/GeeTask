@@ -8,6 +8,7 @@ namespace app\models;
  * @property int $id
  * @property int $team_id
  * @property string $name 名称
+ * @property string $target_version 目标版本
  * @property int $plan_status 状态
  * @property string $target_date 目标日期
  * @property string $test_date 测试发布日期
@@ -35,6 +36,7 @@ class TaskPlan extends BaseModel
             [['team_id','plan_status', 'created_at', 'updated_at'], 'integer'],
             [['target_date','test_date', 'prod_date'], 'safe'],
             [['name'], 'string', 'max' => 128],
+            [['target_version'], 'string', 'max' => 32], 
         ];
     }
 
@@ -47,6 +49,7 @@ class TaskPlan extends BaseModel
             'id' => 'ID',
             'team_id' => '团队',
             'name' => '名称',
+            'target_version' => '目标版本',
             'plan_status' => '状态', 
             'target_date' => '目标日期',
             'test_date' => '测试发布日期',

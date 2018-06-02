@@ -9,7 +9,7 @@ use app\components\AliyunLogDataProvider;
  * @author dungang
  *
  */
-class ProjectController extends AliyunLogBaseController
+class AliyunLogProjectController extends AliyunLogBaseController
 {
     /**
      * 显示创建的项目

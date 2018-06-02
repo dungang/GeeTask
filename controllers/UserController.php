@@ -18,7 +18,7 @@ use yii\data\ActiveDataProvider;
  */
 class UserController extends BaseController
 {
-
+    public $userActions = ['profile'];
     /**
      * Lists all User models.
      *
@@ -184,6 +184,21 @@ class UserController extends BaseController
             'model' => $model,
             'rights' => $rights,
             'dataProvider' => $dataProvider
+        ]);
+    }
+    
+    public function actionProfile() {
+        $model = $this->findModel(\Yii::$app->user->id);
+        $form = new UserForm();
+        $form->loadUser($model);
+        if ($form->load(\Yii::$app->request->post()) && $form->save()) {
+            return $this->redirect([
+                'view',
+                'id' => $model->id
+            ]);
+        }
+        return $this->render('profile', [
+            'model' => $form
         ]);
     }
 

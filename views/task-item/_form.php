@@ -35,6 +35,13 @@ use app\models\User;
 	</div>
 
     <div class="form-group">
+        <?php if(!$model->isNewRecord) echo Html::a('删除', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]); ?>
         <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>
     </div>
 

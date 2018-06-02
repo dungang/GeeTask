@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model['name'],['/task-item','TaskItemSearch[plan_id]'=>$model['id'],'title'=>$model['name']]);
                 }
             ],
+            'target_version',
             [
                 'attribute'=>'team_id',
                 'filter'=>Team::allIdToName(),

@@ -6,8 +6,8 @@ use app\models\TaskDone;
 use app\models\TaskDoneSearch;
 use yii\web\NotFoundHttpException;
 use app\models\TaskItem;
-use app\helpers\SendMailerHelper;
 use app\models\TaskStatus;
+use app\helpers\SendMessageHelper;
 
 /**
  * TaskDoneController implements the CRUD actions for TaskDone model.
@@ -40,30 +40,36 @@ class TaskDoneController extends BaseController
                     $taskStatus = TaskStatus::findOne([
                         'code' => $item->status_code
                     ]);
-                    $subject = $name . '又双叒叕在loglass上更新了任务状态(' . $taskStatus->name . ')#' . $item->code;
-                    $content = "<h1>Good Job !</h1>" . "<p>感谢" . \Yii::$app->user->identity->nick_name . "! 更新了任务状态，继续加油！^^</p>" . "<p>" . $subject . "</p>" . "<p>" . $model->remark . "</p>";
-                    SendMailerHelper::sendMailerToTeamByPlanId($item->plan_id, $subject, $content);
-                    return $this->redirect(\Yii::$app->request->url);
+                    
+                    // 发送钉钉
+                    $title = $name . "又双叒叕在loglass上更新了任务";
+                    $msg = [];
+                    $msg[] = "> **编号：** " . $item->code;
+                    $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态更新为 (" . $taskStatus->name . ")";
+                    $msg[] = "> **备注：** ".$model->remark;
+                    $msg[] = "### 很棒哦！继续加油！^^";
+                    
+                    SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));
+                    
+                    return $this->redirect([
+                        '/task-item','TaskItemSearch[plan_id]'=>$model->plan_id
+                    ]);
                 }
             }
         }
-        $searchModel = new TaskDoneSearch([
-            'item_id' => $model->item_id
-        ]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        return $this->render('create', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+        return $this->renderAjax('modal-form', [
+            'model' => $model
         ]);
     }
-    
+
     /**
      * ajax获取日志
+     *
      * @return string
      */
-    public function actionIndex(){
+    public function actionIndex()
+    {
         $searchModel = new TaskDoneSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         

@@ -42,15 +42,18 @@ AppAsset::register($this);
             ['label' => '团队', 'url' => ['/team']],
             ['label' => '任务计划', 'url' => ['/task-plan']],
             ['label' => '任务状态', 'url' => ['/task-status']],
+            ['label' => '会议', 'url' => ['/meet']],
             //['label' => '项目', 'url' => ['/project']],
-            ['label' => '用户', 'url' => ['/user']],
             ['label' => '系统', 'items'=>[
+                ['label' => '用户', 'url' => ['/user']],
                 ['label'=>'路由','url'=>['/ac-route']],
                 ['label'=>'模块','url'=>['/app-module']],
                 ['label'=>'角色','url'=>['/auth-role']],
                 ['label'=>'权限','url'=>['/auth-permission']],
                 ['label'=>'规则','url'=>['/auth-rule']],  
             ]],
+            
+            ['label' => '用户中心', 'url' => ['/user/profile']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
