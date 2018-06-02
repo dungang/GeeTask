@@ -60,18 +60,21 @@ AppAsset::register($this);
                 ['label'=>'规则','url'=>['/auth-rule']],  
             ]],
             
-            ['label' => '用户中心', 'url' => ['/user/profile']],
+            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+                ['label' => '用户中心', 'items' => [
+                    ['label' => '个人信息', 'url' => ['/user/profile']],
+                    '<li><a href="#">'
+                    . Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->nick_name . ')',
+                        ['class' => 'btn btn-link logout text-primary']
+                        )
+                    . Html::endForm()
+                    . '</a></li>'
+                ]]
             )
         ],
     ]);
