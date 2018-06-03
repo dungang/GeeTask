@@ -14,6 +14,13 @@ $this->title = '历史内容';
     <?= Html::encode($this->title) ?>
     </div>
 <div class="modal-body">
-    <?=DetailView::widget(['model' => $model,'attributes' => ['created_at:datetime','content:html',]])?>
+    <?=DetailView::widget(['model' => $model,'attributes' => [
+        [
+            'attribute'=>'created_at',
+            'format'=>'datetime',
+            'captionOptions'=>['width'=>'80px;'],
+        ],
+        'content:html',
+    ]])?>
 
 </div>

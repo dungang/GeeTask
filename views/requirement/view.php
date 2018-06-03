@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = ['label' => $project->name . $version->name, 'u
 	<h3>修改历史</h3>
     <?= GridView::widget([
         'dataProvider' => new ActiveDataProvider([
-            //'query'=>RequirementContent::find()->where(['AND',['requirement_id'=>$model->id],['<>','id',$content->id]]),
-            'query'=>RequirementContent::find()->where(['requirement_id'=>$model->id]),
+            'query'=>RequirementContent::find()->where(['AND',['requirement_id'=>$model->id],['<>','id',$content->id]]),
+            //'query'=>RequirementContent::find()->where(['requirement_id'=>$model->id]),
             'pagination'=>false,
         ]),
         'columns' => [
@@ -95,6 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => $project->name . $version->name, 'u
 	
 	    <?php 
     SimpleModal::begin([
+        'size'=>'modal-lg',
         'header'=>'需求文档',
         'options'=>['id'=>'requirement-dailog']
     ]);
