@@ -42,7 +42,7 @@ class TaskDoneController extends BaseController
                     ]);
                     
                     // 发送钉钉
-                    $title = $name . "又双叒叕在loglass上更新了任务";
+                    $title = $name . "又双叒叕在".\Yii::$app->name."上更新了任务";
                     $msg = [];
                     $msg[] = "> **编号：** " . $item->code;
                     $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态更新为 (" . $taskStatus->name . ")";

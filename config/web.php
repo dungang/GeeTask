@@ -3,8 +3,8 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'loglass',
-    'name' => 'Loglass',
+    'id' => 'geetask',
+    'name' => 'GeeTask',
     'version' => 'beta',
     'basePath' => dirname(__DIR__),
     'bootstrap' => [

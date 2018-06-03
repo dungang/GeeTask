@@ -68,13 +68,12 @@ AppAsset::register($this);
                         ['label'=>'权限','url'=>['/auth-permission']],
                         ['label'=>'规则','url'=>['/auth-rule']],
                     ]],
-                    ['label' => '用户中心', 'items' => [
+                    ['label' => Yii::$app->user->identity->nick_name , 'items' => [
                         ['label' => '个人信息', 'url' => ['/user/profile']],
                         '<li><a href="#">'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
-                            'Logout (' . Yii::$app->user->identity->nick_name . ')',
-                            ['class' => 'btn btn-link logout text-primary']
+                            '退出',['class' => 'btn btn-link logout']
                             )
                         . Html::endForm()
                         . '</a></li>'
@@ -97,9 +96,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; 螺哥纳斯 <font class="h6"><?= Yii::$app->version ?></font>, <?= date('Y') ?></p>
+        <p class="pull-left">&copy; geetask.com, <?= date('Y') ?></p>
 
-        <p class="pull-right">power by loglass.com</p>
+        <p class="pull-right">powered by 极任务 <font class="h6"><?= Yii::$app->version ?></font></p>
     </div>
 </footer>
 
