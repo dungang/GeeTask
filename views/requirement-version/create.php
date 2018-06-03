@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\RequirementVersion */
 
-$this->title = 'Create Requirement Version';
-$this->params['breadcrumbs'][] = ['label' => 'Requirement Versions', 'url' => ['index']];
+$this->title = '添加版本';
+$this->params['breadcrumbs'][] = ['label' => '项目需求版本', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="requirement-version-create">

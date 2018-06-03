@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>KnowledgeCategory::allIdToName(),
                 'value'=>function($model,$key,$index,$column){
                     $filter = $column->filter;
-                    $val = $model[$key];
+                    $val = $model['category_id'];
                     return isset($filter[$val])?$filter[$val]:'';
                 }
             ],
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>User::allIdToName('id','nick_name'),
                 'value'=>function($model,$key,$index,$column){
                     $filter = $column->filter;
-                    $val = $model[$key];
+                    $val = $model['user_id'];
                     return isset($filter[$val])?$filter[$val]:'';
                 }
             ],
