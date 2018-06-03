@@ -23,9 +23,9 @@
 		"yiisoft/yii2" : "~2.0.14",
 		"yiisoft/yii2-bootstrap" : "~2.0.0",
 		"yiisoft/yii2-swiftmailer" : "~2.0.0",
-		"yiisoft/yii2-httpclient": "^2.0",
-		"dungang/yii2-ueditor": "*",
-		"dungang/yii2-fex-webuploader": "dev-master"
+		"yiisoft/yii2-httpclient" : "^2.0",
+		"dungang/yii2-ueditor" : "*",
+		"dungang/yii2-fex-webuploader" : "dev-master"
 	},
 	"require-dev" : {
 		"yiisoft/yii2-debug" : "~2.0.0",
@@ -37,12 +37,12 @@
 	},
 	"config" : {
 		"process-timeout" : 1800,
-        "fxp-asset":{
-            "installer-paths":{
-                "npm-asset-library": "vendor/npm",
-                "bower-asset-library": "vendor/bower"
-            }
-        }
+		"fxp-asset" : {
+			"installer-paths" : {
+				"npm-asset-library" : "vendor/npm",
+				"bower-asset-library" : "vendor/bower"
+			}
+		}
 	},
 	"scripts" : {
 		"post-install-cmd" : "yii\\composer\\Installer::postInstall",

@@ -11,10 +11,10 @@ use yii\httpclient\Request;
  * @author dungang
  *        
  */
-class DingTalkRobot extends BaseObject
+class DingTalkRobot extends BaseObject implements Robot
 {
 
-    public $webook;
+    public $webhook;
 
     /**
      * 消息标题
@@ -47,7 +47,7 @@ class DingTalkRobot extends BaseObject
      *
      * @var string
      */
-    public $msg_type = 'text';
+    public $msg_type = 'markdown';
 
     /**
      *
@@ -78,8 +78,7 @@ class DingTalkRobot extends BaseObject
         parent::__construct($config);
         
         $this->_request = (new Client())->createRequest();
-        
-        $this->sendMessage($this->msg, $this->msg_type, $this->atMobiles, $this->isAll);
+       
     }
 
     /**
@@ -103,11 +102,13 @@ class DingTalkRobot extends BaseObject
 
     public function markdownMsg()
     {
+        $ats = $this->createAts($this->atMobiles);
+        $msg = $this->msg . "\n\n".$ats;
         return [
             'msgtype' => $this->msg_type,
             $this->msg_type => [
                 'title'=>$this->title,
-                'text' => '### ' . $this->title . "\n\n" . $this->msg
+                'text' => '### ' . $this->title . "\n\n" . $msg
             ],
             'at' => [
                 'atMobiles' => $this->atMobiles,
@@ -132,17 +133,27 @@ class DingTalkRobot extends BaseObject
             ]
         ];
     }
+    
+    protected function createAts($mobiles) {
+        if(is_array($this->atMobiles) && count($this->atMobiles)) {
+            return implode(" ", array_map(function($mobile){
+                return '@'.$mobile;
+            }, $this->atMobiles));
+        }
+    }
 
     /**
      * 发送消息
      *
      * @param string $msg
-     * @param string $msg_type
      * @param boolean|array $atMobiles
      * @param boolean $isAll
      */
-    public function sendMessage()
+    public function sendMessage($title,$msg,$mobiles)
     {
+        $this->msg = $msg;
+        $this->atMobiles = $mobiles;
+        $this->title = $title;
         $fullMsg = false;
         if ($this->msg_type == 'text') {
             $fullMsg = $this->textMsg();
@@ -152,8 +163,7 @@ class DingTalkRobot extends BaseObject
             $fullMsg = $this->linkMsg();
         }
         if ($fullMsg) {
-            
-            $response = $this->_request->setUrl($this->webook)
+            $response = $this->_request->setUrl($this->webhook)
                 ->addHeaders([
                 'content-type' => 'application/json'
             ])

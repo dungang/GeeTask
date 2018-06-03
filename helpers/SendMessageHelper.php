@@ -3,7 +3,7 @@ namespace app\helpers;
 
 use app\models\TaskPlan;
 use app\models\Team;
-use app\components\DingTalkRobot;
+use app\models\ImRobot;
 
 class SendMessageHelper
 {
@@ -28,21 +28,21 @@ class SendMessageHelper
                     foreach ($users as $user) {
                         $recievers[$user->email] = $user->nick_name;
                     }
-                    if(count($recievers)>0) {
+                    if (count($recievers) > 0) {
                         \Yii::$app->mailer->compose()
-                        ->setFrom([
+                            ->setFrom([
                             '项目进度表扬通知' => 'noreply@ndabooking.com'
                         ])
-                        ->setTo($recievers)
-                        ->setSubject($subject)
-                        ->setHtmlBody($content)
-                        ->send();
+                            ->setTo($recievers)
+                            ->setSubject($subject)
+                            ->setHtmlBody($content)
+                            ->send();
                     }
                 }
             }
         }
     }
-    
+
     /**
      * 根据任务计划id发送邮件给团队所有的成员
      *
@@ -57,19 +57,30 @@ class SendMessageHelper
             if ($team = Team::findOne([
                 'id' => $plan->team_id
             ])) {
-                if ($team->dingtalk_webhook && $users = $team->getChildren()->all()) {
+                if (($users = $team->getChildren()->all()) !== null) {
+                    
                     $recievers = [];
                     foreach ($users as $user) {
-                        if(!empty($user->mobile))$recievers[] = $user->mobile;
+                        if (! empty($user->mobile))
+                            $recievers[] = $user->mobile;
                     }
-                    if(count($recievers)>0) {
-                        new DingTalkRobot([
-                            'webook'=>$team->dingtalk_webhook,
-                            'msg_type'=>'markdown',
-                            'title'=>$title,
-                            'msg'=>$content,
-                            'atMobiles'=>$recievers,
+                    if (!empty($team->im_robot_id)) {
+                        $robot = ImRobot::findOne([
+                            'id' => $team->im_robot_id
                         ]);
+                        if (count($recievers) > 0) {
+                            /*@var $robotObj \app\components\Robot */
+                            $robotObj = \Yii::createObject([
+                                'class'=>$robot->code_full_class,
+                                'webhook'=>$robot->webhook,
+                            ]);
+                            $msg=[];
+                            $msg[] = "> **团队**: " . $team->name;
+                            $msg[] = "> **计划**: " . $plan->name;
+                            $content = implode("\n\n", $msg) . "\n\n" . $content;
+                            $robotObj->sendMessage($title, $content, $recievers);
+                            
+                        }
                     }
                 }
             }
