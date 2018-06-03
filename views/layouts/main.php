@@ -51,6 +51,7 @@ AppAsset::register($this);
                         ['label' => '项目', 'url' => ['/project']],
                         ['label' => '团队', 'url' => ['/team']],
                         ['label' => '任务状态', 'url' => ['/task-status']],
+                        ['label' => 'IM机器人', 'url' => ['/im-robot']],
                     ]],
                     ['label' => '知识', 'items' => [
                         ['label' => '知识库', 'url' => ['/knowledge']],
