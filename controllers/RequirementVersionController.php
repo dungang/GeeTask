@@ -3,26 +3,26 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\KnowledgeCategory;
-use app\models\KnowledgeCategorySearch;
+use app\models\RequirementVersion;
+use app\models\RequirementVersionSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * KnowledgeCategoryController implements the CRUD actions for KnowledgeCategory model.
+ * RequirementVersionController implements the CRUD actions for RequirementVersion model.
  */
-class KnowledgeCategoryController extends BaseController
+class RequirementVersionController extends BaseController
 {
     public function init() {
         $this->userActions=['create','update','view','delete','index'];
     }
     
     /**
-     * Lists all KnowledgeCategory models.
+     * Lists all RequirementVersion models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new KnowledgeCategorySearch();
+        $searchModel = new RequirementVersionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -32,7 +32,7 @@ class KnowledgeCategoryController extends BaseController
     }
 
     /**
-     * Displays a single KnowledgeCategory model.
+     * Displays a single RequirementVersion model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -45,13 +45,13 @@ class KnowledgeCategoryController extends BaseController
     }
 
     /**
-     * Creates a new KnowledgeCategory model.
+     * Creates a new RequirementVersion model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($project_id)
     {
-        $model = new KnowledgeCategory();
+        $model = new RequirementVersion(['project_id'=>$project_id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -63,7 +63,7 @@ class KnowledgeCategoryController extends BaseController
     }
 
     /**
-     * Updates an existing KnowledgeCategory model.
+     * Updates an existing RequirementVersion model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -83,7 +83,7 @@ class KnowledgeCategoryController extends BaseController
     }
 
     /**
-     * Deletes an existing KnowledgeCategory model.
+     * Deletes an existing RequirementVersion model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -97,15 +97,15 @@ class KnowledgeCategoryController extends BaseController
     }
 
     /**
-     * Finds the KnowledgeCategory model based on its primary key value.
+     * Finds the RequirementVersion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return KnowledgeCategory the loaded model
+     * @return RequirementVersion the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = KnowledgeCategory::findOne($id)) !== null) {
+        if (($model = RequirementVersion::findOne($id)) !== null) {
             return $model;
         }
 

@@ -13,6 +13,10 @@ use yii\web\NotFoundHttpException;
 class TeamController extends BaseController
 {
 
+    public function init() {
+        $this->userActions=['create','update','view','delete','index'];
+    }
+    
     /**
      * Lists all Team models.
      * @return mixed

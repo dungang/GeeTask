@@ -1,21 +1,42 @@
 <?php
-
 use yii\helpers\Html;
-
+use app\models\RequirementVersion;
+use app\models\Project;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Requirement */
 
 $this->title = '添加需求文档';
-$this->params['breadcrumbs'][] = ['label' => '需求文档', 'url' => ['index']];
+
+$version = RequirementVersion::findOne([
+    'id' => $model->version_id
+]);
+$project = Project::findOne([
+    'id' => $model->project_id
+]);
+$this->params['breadcrumbs'][] = [
+    'label' => '项目需求文档',
+    'url' => [
+        'index'
+    ]
+];
+$this->params['breadcrumbs'][] = [
+    'label' => $project->name . $version->name,
+    'url' => [
+        'doc',
+        'RequirementSearch[project_id]' => $model->project_id,
+        'RequirementSearch[version_id]' => $model->version_id
+    ]
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="requirement-create">
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-hidden="true">&times;</button>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= Html::encode($this->title) ?>
+</div>
+<div class="modal-body">
+    <?=$this->render('_form', ['model' => $model])?>
 
 </div>

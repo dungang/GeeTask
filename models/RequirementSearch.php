@@ -45,6 +45,7 @@ class RequirementSearch extends Requirement
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>false
         ]);
 
         $this->load($params);

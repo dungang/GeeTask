@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name . Yii::$app->version,
+        'brandLabel' => Yii::$app->name . ' <font class="h6">'.Yii::$app->version.'</font>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
@@ -37,46 +37,47 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => '首页', 'url' => ['/site/index']],
-            ['label' => '计划', 'url' => ['/task-plan']],
-            ['label' => '需求文档', 'url' => ['/requirement']],
-            ['label' => '会议', 'url' => ['/meet']],
-            ['label' => '项目管理', 'items' => [            
-                ['label' => '项目', 'url' => ['/project']],
-                ['label' => '团队', 'url' => ['/team']],
-                ['label' => '任务状态', 'url' => ['/task-status']],
-            ]],
-            ['label' => '知识', 'items' => [
-                ['label' => '知识库', 'url' => ['/knowledge']],
-                ['label' => '知识分类', 'url' => ['/knowledge-category']],
-            ]],
-            ['label' => '系统', 'items'=>[
-                ['label' => '用户', 'url' => ['/user']],
-                ['label'=>'路由','url'=>['/ac-route']],
-                ['label'=>'模块','url'=>['/app-module']],
-                ['label'=>'角色','url'=>['/auth-role']],
-                ['label'=>'权限','url'=>['/auth-permission']],
-                ['label'=>'规则','url'=>['/auth-rule']],  
-            ]],
-            
+        'items' => 
             
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                [ ['label' => '登录', 'url' => ['/site/login']]]
             ) : (
-                ['label' => '用户中心', 'items' => [
-                    ['label' => '个人信息', 'url' => ['/user/profile']],
-                    '<li><a href="#">'
-                    . Html::beginForm(['/site/logout'], 'post')
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->nick_name . ')',
-                        ['class' => 'btn btn-link logout text-primary']
-                        )
-                    . Html::endForm()
-                    . '</a></li>'
-                ]]
+                [
+                    ['label' => '首页', 'url' => ['/site/index']],
+                    ['label' => '计划', 'url' => ['/task-plan']],
+                    ['label' => '需求文档', 'url' => ['/requirement']],
+                    ['label' => '会议', 'url' => ['/meet']],
+                    ['label' => '项目管理', 'items' => [
+                        ['label' => '项目', 'url' => ['/project']],
+                        ['label' => '团队', 'url' => ['/team']],
+                        ['label' => '任务状态', 'url' => ['/task-status']],
+                    ]],
+                    ['label' => '知识', 'items' => [
+                        ['label' => '知识库', 'url' => ['/knowledge']],
+                        ['label' => '知识分类', 'url' => ['/knowledge-category']],
+                    ]],
+                    ['label' => '系统', 'items'=>[
+                        ['label' => '用户', 'url' => ['/user']],
+                        ['label'=>'路由','url'=>['/ac-route']],
+                        ['label'=>'模块','url'=>['/app-module']],
+                        ['label'=>'角色','url'=>['/auth-role']],
+                        ['label'=>'权限','url'=>['/auth-permission']],
+                        ['label'=>'规则','url'=>['/auth-rule']],
+                    ]],
+                    ['label' => '用户中心', 'items' => [
+                        ['label' => '个人信息', 'url' => ['/user/profile']],
+                        '<li><a href="#">'
+                        . Html::beginForm(['/site/logout'], 'post')
+                        . Html::submitButton(
+                            'Logout (' . Yii::$app->user->identity->nick_name . ')',
+                            ['class' => 'btn btn-link logout text-primary']
+                            )
+                        . Html::endForm()
+                        . '</a></li>'
+                    ]]
+                ]
             )
-        ],
+        ,
     ]);
     NavBar::end();
     ?>
@@ -92,7 +93,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; 螺哥纳斯 <?= Yii::$app->version ?>, <?= date('Y') ?></p>
+        <p class="pull-left">&copy; 螺哥纳斯 <font class="h6"><?= Yii::$app->version ?></font>, <?= date('Y') ?></p>
 
         <p class="pull-right">power by loglass.com</p>
     </div>

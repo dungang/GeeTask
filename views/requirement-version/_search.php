@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\RequirementContentSearch */
+/* @var $model app\models\RequirementVersionSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="requirement-content-search">
+<div class="requirement-version-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'requirement_id') ?>
+    <?= $form->field($model, 'project_id') ?>
 
-    <?= $form->field($model, 'is_last') ?>
-
-    <?= $form->field($model, 'content') ?>
-
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'name') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * RequirementContentSearch represents the model behind the search form of `app\models\RequirementContent`.
+ * RequirementVersionSearch represents the model behind the search form of `app\models\RequirementVersion`.
  */
-class RequirementContentSearch extends RequirementContent
+class RequirementVersionSearch extends RequirementVersion
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,8 @@ class RequirementContentSearch extends RequirementContent
     public function rules()
     {
         return [
-            [['id', 'requirement_id', 'created_at'], 'integer'],
-            [['content'], 'safe'],
+            [['id', 'project_id'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -39,13 +39,12 @@ class RequirementContentSearch extends RequirementContent
      */
     public function search($params)
     {
-        $query = RequirementContent::find();
+        $query = RequirementVersion::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination'=>false,
         ]);
 
         $this->load($params);
@@ -59,11 +58,10 @@ class RequirementContentSearch extends RequirementContent
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'requirement_id' => $this->requirement_id,
-            'created_at' => $this->created_at,
+            'project_id' => $this->project_id,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

@@ -39,7 +39,7 @@ class TaskItemController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -79,7 +79,7 @@ class TaskItemController extends BaseController
             return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -99,7 +99,7 @@ class TaskItemController extends BaseController
             return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
         }
 
-        return $this->renderAjax('update', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }

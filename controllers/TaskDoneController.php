@@ -58,7 +58,7 @@ class TaskDoneController extends BaseController
             }
         }
         
-        return $this->renderAjax('modal-form', [
+        return $this->render('modal-form', [
             'model' => $model
         ]);
     }
@@ -73,7 +73,7 @@ class TaskDoneController extends BaseController
         $searchModel = new TaskDoneSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        return $this->renderAjax('modal-list', [
+        return $this->render('modal-list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
         ]);

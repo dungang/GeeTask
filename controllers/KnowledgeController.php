@@ -12,6 +12,9 @@ use yii\web\NotFoundHttpException;
  */
 class KnowledgeController extends BaseController
 {
+    public function init() {
+        $this->userActions=['create','update','view','delete','index'];
+    }
     /**
      * Lists all Knowledge models.
      * @return mixed

@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use app\models\RequirementContent;
-use app\models\RequirementContentSearch;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -12,20 +11,8 @@ use yii\web\NotFoundHttpException;
  */
 class RequirementContentController extends BaseController
 {
-
-    /**
-     * Lists all RequirementContent models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new RequirementContentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+    public function init() {
+        $this->userActions=['create','index'];
     }
 
     /**
@@ -36,8 +23,10 @@ class RequirementContentController extends BaseController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -46,51 +35,19 @@ class RequirementContentController extends BaseController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($requirement_id)
     {
-        $model = new RequirementContent();
+        
+        $model = $this->findModelByRequirementId($requirement_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            \Yii::$app->session->setFlash('success','文档发布成功');
+            return $this->redirect(['/requirement/view', 'id' => $model->requirement_id]);
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Updates an existing RequirementContent model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing RequirementContent model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -107,5 +64,19 @@ class RequirementContentController extends BaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    /**
+     * 根据文档目录id查找最新版的文档
+     * @param number $requirement_id
+     * @throws NotFoundHttpException
+     * @return \app\models\RequirementContent|NULL
+     */
+    protected function findModelByRequirementId($requirement_id) {
+        
+        if (($model = RequirementContent::findNewestOneByRequirmentId($requirement_id)) !== null) {
+            return $model;
+        }
+        return new RequirementContent(['requirement_id'=>$requirement_id]);
     }
 }
