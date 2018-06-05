@@ -77,7 +77,7 @@ class TaskItemController extends BaseController
         $model->load(Yii::$app->request->get());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->sendMsg($model);
-            return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
+            return $this->redirect(\Yii::$app->request->referrer);
         }
 
         return $this->render('create', [
@@ -97,7 +97,7 @@ class TaskItemController extends BaseController
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->sendMsg($model);
-            return $this->redirect(['index', 'TaskItemSearch[plan_id]' => $model->plan_id]);
+            return $this->redirect(\Yii::$app->request->referrer);
         }
 
         return $this->render('update', [
@@ -116,7 +116,7 @@ class TaskItemController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
     /**

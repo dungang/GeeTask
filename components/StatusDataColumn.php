@@ -5,6 +5,7 @@ use yii\grid\Column;
 use Closure;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\StringHelper;
 
 /**
  * DataColumn is the default column type for the [[GridView]] widget.
@@ -75,6 +76,28 @@ class StatusDataColumn extends Column
      * @see \yii\i18n\Formatter::format()
      */
     public $format = 'text';
+    
+    private $_wordWidth = 0;
+    
+    private $_statsuKeyWidths = [];
+    
+    public $width = 0;
+    
+    public function init(){
+        $size = 0;
+        $keyWordsNumber = [];
+        foreach ($this->allStatus as $key=>$val){
+            $keyWordsNumber[$key] = StringHelper::byteLength($val);
+            $size += $keyWordsNumber[$key];
+        }
+        if($size > 0 ) {
+            $this->_wordWidth = $this->width / $size;
+            $this->_statsuKeyWidths = array_map(function($number) use(&$total){
+                return round($this->_wordWidth * $number,2);
+            }, $keyWordsNumber);
+        }
+        
+    }
 
     
     /**
@@ -93,7 +116,11 @@ class StatusDataColumn extends Column
     {
         $headers = "";
         foreach($this->allStatus as $key=>$val) {
-            $headers .= Html::tag('th', $val, $this->headerOptions);
+            $widthOptions = [];
+            if($this->_wordWidth > 0 ) {
+                $widthOptions['width']=$this->_statsuKeyWidths[$key] . "px";
+            }
+            $headers .= Html::tag('th', $val, ArrayHelper::merge($this->headerOptions,$widthOptions));
         }
         return $headers;
     }
@@ -158,7 +185,12 @@ class StatusDataColumn extends Column
             if($code == $model[$this->attribute]) {
                 $content = $this->getDataCellValue($model, $key, $index);
             }
-            $dataCells .= Html::tag('td', $content, $options);
+            
+            $widthOptions = [];
+            if($this->_wordWidth > 0 ) {
+                $widthOptions['width']=$this->_statsuKeyWidths[$code]  . "px";;
+            }
+            $dataCells .= Html::tag('td', $content, ArrayHelper::merge($options,$widthOptions));
         }
         return $dataCells;
     }

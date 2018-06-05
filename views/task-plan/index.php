@@ -29,7 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('添加计划', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加计划', ['create'], [
+            'class' => 'btn btn-success',
+            'data-toggle'=>'modal',
+            'data-target'=>'#task-plan-dailog',
+        ]) ?>
     </p>
 
     <?= GridView::widget([
@@ -71,6 +75,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'prod_date',
                 'headerOptions'=>['width'=>'120px','class'=>'text-center'],
+            ],
+            [
+                'label'=>'SQL变更',
+                'headerOptions'=>['width'=>'100px','class'=>'text-center'],
+                'format'=>'html',
+                'value' => function($model,$key,$index,$column){
+                return Html::a('查看',['/db-change','DbChangeSearch[task_plan_id]'=>$model->id]);
+                }
             ],
             [
                 'class' => '\app\components\ActionColumn',

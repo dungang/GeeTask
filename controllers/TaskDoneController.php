@@ -54,9 +54,7 @@ class TaskDoneController extends BaseController
                     
                     SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));
                     
-                    return $this->redirect([
-                        '/task-item','TaskItemSearch[plan_id]'=>$model->plan_id
-                    ]);
+                    return $this->redirect(\Yii::$app->request->referrer);
                 }
             }
         }

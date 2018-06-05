@@ -46,9 +46,10 @@ AppAsset::register($this);
                     ['label' => '首页', 'url' => ['/site/index']],
                     ['label' => '计划', 'url' => ['/task-plan']],
                     ['label' => '会议', 'url' => ['/meet']],
-                    ['label' => '需求文档', 'items' => [
+                    ['label' => '文档', 'items' => [
                         ['label' => '需求文档', 'url' => ['/requirement']],
                         ['label' => '需求版本', 'url' => ['/requirement-version']],
+                        ['label' => '数据库', 'url' => ['/db-name']],
                     ]],
                     ['label' => '项目管理', 'items' => [
                         ['label' => '项目', 'url' => ['/project']],

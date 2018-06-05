@@ -3,23 +3,29 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\TaskPlan;
-use app\models\TaskPlanSearch;
+use app\models\DbChange;
+use app\models\DbChangeSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * TaskPlanController implements the CRUD actions for TaskPlan model.
+ * DbChangeController implements the CRUD actions for DbChange model.
  */
-class TaskPlanController extends BaseController
+class DbChangeController extends BaseController
 {
+    
+    public function init(){
+        $this->userActions = [
+            'create','modify','update','view','index'
+        ];
+    }
 
     /**
-     * Lists all TaskPlan models.
+     * Lists all DbChange models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TaskPlanSearch();
+        $searchModel = new DbChangeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -27,9 +33,27 @@ class TaskPlanController extends BaseController
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionModify($plan_id,$item_id){
+        $condition = ['task_item_id'=>$item_id,'task_plan_id'=>$plan_id];
+        //查找是否已经存在
+        $model  = DbChange::findOne($condition);
+        if($model == null) {
+            $condition['creator_id'] =  \Yii::$app->user->id;
+            $model = new DbChange($condition);
+        }
+        $model->user_id = \Yii::$app->user->id;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(\Yii::$app->request->referrer);
+        }
+        
+        return $this->render('modify',[
+            'model'=>$model
+        ]);
+    }
 
     /**
-     * Displays a single TaskPlan model.
+     * Displays a single DbChange model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -42,17 +66,16 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Creates a new TaskPlan model.
+     * Creates a new DbChange model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new TaskPlan();
+        $model = new DbChange();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",添加成功！");
-            return $this->redirect(\Yii::$app->request->referrer);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -61,7 +84,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Updates an existing TaskPlan model.
+     * Updates an existing DbChange model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -72,8 +95,7 @@ class TaskPlanController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",更新成功！");
-            return $this->redirect(\Yii::$app->request->referrer);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -82,7 +104,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Deletes an existing TaskPlan model.
+     * Deletes an existing DbChange model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -92,19 +114,19 @@ class TaskPlanController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the TaskPlan model based on its primary key value.
+     * Finds the DbChange model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TaskPlan the loaded model
+     * @return DbChange the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TaskPlan::findOne($id)) !== null) {
+        if (($model = DbChange::findOne($id)) !== null) {
             return $model;
         }
 

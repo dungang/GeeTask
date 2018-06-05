@@ -3,23 +3,29 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\TaskPlan;
-use app\models\TaskPlanSearch;
+use app\models\DbName;
+use app\models\DbNameSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * TaskPlanController implements the CRUD actions for TaskPlan model.
+ * DbNameController implements the CRUD actions for DbName model.
  */
-class TaskPlanController extends BaseController
+class DbNameController extends BaseController
 {
-
+    
+    public function init(){
+        $this->userActions = [
+            'create','modify','update','view','index'
+        ];
+    }
+    
     /**
-     * Lists all TaskPlan models.
+     * Lists all DbName models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TaskPlanSearch();
+        $searchModel = new DbNameSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -29,7 +35,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Displays a single TaskPlan model.
+     * Displays a single DbName model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -42,16 +48,16 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Creates a new TaskPlan model.
+     * Creates a new DbName model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new TaskPlan();
+        $model = new DbName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",添加成功！");
+            \Yii::$app->session->setFlash("success","数据库：".$model->name.",添加成功！");
             return $this->redirect(\Yii::$app->request->referrer);
         }
 
@@ -61,7 +67,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Updates an existing TaskPlan model.
+     * Updates an existing DbName model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -72,7 +78,7 @@ class TaskPlanController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",更新成功！");
+            \Yii::$app->session->setFlash("success","数据库：".$model->name.",更新成功！");
             return $this->redirect(\Yii::$app->request->referrer);
         }
 
@@ -82,7 +88,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Deletes an existing TaskPlan model.
+     * Deletes an existing DbName model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -96,15 +102,15 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Finds the TaskPlan model based on its primary key value.
+     * Finds the DbName model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TaskPlan the loaded model
+     * @return DbName the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TaskPlan::findOne($id)) !== null) {
+        if (($model = DbName::findOne($id)) !== null) {
             return $model;
         }
 
