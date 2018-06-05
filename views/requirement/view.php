@@ -34,64 +34,74 @@ $this->params['breadcrumbs'][] = ['label' => $project->name . $version->name, 'u
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('编辑', ['/requirement-content/create', 'requirement_id' => $model->id,'project_id'=>$model->project_id,'version_id'=>$model->version_id], ['class' => 'btn btn-primary']) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'template'=>'<tr><th{captionOptions}>{label}</th><td{contentOptions}>{value}</td></tr>',
-        'attributes' => [
-            [
-                'attribute'=>'title',
-                'captionOptions'=>['width'=>'120px']
-            ],
-            [
-                'attribute'=>'project_id',
-                'value'=>$project->name,
-            ],
-            [
-                'attribute'=>'version_id',
-                'value'=>$version->name,
-            ],
-            [
-                'attribute'=>'user_id',
-                'value'=>$author->nick_name,
-            ],
-            'created_at:datetime',
-            [
-                'attribute'=>'updated_at',
-                'format'=>'datetime',
-                'value'=>$content->created_at,
-            ],
-        ],
-    ]) ?>
     
-    <div>
-    	<?php echo $content->content;?>
+    <div class="row">
+    	<div class="col-md-8">    
+    	
+    	<?= DetailView::widget([
+            'model' => $content,
+            'attributes' => [
+                [
+                    'attribute'=>'content',
+                    'format'=>'html',
+                    'captionOptions'=>['width'=>'60px'],
+                ],
+            ],
+        ]) ?>
+    	</div>
+    	<div class="col-md-4">
+    	 <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    [
+                        'attribute'=>'title',
+                        'captionOptions'=>['width'=>'120px']
+                    ],
+                    [
+                        'attribute'=>'project_id',
+                        'value'=>$project->name,
+                    ],
+                    [
+                        'attribute'=>'version_id',
+                        'value'=>$version->name,
+                    ],
+                    [
+                        'attribute'=>'user_id',
+                        'value'=>$author->nick_name,
+                    ],
+                    'created_at:datetime',
+                    [
+                        'attribute'=>'updated_at',
+                        'format'=>'datetime',
+                        'value'=>$content->created_at,
+                    ],
+                ],
+            ]) ?>
+            <h3>修改历史</h3>
+            <?= GridView::widget([
+                'dataProvider' => new ActiveDataProvider([
+                    'query'=>RequirementContent::find()->where(['AND',['requirement_id'=>$model->id],['<>','id',$content->id]])->orderBy('created_at desc'),
+                    //'query'=>RequirementContent::find()->where(['requirement_id'=>$model->id]),
+                    'pagination'=>false,
+                ]),
+                'columns' => [
+                    'created_at:datetime',
+                    [
+                        'format'=>'raw',
+                        'value'=>function($model,$key,$index,$column){
+                            return Html::a('查看',['/requirement-content/view','id'=>$model->id],[
+                                'data-toggle'=>'modal',
+                                'data-target'=>'#requirement-dailog',
+                            ]);
+                        }
+                    ],
+                ],
+            ]); ?>
+    	</div>
     </div>
 
-	<div>
-	<h3>修改历史</h3>
-    <?= GridView::widget([
-        'dataProvider' => new ActiveDataProvider([
-            'query'=>RequirementContent::find()->where(['AND',['requirement_id'=>$model->id],['<>','id',$content->id]]),
-            //'query'=>RequirementContent::find()->where(['requirement_id'=>$model->id]),
-            'pagination'=>false,
-        ]),
-        'columns' => [
-            'created_at:datetime',
-            [
-                'format'=>'raw',
-                'value'=>function($model,$key,$index,$column){
-                    return Html::a('查看',['/requirement-content/view','id'=>$model->id],[
-                        'data-toggle'=>'modal',
-                        'data-target'=>'#requirement-dailog',
-                    ]);
-                }
-            ],
-        ],
-    ]); ?>
-	</div>
 	
 	    <?php 
     SimpleModal::begin([

@@ -2,21 +2,25 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\KnowledgeCategory;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Knowledge */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Knowledges', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '知识库', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$category = KnowledgeCategory::findOne(['id'=>$model->category_id]);
+$author = User::findOne(['id'=>$model->user_id]);
 ?>
 <div class="knowledge-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,14 +32,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'category_id',
-            'user_id',
-            'title',
+            [
+                'attribute'=>'title',
+                'captionOptions'=>['width'=>'120px'],
+            ],
+            [
+                'attribute'=>'category_id',
+                'value'=>$category->name
+            ],
+//             [
+//                 'attribute'=>'user_id',
+//                 'value'=>$author->nick_name
+//             ],
             'tags:ntext',
-            'content:ntext',
-            'created_at',
-            'updated_at',
+            'content:html',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

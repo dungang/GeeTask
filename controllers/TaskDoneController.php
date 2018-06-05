@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use app\models\TaskItem;
 use app\models\TaskStatus;
 use app\helpers\SendMessageHelper;
+use app\models\User;
 
 /**
  * TaskDoneController implements the CRUD actions for TaskDone model.
@@ -42,11 +43,13 @@ class TaskDoneController extends BaseController
                     ]);
                     
                     // 发送钉钉
+                    $planUser = User::findOne(['id'=>$item->user_id]);
                     $title = $name . "又双叒叕在".\Yii::$app->name."上更新了任务";
                     $msg = [];
-                    $msg[] = "> **编号：** " . $item->code;
-                    $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态更新为 (" . $taskStatus->name . ")";
-                    $msg[] = "> **备注：** ".$model->remark;
+                    $msg[] = "> ** 编号：** " . $item->code;
+                    $msg[] = "> **负责人：** " . $planUser->nick_name;
+                    $msg[] = "> ** 任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态更新为 (" . $taskStatus->name . ")";
+                    $msg[] = "> ** 备注：** ".$model->remark;
                     $msg[] = "### 很棒哦！继续加油！^^";
                     
                     SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));

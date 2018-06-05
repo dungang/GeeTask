@@ -12,6 +12,9 @@ use yii\web\NotFoundHttpException;
  */
 class MeetController extends BaseController
 {
+    public function init() {
+        $this->userActions=['create','view','update','delete','index'];
+    }
 
     /**
      * Lists all Meet models.

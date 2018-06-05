@@ -50,7 +50,7 @@ class KnowledgeController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Knowledge();
+        $model = new Knowledge(['user_id'=>\Yii::$app->user->id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

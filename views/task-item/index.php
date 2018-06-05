@@ -56,9 +56,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'user_id',
                 'headerOptions'=>['width'=>'60px;','class'=>'text-center'],
                 'contentOptions'=>['width'=>'60px;','class'=>'text-center'],
-                'value'=>function($model,$key,$index,$column) use($users){
-                    return $users[$model['user_id']];
-                }
+                'format'=>'raw',
+                'value' => function($model,$key,$index,$column)use($users){
+                    return Html::a($users[$model['user_id']],['update','id'=>$model['id']],
+                        [
+                            'data-pajx'=>'0',
+                            'title'=>$model['name'],
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#task-done-dailog'
+                        ]);
+                    }
             ],
             [
                 'attribute'=>'name',
@@ -66,10 +73,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions'=>['width'=>'260px;'],
                 'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
-                    return Html::a($model['name'],['update','id'=>$model['id']],
+                    return Html::a($model['name'],['view','id'=>$model['id']],
                         [
                             'data-pajx'=>'0',
-                            'title'=>$model['description'],
+                            'title'=>$model['name'],
                             'data-toggle'=>'modal',
                             'data-target'=>'#task-done-dailog'
                         ]);

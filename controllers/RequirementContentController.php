@@ -74,9 +74,12 @@ class RequirementContentController extends BaseController
      */
     protected function findModelByRequirementId($requirement_id) {
         
+        $modelAttrs = ['requirement_id'=>$requirement_id];
+        
         if (($model = RequirementContent::findNewestOneByRequirmentId($requirement_id)) !== null) {
-            return $model;
+            $modelAttrs['content'] = $model->content;
         }
-        return new RequirementContent(['requirement_id'=>$requirement_id]);
+        
+        return new RequirementContent($modelAttrs);
     }
 }

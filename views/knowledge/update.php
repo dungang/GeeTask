@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Knowledge */
 
-$this->title = 'Update Knowledge: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Knowledges', 'url' => ['index']];
+$this->title = '更新知识: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => '知识库', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="knowledge-update">
 

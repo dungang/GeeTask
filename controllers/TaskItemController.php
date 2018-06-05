@@ -56,10 +56,11 @@ class TaskItemController extends BaseController
         ]);
         $user = User::findOne(['id'=>$item->user_id]);
         // 发送钉钉
-        $title = $name . "在loglass上指派任务给了".$user->nick_name;
+        $title = $name . "在".\Yii::$app->name."上指派任务给了".$user->nick_name;
         $msg = [];
-        $msg[] = "> **编号：** " . $item->code;
-        $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态为 (" . $taskStatus->name . ")";
+        $msg[] = "> ** 编号：** " . $item->code;
+        $msg[] = "> **负责人：** " . $user->nick_name;
+        $msg[] = "> ** 任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态为 (" . $taskStatus->name . ")";
         $msg[] = "### 勇敢的人，不畏惧挑战！继续加油！^^";
         
         SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));

@@ -8,7 +8,7 @@ use yii\helpers\Html;
 $this->title = '更新会议: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => '会议', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="meet-update">
 

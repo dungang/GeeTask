@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'nick_name',
             'email:email',
+            'mobile',
             [
                 'attribute'=>'status',
                 'value'=>function($model){

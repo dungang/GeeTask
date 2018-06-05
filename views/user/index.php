@@ -26,16 +26,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute' => 'username',
-                'headerOptions'=>['width'=>'120px']
+                'headerOptions'=>['width'=>'100px']
             ],
             [
                 'attribute' => 'nick_name',
-                'headerOptions'=>['width'=>'120px']
+                'headerOptions'=>['width'=>'100px']
             ],
             'email:email',
             [
+                'attribute'=>'mobile',
+                'headerOptions'=>['width'=>'60px'],
+            ],
+            [
                 'attribute' => 'is_admin',
-                'headerOptions'=>['width'=>'80px'],
+                'headerOptions'=>['width'=>'50px'],
                 'filter' => [true=>'是',false=>'否'],
                 'format'=>'html',
                 'value'=>function ($model, $key, $index, $column){

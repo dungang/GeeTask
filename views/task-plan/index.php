@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Team;
+use app\widgets\SimpleModal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskPlanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -71,7 +72,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'prod_date',
                 'headerOptions'=>['width'=>'120px','class'=>'text-center'],
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => '\app\components\ActionColumn',
+                'buttonsOptions'=>[
+                    'update'=>[
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#task-plan-dailog',
+                    ],
+                    'view'=>[
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#task-plan-dailog',
+                    ],
+                ]
+            ],
         ],
     ]); ?>
+        <?php 
+            SimpleModal::begin([
+                'header'=>'更新计划',
+                'options'=>['id'=>'task-plan-dailog']
+            ]);
+            echo "没有记录";
+            SimpleModal::end();
+        ?>
 </div>

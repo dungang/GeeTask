@@ -13,17 +13,28 @@ use app\models\Team;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'team_id')->dropDownList(Team::allIdToName()) ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    
+    <div class="row">
+    	<div class="col-md-6">
+    
+            <?= $form->field($model, 'team_id')->dropDownList(Team::allIdToName()) ?>
+        
+            <?= $form->field($model, 'plan_status')->dropDownList([
+                0=>'关闭',1=>'活动'
+            ]) ?>
+        
+            <?= $form->field($model, 'target_version')->textInput(['maxlength' => true]) ?>
+    	</div>
+    	<div class="col-md-6">
 
-    <?= $form->field($model, 'target_version')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'target_date')->textInput()?>
-
-    <?= $form->field($model, 'test_date')->textInput() ?>
-
-    <?= $form->field($model, 'prod_date')->textInput() ?>
+            <?= $form->field($model, 'target_date')->textInput()?>
+        
+            <?= $form->field($model, 'test_date')->textInput() ?>
+        
+            <?= $form->field($model, 'prod_date')->textInput() ?>
+    	</div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>

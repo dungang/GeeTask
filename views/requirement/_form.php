@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'pid')->hiddenInput()->label(FALSE) ?>
+    <?= $form->field($model, 'pid')->textInput() ?>
     
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

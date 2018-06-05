@@ -31,7 +31,7 @@ class TaskDone extends BaseModel
     public function rules()
     {
         return [
-            [['user_id', 'plan_id', 'item_id', 'status_code'], 'required'],
+            [['user_id', 'plan_id', 'item_id', 'status_code','remark'], 'required'],
             [['user_id', 'plan_id', 'item_id', 'created_at'], 'integer'],
             [['remark'], 'string'],
             [['status_code'], 'string', 'max' => 32]

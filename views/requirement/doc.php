@@ -64,6 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute' => 'id',
+                'headerOptions'=>['width'=>'60px'],
+                
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'headerOptions'=>['width'=>'80px'],
                 

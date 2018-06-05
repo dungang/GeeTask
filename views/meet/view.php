@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Meet */
@@ -9,6 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => '会议', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$user = User::findOne(['id'=>$model->user_id]);
 ?>
 <div class="meet-view">
 
@@ -28,10 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'title',
+            [
+                'attribute'=>'title',
+                'captionOptoins'=>['width'=>'100px'],
+            ],
             'actors:ntext',
-            'content:ntext',
-            'user_id',
+            'content:html',
+            [
+                'attribute'=>'user_id',
+                'value'=>$user->nick_name,
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],
