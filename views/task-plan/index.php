@@ -47,9 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model['name'],['/task-item','TaskItemSearch[plan_id]'=>$model['id'],'title'=>$model['name']]);
                 }
             ],
-            'target_version',
+            [
+                'attribute'=>'target_version',
+                'headerOptions'=>['width'=>'60px','class'=>'text-center'],
+            ],
             [
                 'attribute'=>'team_id',
+                'headerOptions'=>['width'=>'120px','class'=>'text-center'],
                 'filter'=>Team::allIdToName(),
                 'value'=>function($model,$key,$index,$column) {
                     /* @var $column \yii\grid\DataColumn */
@@ -78,10 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label'=>'SQL变更',
-                'headerOptions'=>['width'=>'100px','class'=>'text-center'],
-                'format'=>'html',
+                'headerOptions'=>['width'=>'90px','class'=>'text-center'],
+                'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
-                return Html::a('查看',['/db-change','DbChangeSearch[task_plan_id]'=>$model->id]);
+                    return Html::a('查看',['/db-change','DbChangeSearch[task_plan_id]'=>$model->id]);
                 }
             ],
             [
