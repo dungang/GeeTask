@@ -6,6 +6,7 @@ use Yii;
 use app\models\Knowledge;
 use app\models\KnowledgeSearch;
 use yii\web\NotFoundHttpException;
+use app\models\Integration;
 
 /**
  * KnowledgeController implements the CRUD actions for Knowledge model.
@@ -53,6 +54,9 @@ class KnowledgeController extends BaseController
         $model = new Knowledge(['user_id'=>\Yii::$app->user->id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //添加积分
+            Integration::addScope(Yii::$app->user->id, Knowledge::tableName(), $model->id);
+            
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

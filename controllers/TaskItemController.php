@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use app\helpers\SendMessageHelper;
 use app\models\TaskStatus;
 use app\models\User;
+use app\models\Integration;
 
 /**
  * TaskItemController implements the CRUD actions for TaskItem model.
@@ -58,9 +59,9 @@ class TaskItemController extends BaseController
         // 发送钉钉
         $title = $name . "在".\Yii::$app->name."上指派任务给了".$user->nick_name;
         $msg = [];
-        $msg[] = "> ** 编号：** " . $item->code;
+        $msg[] = "> **编号：** " . $item->code;
         $msg[] = "> **负责人：** " . $user->nick_name;
-        $msg[] = "> ** 任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态为 (" . $taskStatus->name . ")";
+        $msg[] = "> **任务：** [" . $item->name . "](".\Yii::$app->urlManager->createAbsoluteUrl(['/task-item','TaskItemSearch[plan_id]'=>$item->plan_id]).")的状态为 (" . $taskStatus->name . ")";
         $msg[] = "### 勇敢的人，不畏惧挑战！继续加油！^^";
         
         SendMessageHelper::sendDingMsgToTeamByPlanId($item->plan_id,$title, implode("\n\n", $msg));
@@ -76,6 +77,9 @@ class TaskItemController extends BaseController
         $model = new TaskItem();
         $model->load(Yii::$app->request->get());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //添加积分
+            Integration::addScope(Yii::$app->user->id, TaskItem::tableName(), $model->id);
+            //发送消息
             $this->sendMsg($model);
             return $this->redirect(\Yii::$app->request->referrer);
         }
@@ -96,6 +100,9 @@ class TaskItemController extends BaseController
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //添加积分
+            Integration::addScope(Yii::$app->user->id, TaskItem::tableName(), $model->id);
+            //发送消息
             $this->sendMsg($model);
             return $this->redirect(\Yii::$app->request->referrer);
         }

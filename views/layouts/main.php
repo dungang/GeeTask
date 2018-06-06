@@ -44,12 +44,13 @@ AppAsset::register($this);
             ) : (
                 [
                     ['label' => '首页', 'url' => ['/site/index']],
+                    ['label' => '排行榜', 'url' => ['/integration/top']],
                     ['label' => '计划', 'url' => ['/task-plan']],
                     ['label' => '会议', 'url' => ['/meet']],
                     ['label' => '文档', 'items' => [
                         ['label' => '需求文档', 'url' => ['/requirement']],
                         ['label' => '需求版本', 'url' => ['/requirement-version']],
-                        ['label' => '数据库', 'url' => ['/db-name']],
+                        ['label' => '数据库变更', 'url' => ['/db-name']],
                     ]],
                     ['label' => '项目管理', 'items' => [
                         ['label' => '项目', 'url' => ['/project']],
@@ -61,6 +62,12 @@ AppAsset::register($this);
                         ['label' => '知识库', 'url' => ['/knowledge']],
                         ['label' => '知识分类', 'url' => ['/knowledge-category']],
                     ]],
+                    ['label' => '统计', 'items' => [
+                        ['label' => '统计排行', 'url' => ['/target-statistics']],
+                        ['label' => '统计对象', 'url' => ['/statistical-target']],
+                        ['label' => '积分规则', 'url' => ['/integration-rule']],
+                        ['label' => '积分记录', 'url' => ['/integration']],
+                    ]],
                     ['label' => '系统', 'items'=>[
                         ['label' => '用户', 'url' => ['/user']],
                         ['label'=>'路由','url'=>['/ac-route']],
@@ -71,13 +78,7 @@ AppAsset::register($this);
                     ]],
                     ['label' => Yii::$app->user->identity->nick_name , 'items' => [
                         ['label' => '个人信息', 'url' => ['/user/profile']],
-                        '<li><a href="#">'
-                        . Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            '退出',['class' => 'btn btn-link logout']
-                            )
-                        . Html::endForm()
-                        . '</a></li>'
+                        ['label' => '退出', 'url' => ['/site/logout'], 'linkOptions'=>['data-method'=>'post']],
                     ]]
                 ]
             )

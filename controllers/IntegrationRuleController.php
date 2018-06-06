@@ -3,27 +3,27 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Meet;
-use app\models\MeetSearch;
+use app\models\IntegrationRule;
+use app\models\IntegrationRuleSearch;
 use yii\web\NotFoundHttpException;
-use app\models\Integration;
 
 /**
- * MeetController implements the CRUD actions for Meet model.
+ * IntegrationRuleController implements the CRUD actions for IntegrationRule model.
  */
-class MeetController extends BaseController
+class IntegrationRuleController extends BaseController
 {
+
     public function init() {
-        $this->userActions=['create','view','update','delete','index'];
+        $this->userActions=['index','view'];
     }
 
     /**
-     * Lists all Meet models.
+     * Lists all IntegrationRule models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MeetSearch();
+        $searchModel = new IntegrationRuleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -33,7 +33,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Displays a single Meet model.
+     * Displays a single IntegrationRule model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -46,18 +46,15 @@ class MeetController extends BaseController
     }
 
     /**
-     * Creates a new Meet model.
+     * Creates a new IntegrationRule model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Meet(['user_id'=>\Yii::$app->user->id]);
+        $model = new IntegrationRule();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //添加积分
-            Integration::addScope(Yii::$app->user->id, Meet::tableName(), $model->id);
-            
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -67,7 +64,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Updates an existing Meet model.
+     * Updates an existing IntegrationRule model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +84,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Deletes an existing Meet model.
+     * Deletes an existing IntegrationRule model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -101,15 +98,15 @@ class MeetController extends BaseController
     }
 
     /**
-     * Finds the Meet model based on its primary key value.
+     * Finds the IntegrationRule model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Meet the loaded model
+     * @return IntegrationRule the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Meet::findOne($id)) !== null) {
+        if (($model = IntegrationRule::findOne($id)) !== null) {
             return $model;
         }
 

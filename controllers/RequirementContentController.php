@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\RequirementContent;
 use yii\web\NotFoundHttpException;
+use app\models\Integration;
 
 /**
  * RequirementContentController implements the CRUD actions for RequirementContent model.
@@ -41,8 +42,12 @@ class RequirementContentController extends BaseController
         $model = $this->findModelByRequirementId($requirement_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success','文档发布成功');
-            return $this->redirect(['/requirement/view', 'id' => $model->requirement_id]);
+            
+            //添加积分
+            Integration::addScope(Yii::$app->user->id, RequirementContent::tableName(), $model->id);
+    
+            //\Yii::$app->session->setFlash('success','文档发布成功');
+           // return $this->redirect(['/requirement/view', 'id' => $model->requirement_id]);
         }
 
         return $this->render('create', [

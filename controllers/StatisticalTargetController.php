@@ -3,27 +3,23 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Meet;
-use app\models\MeetSearch;
+use app\models\StatisticalTarget;
+use app\models\StatisticalTargetSearch;
 use yii\web\NotFoundHttpException;
-use app\models\Integration;
 
 /**
- * MeetController implements the CRUD actions for Meet model.
+ * StatisticalTargetController implements the CRUD actions for StatisticalTarget model.
  */
-class MeetController extends BaseController
+class StatisticalTargetController extends BaseController
 {
-    public function init() {
-        $this->userActions=['create','view','update','delete','index'];
-    }
 
     /**
-     * Lists all Meet models.
+     * Lists all StatisticalTarget models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MeetSearch();
+        $searchModel = new StatisticalTargetSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -33,7 +29,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Displays a single Meet model.
+     * Displays a single StatisticalTarget model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -46,18 +42,15 @@ class MeetController extends BaseController
     }
 
     /**
-     * Creates a new Meet model.
+     * Creates a new StatisticalTarget model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Meet(['user_id'=>\Yii::$app->user->id]);
+        $model = new StatisticalTarget();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //添加积分
-            Integration::addScope(Yii::$app->user->id, Meet::tableName(), $model->id);
-            
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -67,7 +60,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Updates an existing Meet model.
+     * Updates an existing StatisticalTarget model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +80,7 @@ class MeetController extends BaseController
     }
 
     /**
-     * Deletes an existing Meet model.
+     * Deletes an existing StatisticalTarget model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -101,15 +94,15 @@ class MeetController extends BaseController
     }
 
     /**
-     * Finds the Meet model based on its primary key value.
+     * Finds the StatisticalTarget model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Meet the loaded model
+     * @return StatisticalTarget the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Meet::findOne($id)) !== null) {
+        if (($model = StatisticalTarget::findOne($id)) !== null) {
             return $model;
         }
 

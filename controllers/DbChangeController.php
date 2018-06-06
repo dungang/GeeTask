@@ -6,6 +6,7 @@ use Yii;
 use app\models\DbChange;
 use app\models\DbChangeSearch;
 use yii\web\NotFoundHttpException;
+use app\models\Integration;
 
 /**
  * DbChangeController implements the CRUD actions for DbChange model.
@@ -44,6 +45,9 @@ class DbChangeController extends BaseController
         }
         $model->user_id = \Yii::$app->user->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //添加积分
+            Integration::addScope(Yii::$app->user->id, DbChange::tableName(), $model->id);
+            
             return $this->redirect(\Yii::$app->request->referrer);
         }
         

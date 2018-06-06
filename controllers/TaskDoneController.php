@@ -9,6 +9,7 @@ use app\models\TaskItem;
 use app\models\TaskStatus;
 use app\helpers\SendMessageHelper;
 use app\models\User;
+use app\models\Integration;
 
 /**
  * TaskDoneController implements the CRUD actions for TaskDone model.
@@ -37,6 +38,11 @@ class TaskDoneController extends BaseController
                 $item->last_user_id = Yii::$app->user->id;
                 // 保存更新备注，更新对应的任务项的状态
                 if ($item->save(false) && $model->save()) {
+                    
+                    
+                    //添加积分
+                    Integration::addScope(Yii::$app->user->id, TaskDone::tableName(), $model->id);
+                    
                     $name = \Yii::$app->user->identity->nick_name;
                     $taskStatus = TaskStatus::findOne([
                         'code' => $item->status_code
