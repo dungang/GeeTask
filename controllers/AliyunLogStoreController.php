@@ -1,15 +1,10 @@
 <?php
 namespace app\controllers;
 
-use app\aliyunlog\models\ProjectSearch;
+use app\aliyunlog\models\LogStoreSearch;
 use app\aliyunlog\components\AliyunLogDataProvider;
 
-/**
- * 日志项目管理
- * @author dungang
- *
- */
-class AliyunLogProjectController extends AliyunLogBaseController
+class AliyunLogStoreController extends AliyunLogBaseController
 {
     
     public function init(){
@@ -21,7 +16,7 @@ class AliyunLogProjectController extends AliyunLogBaseController
      */
     public function actionIndex(){
         $client = $this->getLogClient();
-        $search = new ProjectSearch(['client'=>$client]);
+        $search = new LogStoreSearch(['client'=>$client]);
         $search->search(\Yii::$app->request->queryParams);
         return $this->render("index",[
             'dataProvider'=>new AliyunLogDataProvider([
@@ -29,6 +24,6 @@ class AliyunLogProjectController extends AliyunLogBaseController
             ])
         ]);
     }
-   
+ 
 }
 

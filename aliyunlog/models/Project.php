@@ -1,5 +1,5 @@
 <?php
-namespace app\models;
+namespace app\aliyunlog\models;
 use yii\base\Model;
 
 /**
@@ -7,7 +7,7 @@ use yii\base\Model;
  * @author dungang
  *
  */
-class AliyunLogProject extends Model
+class Project extends Model
 {
     public $projectName;
     public $description;

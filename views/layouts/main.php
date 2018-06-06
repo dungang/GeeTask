@@ -46,6 +46,7 @@ AppAsset::register($this);
                     ['label' => '首页', 'url' => ['/site/index']],
                     ['label' => '排行榜', 'url' => ['/integration/top']],
                     ['label' => '计划', 'url' => ['/task-plan']],
+                    ['label' => '阿里云日志', 'url' => ['/aliyun-log-project']],
                     ['label' => '会议', 'url' => ['/meet']],
                     ['label' => '文档', 'items' => [
                         ['label' => '需求文档', 'url' => ['/requirement']],

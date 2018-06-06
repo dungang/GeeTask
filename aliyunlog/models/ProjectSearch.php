@@ -1,9 +1,10 @@
 <?php
-namespace app\components;
+namespace app\aliyunlog\models;
 
-use app\models\Project;
 
-class AliyunLogProjectSearch extends AliyunLogDataSearch
+use app\aliyunlog\components\DataSearch;
+
+class ProjectSearch extends DataSearch
 {
 
     /**
@@ -19,7 +20,7 @@ class AliyunLogProjectSearch extends AliyunLogDataSearch
 
     public function search($param)
     {
-        $request = new \Aliyun_log_Models_ListProjectRequest();
+        $request = new \Aliyun_Log_Models_ListProjectRequest();
         $this->response = $this->client->listProject($request);
     }
 

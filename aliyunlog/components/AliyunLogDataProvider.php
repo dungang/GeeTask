@@ -1,5 +1,5 @@
 <?php
-namespace app\components;
+namespace app\aliyunlog\components;
 use yii\data\BaseDataProvider;
 
 class AliyunLogDataProvider extends BaseDataProvider
@@ -12,7 +12,7 @@ class AliyunLogDataProvider extends BaseDataProvider
     /**
      * 阿里云日志查询模型类
      *
-     * @var AliyunLogDataSearch
+     * @var DataSearch
      */
     public $search;
     

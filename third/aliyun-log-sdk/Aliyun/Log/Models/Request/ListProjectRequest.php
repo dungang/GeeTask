@@ -1,6 +1,6 @@
 <?php
 
-class Aliyun_log_Models_ListProjectRequest
+class Aliyun_Log_Models_ListProjectRequest
 {
     private $offset = 0;
     

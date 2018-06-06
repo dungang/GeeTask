@@ -1,5 +1,5 @@
 <?php
-namespace app\components;
+namespace app\aliyunlog\components;
 use yii\base\BaseObject;
 
 /**
@@ -7,7 +7,7 @@ use yii\base\BaseObject;
  * @author dungang
  *
  */
-abstract class AliyunLogDataSearch extends BaseObject
+abstract class DataSearch extends BaseObject
 {
     public $key;
     
