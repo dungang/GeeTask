@@ -23,13 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'nick_name',
             ],
             [
-                'attribute'=>'expirence_scope',
-                'label'=>'经验值',
-            ],
-            
-            [
                 'attribute'=>'contribution_scope',
                 'label'=>'贡献值',
+            ],
+            [
+                'attribute'=>'experience_scope',
+                'label'=>'经验值',
             ]
             
         ],

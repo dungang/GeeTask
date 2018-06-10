@@ -1,13 +1,13 @@
 <?php
 namespace app\aliyunlog\components;
-use yii\base\BaseObject;
+use app\aliyunlog\models\Query;
 
 /**
  * 获取日期相关数据的查询接口类
  * @author dungang
  *
  */
-abstract class DataSearch extends BaseObject
+abstract class DataSearch extends Query
 {
     public $key;
     

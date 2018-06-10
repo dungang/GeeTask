@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="task-status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('添加任务状态', ['create'], ['class' => 'btn btn-success']) ?>
@@ -34,5 +32,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 </div>

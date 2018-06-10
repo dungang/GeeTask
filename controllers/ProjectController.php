@@ -6,6 +6,8 @@ use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
 use yii\web\NotFoundHttpException;
+use app\models\ProjectVersion;
+use yii\data\ArrayDataProvider;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -36,8 +38,31 @@ class ProjectController extends BaseController
      */
     public function actionView($id)
     {
+        //发布版本
+        $releaseVersions = [];
+        //项目版本
+        $projectVersions = [];
+        
+        if($versions = ProjectVersion::findAll(['project_id'=>$id])) {
+            foreach ($versions as $version) {
+                if($version->is_release == 0) {
+                    array_push($projectVersions, $version);
+                } else {
+                    array_push($releaseVersions, $version);
+                }
+            }
+        }
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'releaseVersionProvider'=>new ArrayDataProvider([
+                'allModels'=>$releaseVersions,
+                'pagination'=>false,
+            ]),
+            'projectVersionProvider'=>new ArrayDataProvider([
+                'allModels'=>$projectVersions,
+                'pagination'=>false,
+            ]),
         ]);
     }
 

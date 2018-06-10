@@ -18,10 +18,9 @@ class AliyunLogController extends AliyunLogBaseController
     }
 
     /**
-     * 显示创建的项目
-     * @var string projectName;
+     * 显示日志
      */
-    public function actionIndex($projectName)
+    public function actionIndex()
     {
         $client = $this->getLogClient();
         $search = new LogSearch([
@@ -29,8 +28,10 @@ class AliyunLogController extends AliyunLogBaseController
         ]);
         $search->search(\Yii::$app->request->queryParams);
         return $this->render("index", [
+            'searchModel'=>$search,
             'dataProvider' => new AliyunLogDataProvider([
-                'search' => $search
+                'search' => $search,
+                'pagination'=>false,
             ])
         ]);
     }
@@ -44,6 +45,7 @@ class AliyunLogController extends AliyunLogBaseController
         $search = new ProjectLogSearch(['client'=>$client]);
         $search->search(\Yii::$app->request->queryParams);
         return $this->render("index",[
+            'searchModel'=>$search,
             'dataProvider'=>new AliyunLogDataProvider([
                 'search' => $search,
                 'pagination'=>false,

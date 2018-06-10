@@ -65,6 +65,7 @@ class TaskPlanSearch extends TaskPlan
         $query->andFilterWhere([
             'id' => $this->id,
             'team_id' => $this->team_id,
+            'plan_status' => $this->plan_status,
             'target_date' => $this->target_date,
             'test_date' => $this->test_date,
             'prod_date' => $this->prod_date,

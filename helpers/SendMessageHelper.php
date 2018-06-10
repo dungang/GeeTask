@@ -64,27 +64,42 @@ class SendMessageHelper
                         if (! empty($user->mobile))
                             $recievers[] = $user->mobile;
                     }
-                    if (!empty($team->im_robot_id)) {
+                    if (! empty($team->im_robot_id)) {
                         $robot = ImRobot::findOne([
                             'id' => $team->im_robot_id
                         ]);
                         if (count($recievers) > 0) {
                             /*@var $robotObj \app\components\Robot */
                             $robotObj = \Yii::createObject([
-                                'class'=>$robot->code_full_class,
-                                'webhook'=>$robot->webhook,
+                                'class' => $robot->code_full_class,
+                                'webhook' => $robot->webhook
                             ]);
-                            $msg=[];
+                            $msg = [];
                             $msg[] = "> **团队**: " . $team->name;
                             $msg[] = "> **计划**: " . $plan->name;
                             $content = implode("\n\n", $msg) . "\n\n" . $content;
                             $robotObj->sendMessage($title, $content, $recievers);
-                            
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * 发送消息到所有人
+     *
+     * @param string $title
+     * @param string $content
+     */
+    public static function sendDingMsgToAll($title, $content)
+    {
+        /*@var $robotObj \app\components\Robot */
+        $robotObj = \Yii::createObject([
+            'class' => $robot->code_full_class,
+            'webhook' => $robot->webhook
+        ]);
+        $robotObj->sendMessage($title, $content, []);
     }
 }
 

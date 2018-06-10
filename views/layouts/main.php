@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\widgets\Notify;
 
 AppAsset::register($this);
 ?>
@@ -46,17 +47,21 @@ AppAsset::register($this);
                     ['label' => '首页', 'url' => ['/site/index']],
                     ['label' => '排行榜', 'url' => ['/integration/top']],
                     ['label' => '计划', 'url' => ['/task-plan']],
+                    ['label' => 'BUG', 'url' => ['/bug/project']],
+                    ['label' => '测试用例', 'url' => ['/test-case/project']],
                     ['label' => '阿里云日志', 'url' => ['/aliyun-log-project']],
                     ['label' => '会议', 'url' => ['/meet']],
                     ['label' => '文档', 'items' => [
-                        ['label' => '需求文档', 'url' => ['/requirement']],
-                        ['label' => '需求版本', 'url' => ['/requirement-version']],
+                        ['label' => '需求文档', 'url' => ['/requirement/project']],
                         ['label' => '数据库变更', 'url' => ['/db-name']],
                     ]],
                     ['label' => '项目管理', 'items' => [
                         ['label' => '项目', 'url' => ['/project']],
+                        ['label' => '项目版本', 'url' => ['/project-version/project-versions']],
+                        ['label' => '项目发布版本', 'url' => ['/project-version/release-versions']],
                         ['label' => '团队', 'url' => ['/team']],
                         ['label' => '任务状态', 'url' => ['/task-status']],
+                        ['label' => 'BUG状态', 'url' => ['/bug-status']],
                         ['label' => 'IM机器人', 'url' => ['/im-robot']],
                     ]],
                     ['label' => '知识', 'items' => [
@@ -66,11 +71,13 @@ AppAsset::register($this);
                     ['label' => '统计', 'items' => [
                         ['label' => '统计排行', 'url' => ['/target-statistics']],
                         ['label' => '统计对象', 'url' => ['/statistical-target']],
-                        ['label' => '积分规则', 'url' => ['/integration-rule']],
+                        ['label' => '积分细则', 'url' => ['/integration-rule/details']],
+                        ['label' => '积分规则', 'url' => ['/integration-rule/index']],
                         ['label' => '积分记录', 'url' => ['/integration']],
                     ]],
                     ['label' => '系统', 'items'=>[
                         ['label' => '用户', 'url' => ['/user']],
+                        ['label' => '工作岗位', 'url' => ['/job-position']],
                         ['label'=>'路由','url'=>['/ac-route']],
                         ['label'=>'模块','url'=>['/app-module']],
                         ['label'=>'角色','url'=>['/auth-role']],
@@ -93,6 +100,7 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?= Notify::widget() ?>
         <?= $content ?>
     </div>
 </div>

@@ -17,7 +17,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username','nick_name', 'is_admin','mobile', 'email'], 'safe'],
+            [['username','nick_name', 'is_admin','mobile', 'email','job_position'], 'safe'],
         ];
     }
 
@@ -61,13 +61,12 @@ class UserSearch extends User
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'job_position' => $this->job_position,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'mobile', $this->mobile]);
 
         return $dataProvider;
     }

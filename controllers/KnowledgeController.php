@@ -14,7 +14,7 @@ use app\models\Integration;
 class KnowledgeController extends BaseController
 {
     public function init() {
-        $this->userActions=['create','update','view','delete','index'];
+        $this->userActions=['create','update','view','index'];
     }
     /**
      * Lists all Knowledge models.
@@ -55,7 +55,7 @@ class KnowledgeController extends BaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //添加积分
-            Integration::addScope(Yii::$app->user->id, Knowledge::tableName(), $model->id);
+            Integration::addScope(Yii::$app->user->id, 'Knowledge', $model->id);
             
             return $this->redirect(['view', 'id' => $model->id]);
         }

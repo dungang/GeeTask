@@ -16,7 +16,7 @@ class IntegrationRuleSearch extends IntegrationRule
     public function rules()
     {
         return [
-            [['id', 'experience_value', 'contribution_value', 'created_at', 'repeat_times'], 'integer'],
+            [['id', 'created_at'], 'integer'],
             [['name', 'method', 'route', 'intro'], 'safe'],
         ];
     }
@@ -59,10 +59,7 @@ class IntegrationRuleSearch extends IntegrationRule
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'experience_value' => $this->experience_value,
-            'contribution_value' => $this->contribution_value,
             'created_at' => $this->created_at,
-            'repeat_times' => $this->repeat_times,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

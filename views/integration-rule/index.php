@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\JobPosition;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\IntegrationRuleSearch */
@@ -24,18 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'method',
             'route',
-            [
-                'attribute'=>'experience_value',
-                'headerOptions'=>['width'=>'60px']
-            ],
-            [
-                'attribute'=>'contribution_value',
-                'headerOptions'=>['width'=>'60px']
-            ],
-            [
-                'attribute'=>'repeat_times',
-                'headerOptions'=>['width'=>'60px']
-            ],
             'created_at:date',
             ['class' => 'yii\grid\ActionColumn'],
         ],

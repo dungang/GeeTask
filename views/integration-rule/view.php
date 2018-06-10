@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
+use app\models\JobPosition;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\IntegrationRule */
@@ -9,6 +11,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '积分规则', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$jobPositions = JobPosition::allIdToName();
 ?>
 <div class="integration-rule-view">
 
@@ -33,12 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'method',
             'route',
-            'experience_value',
-            'contribution_value',
-            'repeat_times',
             'intro:ntext',
             'created_at:datetime',
         ],
     ]) ?>
-
+    	<?= GridView::widget([
+    	    'dataProvider'=>$dataProvider,
+    	    'layout'=>'{items}',
+    	    'columns'=>[
+    	        [
+    	            'attribute'=>'job_position',
+    	            'value'=>function($model,$key,$index,$column) use($jobPositions) {
+    	               return $jobPositions[$model['job_position']];
+    	            }
+    	        ],
+    	        'experience_value',
+	            'contribution_value',
+	            'repeat_times',
+    	    ]
+    	]);?>
 </div>

@@ -15,6 +15,7 @@ class ProjectLogSearch extends DataSearch
     
     public function init()
     {
+        parent::init();
         $this->key = 'time';
     }
     
@@ -24,14 +25,10 @@ class ProjectLogSearch extends DataSearch
     
     public function search($param)
     {
-        if (empty($param['starttime']) or empty($param['endtime'])) {
-            $today = date('Y-m-d 00:00:00');
-            $param['starttime'] = $today;
-            $param['endtime'] = date('Y-m-d 00:00:00', strtotime($today . " -1   day"));
-        }
+        $this->load($param);
         
         $request = new \Aliyun_Log_Models_GetProjectLogsRequest(
-            $param['projectName'],$this->getQuery($param['logstore'],$param['starttime'],$param['endtime']));
+            $this->projectName,$this->getQuery($this->logstoreName,$this->to,$this->from));
         $this->response = $this->client->getProjectLogs($request);
     }
     
@@ -43,7 +40,7 @@ class ProjectLogSearch extends DataSearch
                 'time' => $item->getTime(),
                 'ip' => $item->getSource(),
                 'level' => $content['level'],
-                'location' => $content['location'],
+                'location' => isset($content['location'])?$content['location']:'',
                 'thread' => $content['thread'],
                 'topic' => $content['__topic__'],
                 'message' => $content['message']

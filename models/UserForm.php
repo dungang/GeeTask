@@ -23,12 +23,14 @@ class UserForm extends Model
     
     public $mobile;
     
+    public $job_position;
+    
     public $status;
     
     public function rules()
     {
         return [
-            [['username','nick_name','email','mobile'], 'required'],
+            [['username','nick_name','email','mobile','job_position'], 'required'],
             [['password'],'safe'],
             [
                 'status',
@@ -58,6 +60,7 @@ class UserForm extends Model
             'status' => '状态',
             'email' => '邮箱',
             'mobile' => '手机',
+            'job_position' => '岗位',
             'password'=>'密碼',
         ];
     }
@@ -73,6 +76,7 @@ class UserForm extends Model
         $this->email = $model->email;
         $this->mobile = $model->mobile;
         $this->status = $model->status;
+        $this->job_position = $model->job_position;
     }
     
     /**
@@ -95,6 +99,7 @@ class UserForm extends Model
         $user->status = $this->status;
         $user->email = $this->email;
         $user->mobile = $this->mobile;
+        $user->job_position = $this->job_position;
         if($this->password) {
             $user->setPassword($this->password);
         }

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'receiver_id',
+            'reciever_id',
             'creator_id',
             'rule_id',
             'expirence_scope',
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'target',
             'target_id',
             'remark',
-            'created_at',
+            'created_at:datetime',
         ],
     ]) ?>
 

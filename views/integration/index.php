@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\User;
+use app\models\JobPosition;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\IntegrationSearch */
@@ -31,6 +32,14 @@ $users = User::allIdToName('id','nick_name');
                 'filter'=>$users,
                 'value'=>function($model,$key,$index,$column) {
                     return $column->filter[$model['reciever_id']];
+                }
+            ],
+            [
+                'attribute'=>'job_position',
+                'filter'=>JobPosition::allIdToName(),
+                'headerOptions'=>['width'=>'100px'],
+                'value'=>function($model,$key,$index,$column){
+                    return $column->filter[$model['job_position']];
                 }
             ],
             [
@@ -66,6 +75,7 @@ $users = User::allIdToName('id','nick_name');
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
+                'template'=>'{view}',
                 'headerOptions'=>['width'=>'70px'],
                 
             ],

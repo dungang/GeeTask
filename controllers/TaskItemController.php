@@ -78,7 +78,7 @@ class TaskItemController extends BaseController
         $model->load(Yii::$app->request->get());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //添加积分
-            Integration::addScope(Yii::$app->user->id, TaskItem::tableName(), $model->id);
+            Integration::addScope(Yii::$app->user->id, 'TaskItem', $model->id);
             //发送消息
             $this->sendMsg($model);
             return $this->redirect(\Yii::$app->request->referrer);
@@ -101,7 +101,7 @@ class TaskItemController extends BaseController
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //添加积分
-            Integration::addScope(Yii::$app->user->id, TaskItem::tableName(), $model->id);
+            Integration::addScope(Yii::$app->user->id, 'TaskItem', $model->id);
             //发送消息
             $this->sendMsg($model);
             return $this->redirect(\Yii::$app->request->referrer);

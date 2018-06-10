@@ -1,8 +1,8 @@
 <?php
 use yii\grid\GridView;
 use app\models\User;
-use app\models\TaskStatus;
 use yii\widgets\Pjax;
+use app\models\BugStatus;
 ?>
 
 <?php Pjax::begin(); ?>
@@ -20,7 +20,7 @@ use yii\widgets\Pjax;
         ],
         [
             'attribute'=>'status_code',
-            'filter'=>TaskStatus::allIdToName('code'),
+            'filter'=>BugStatus::allIdToName('code'),
             'value'=>function($model,$key,$index,$column){
                 return $column->filter[$model['status_code']];
             }

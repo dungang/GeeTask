@@ -16,7 +16,7 @@ class RequirementSearch extends Requirement
     public function rules()
     {
         return [
-            [['id', 'project_id', 'version_id', 'pid', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'project_id', 'version_id', 'pid', 'user_id','last_user_id', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'safe'],
         ];
     }
@@ -42,7 +42,8 @@ class RequirementSearch extends Requirement
         $query = Requirement::find();
 
         // add conditions that should always apply here
-
+        $query->andWhere(['source_type'=>'requirement']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=>false
@@ -63,6 +64,7 @@ class RequirementSearch extends Requirement
             'version_id' => $this->version_id,
             'pid' => $this->pid,
             'user_id' => $this->user_id,
+            'last_user_id' => $this->last_user_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

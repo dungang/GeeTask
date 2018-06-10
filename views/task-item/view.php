@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'status_code',
             'code',
             'name',
-            'description',
             'target_date',
             'created_at:datetime',
             'updated_at:datetime',

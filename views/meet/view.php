@@ -32,16 +32,16 @@ $user = User::findOne(['id'=>$model->user_id]);
         'attributes' => [
             [
                 'attribute'=>'title',
-                'captionOptoins'=>['width'=>'100px'],
+                'captionOptions'=>['width'=>'100px'],
             ],
             'actors:ntext',
-            'content:html',
             [
                 'attribute'=>'user_id',
                 'value'=>$user->nick_name,
             ],
             'created_at:datetime',
             'updated_at:datetime',
+            'content:html',
         ],
     ]) ?>
 

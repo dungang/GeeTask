@@ -42,9 +42,11 @@ class TaskStatusSearch extends TaskStatus
         $query = TaskStatus::find();
 
         // add conditions that should always apply here
-
+        $query->andWhere(['status_type'=>'task']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>false,
             'sort'=>[
                 'defaultOrder'=>[
                     'sort'=>SORT_ASC

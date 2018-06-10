@@ -14,7 +14,7 @@ use app\models\Integration;
 class MeetController extends BaseController
 {
     public function init() {
-        $this->userActions=['create','view','update','delete','index'];
+        $this->userActions=['create','view','update','index'];
     }
 
     /**
@@ -56,7 +56,7 @@ class MeetController extends BaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //添加积分
-            Integration::addScope(Yii::$app->user->id, Meet::tableName(), $model->id);
+            Integration::addScope(Yii::$app->user->id, 'Meet', $model->id);
             
             return $this->redirect(['view', 'id' => $model->id]);
         }

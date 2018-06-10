@@ -6,7 +6,8 @@ namespace app\models;
  * This is the model class for table "requirement_content".
  *
  * @property int $id
- * @property int $requirement_id
+ * @property int $requirement_id 目录
+ * @property int $user_id 编辑人
  * @property string $content 内容
  * @property int $created_at 添加时间
  */
@@ -39,7 +40,8 @@ class RequirementContent extends \app\models\BaseModel
     {
         return [
             'id' => 'ID',
-            'requirement_id' => 'Requirement ID',
+            'user_id' => '编辑人',
+            'requirement_id' => '标题',
             'content' => '内容',
             'created_at' => '添加时间',
         ];

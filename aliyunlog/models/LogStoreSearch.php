@@ -12,7 +12,6 @@ class LogStoreSearch extends DataSearch
      */
     protected $response;
     
-    private $projectName;
     
     public function init(){
         $this->key = 'logstoreName';

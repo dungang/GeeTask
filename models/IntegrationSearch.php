@@ -17,7 +17,7 @@ class IntegrationSearch extends Integration
     {
         return [
             [['id', 'reciever_id', 'creator_id', 'rule_id', 'expirence_scope', 'contribution_scope', 'target_id', 'created_at'], 'integer'],
-            [['route', 'name', 'target', 'remark'], 'safe'],
+            [['route', 'name', 'target', 'remark','job_position'], 'safe'],
         ];
     }
 
@@ -45,6 +45,11 @@ class IntegrationSearch extends Integration
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder'=>[
+                    'created_at'=>SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -61,6 +66,7 @@ class IntegrationSearch extends Integration
             'reciever_id' => $this->reciever_id,
             'creator_id' => $this->creator_id,
             'rule_id' => $this->rule_id,
+            'job_position' => $this->job_position,
             'expirence_scope' => $this->expirence_scope,
             'contribution_scope' => $this->contribution_scope,
             'target_id' => $this->target_id,

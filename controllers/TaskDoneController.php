@@ -4,7 +4,6 @@ namespace app\controllers;
 use Yii;
 use app\models\TaskDone;
 use app\models\TaskDoneSearch;
-use yii\web\NotFoundHttpException;
 use app\models\TaskItem;
 use app\models\TaskStatus;
 use app\helpers\SendMessageHelper;
@@ -16,7 +15,6 @@ use app\models\Integration;
  */
 class TaskDoneController extends BaseController
 {
-
     /**
      * Creates a new TaskDone model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -37,12 +35,13 @@ class TaskDoneController extends BaseController
                 $item->status_code = $model->status_code;
                 $item->last_user_id = Yii::$app->user->id;
                 // 保存更新备注，更新对应的任务项的状态
-                if ($item->save(false) && $model->save()) {
-                    
-                    
+                $saveOk = false;
+                \Yii::$app->db->transaction(function($db) use ($saveOk,$item, $model){
+                    $saveOk = $item->save(false) && $model->save();
+                });
+                if ($saveOk) {
                     //添加积分
-                    Integration::addScope(Yii::$app->user->id, TaskDone::tableName(), $model->id);
-                    
+                    Integration::addScope(Yii::$app->user->id, 'TaskDone', $model->id);
                     $name = \Yii::$app->user->identity->nick_name;
                     $taskStatus = TaskStatus::findOne([
                         'code' => $item->status_code
@@ -86,20 +85,4 @@ class TaskDoneController extends BaseController
         ]);
     }
 
-    /**
-     * Finds the TaskDone model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param integer $id
-     * @return TaskDone the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = TaskDone::findOne($id)) !== null) {
-            return $model;
-        }
-        
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

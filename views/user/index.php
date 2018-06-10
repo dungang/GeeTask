@@ -3,12 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\JobPosition;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '用户';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
 
@@ -32,10 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'nick_name',
                 'headerOptions'=>['width'=>'100px']
             ],
+            [
+                'attribute'=>'job_position',
+                'filter'=>JobPosition::allIdToName(),
+                'headerOptions'=>['width'=>'100px'],
+                'value'=>function($model,$key,$index,$column){
+                    return $column->filter[$model['job_position']];
+                }
+            ],
             'email:email',
             [
                 'attribute'=>'mobile',
-                'headerOptions'=>['width'=>'60px'],
+                'headerOptions'=>['width'=>'110px'],
             ],
             [
                 'attribute' => 'is_admin',
@@ -63,7 +73,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
-            'created_at:date',
+            [
+                'attribute' => 'created_at',
+                'format'=>'date',
+                'headerOptions'=>['width'=>'100px']
+            ],
             [
                 'label'=>'角色',
                 'format'=>'raw',

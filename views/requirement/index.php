@@ -1,48 +1,87 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use app\widgets\TreeGrid;
 use app\models\RequirementVersion;
+use app\models\Project;
+use app\widgets\SimpleModal;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProjectSearch */
+/* @var $searchModel app\models\RequirementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '项目需求文档';
+$this->params['breadcrumbs'][] = [
+    'label'=>'项目需求文档',
+    'url'=>['project']
+];
+
+if(($projectName = \Yii::$app->request->get('project_name')) && ($version = \Yii::$app->request->get('version'))) {
+    $this->title = $projectName . ' ' . $version;
+} else {
+    $version = RequirementVersion::findOne(['id'=>$searchModel->version_id]);
+    $project = Project::findOne(['id'=>$searchModel->project_id]);
+    $this->title = $project->name . ' ' . $version->name;
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="project-index">
+<div class="requirement-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= GridView::widget([
+    <p>
+        <?= Html::a('添加需求文档', ['create','pid'=>'0','project_id'=>$searchModel->project_id,'version_id'=>$searchModel->version_id], [
+            'class' => 'btn btn-success',
+            'data-toggle'=>'modal',
+            'data-target'=>'#requirement-dailog',
+        ]) ?>
+    </p>
+
+    <?= TreeGrid::widget([
         'dataProvider' => $dataProvider,
+        'keyColumnName'=>'id',
+        'parentColumnName'=>'pid',
         'columns' => [
-            'name',
             [
-                'label'=>'文档版本',
+                'attribute'=>'title',
+                'label'=>'目录',
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column){
-                    if($versions = RequirementVersion::findAll(['project_id'=>$model['id']])){
-                        return implode(" ", array_map(function($version)use($model){
-                            return Html::a($version['name'],['doc',
-                                'RequirementSearch[version_id]'=>$version['id'],
-                                'RequirementSearch[project_id]'=>$version['project_id'],
-                                'project_name'=>$model['name'],
-                                'version'=>$version['name']
-                            ]);
-                        }, $versions));
-                    }
-                    return '';
+                    $actions = [];
+                    $actions[] = Html::a($model['title'],['view','id'=>$key]);
+                    $actions[] = Html::a('编辑内容',['/requirement-content/create',
+                        'requirement_id'=>$key,
+                        'project_id'=>$model['project_id'],
+                        'version_id'=>$model['version_id'],
+                        'title'=>$model['title']],[
+                        'class'=>'h6 text-muted',
+                    ]);
+                    $actions[] = Html::a('添加子项',['create','pid'=>$key,'project_id'=>$model['project_id'],'version_id'=>$model['version_id']],[
+                        'class'=>'h6 text-muted',
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#requirement-dailog',
+                    ]);
+                    return  implode(" ", $actions);
                 }
             ],
-            'created_at:date',
             [
-                'format'=>'raw',
-                'value'=>function($model,$key,$index,$column) {
-                    return Html::a('添加版本',['/requirement-version/create','project_id'=>$model['id'], 'title'=>$model['name']]);
-                }
-            ]
+                'attribute' => 'id',
+                'headerOptions'=>['width'=>'60px'],
+                
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions'=>['width'=>'80px'],
+                
+            ],
         ],
     ]); ?>
+    
+    <?php 
+    SimpleModal::begin([
+        'header'=>'需求文档',
+        'options'=>['id'=>'requirement-dailog']
+    ]);
+    echo "没有记录";
+    SimpleModal::end();
+    ?>
 </div>

@@ -15,9 +15,12 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $email
  * @property string $mobile
+ * @property string $job_position
  * @property string $auth_key
  * @property integer $status
  * @property int $is_admin
+ * @property int $experience_scope
+ * @property int $contribution_scope
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -52,7 +55,10 @@ class User extends BaseModel implements IdentityInterface
             'is_admin'=> '是超管',
             'email' => '邮箱',
             'mobile' => '手机',
+            'job_position' => '岗位',
             'password'=>'密碼',
+            'experience_scope'=>'经验',
+            'contribution_scope'=>'贡献',
             'created_at' => '添加时间',
             'updated_at' => '更新时间',
         ];

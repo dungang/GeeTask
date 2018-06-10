@@ -46,7 +46,7 @@ class DbChangeController extends BaseController
         $model->user_id = \Yii::$app->user->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //添加积分
-            Integration::addScope(Yii::$app->user->id, DbChange::tableName(), $model->id);
+            Integration::addScope(Yii::$app->user->id, 'DbChange', $model->id);
             
             return $this->redirect(\Yii::$app->request->referrer);
         }

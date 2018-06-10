@@ -15,34 +15,24 @@ class LogSearch extends DataSearch
 
     public function init()
     {
+        parent::init();
         $this->key = 'time';
     }
 
     public function search($param)
     {
-        if (empty($param['starttime']) or empty($param['endtime'])) {
-            $today = date('Y-m-d 00:00:00');
-            $param['starttime'] = $today;
-            $param['endtime'] = date('Y-m-d 00:00:00', strtotime($today . " -1   day"));
-        }
-        if (empty($param['size'])) {
-            $param['size'] = 20;
-        }
-        if (empty($param['page'])) {
-            $param['page'] = 1;
-        }
-        
-        $offset = $param['size'] * ($param['page'] - 1);
+        $this->load($param);
+
         $request = new \Aliyun_Log_Models_GetLogsRequest(
-            $param['projectName'], 
-            $param['logstore'],
-            strtotime($param['starttime']), 
-            strtotime($param['endtime']),
-            isset($param['topic'])?$param['topic']:null,
-            null,
-            $param['size'],
-            $offset,
-            isset($param['reverse'])?$param['reverse']:null);
+            $this->projectName, 
+            $this->logstoreName,
+            strtotime($this->from), 
+            strtotime($this->to),
+            $this->topic,
+            $this->query,
+            $this->line,
+            $this->offset,
+            $this->reverse);
         $this->response = $this->client->getLogs($request);
     }
 
@@ -54,7 +44,7 @@ class LogSearch extends DataSearch
                 'time' => $item->getTime(),
                 'ip' => $item->getSource(),
                 'level' => $content['level'],
-                'location' => $content['location'],
+                'location' => isset($content['location'])?$content['location']:'',
                 'thread' => $content['thread'],
                 'topic' => $content['__topic__'],
                 'message' => $content['message']

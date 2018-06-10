@@ -10,11 +10,8 @@ namespace app\models;
  * @property string $name 名称
  * @property string $method
  * @property string $route 路由
- * @property int $experience_value 经验值
- * @property int $contribution_value 贡献值
  * @property string $intro 介绍
  * @property int $created_at 添加时间
- * @property int $repeat_times 重复次数
  */
 class IntegrationRule extends \app\models\BaseModel
 {
@@ -32,9 +29,9 @@ class IntegrationRule extends \app\models\BaseModel
     public function rules()
     {
         return [
-            [['name', 'method', 'route','experience_value', 'contribution_value'], 'required'],
+            [['name', 'method', 'route'], 'required'],
             [['method', 'intro'], 'string'],
-            [['experience_value', 'contribution_value', 'created_at', 'repeat_times'], 'integer'],
+            [[ 'created_at'], 'integer'],
             [['name', 'route'], 'string', 'max' => 64],
         ];
     }
@@ -49,11 +46,8 @@ class IntegrationRule extends \app\models\BaseModel
             'name' => '名称',
             'method' => 'Method',
             'route' => '路由',
-            'experience_value' => '经验值',
-            'contribution_value' => '贡献值',
             'intro' => '介绍',
             'created_at' => '添加时间',
-            'repeat_times' => '重复次数',
         ];
     }
 

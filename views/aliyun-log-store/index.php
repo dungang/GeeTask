@@ -19,14 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'日志库日志',
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column){
-                return Html::a('查看',['/aliyun-log','projectName'=>$model['projectName'],'logstore'=>$model['logstoreName']]);
+                return Html::a('查看',['/aliyun-log','LogSearch[projectName]'=>$model['projectName'],'LogSearch[logstoreName]'=>$model['logstoreName']]);
                 }
             ],
             [
                 'label'=>'项目日志',
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column){
-                return Html::a('查看',['/aliyun-log/project-log','projectName'=>$model['projectName'],'logstore'=>$model['logstoreName']]);
+                return Html::a('查看',['/aliyun-log/project-log','ProjectLogSearch[projectName]'=>$model['projectName'],'ProjectLogSearch[logstoreName]'=>$model['logstoreName']]);
                 }
             ],
         ],
