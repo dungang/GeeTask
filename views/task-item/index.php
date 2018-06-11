@@ -11,16 +11,8 @@ use app\widgets\SimpleModal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$planName = "所有任务计划";
-if(Yii::$app->request->get('title')) {
-    $planName = Yii::$app->request->get('title');
-} else {
-    
-    if($searchModel->plan_id && $plan = TaskPlan::findOne(['id'=>$searchModel->plan_id])){
-        $planName = $plan->name;
-    }
-}
-$this->title = $planName . ' - 任务项';
+
+$this->title = $plan->name . ' - 任务项';
 $this->params['breadcrumbs'][] = ['label' => '任务计划', 'url' => ['/task-plan']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -32,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('添加任务项', ['create','TaskItem[plan_id]'=>$searchModel->plan_id], ['class' => 'btn btn-success',
                             'data-toggle'=>'modal',
-                            'data-target'=>'#task-done-dailog']) ?>
+                            'data-target'=>'#task-dailog']) ?>
     </p>
 	<?php 
 	   $users = User::allIdToName('id','nick_name');
@@ -50,14 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             [
-                'attribute'=>'code',
-                'value'=>function($model,$key,$index,$column){
-                    if(empty($model['code'])) {
-                        return 'L'.$model['id'];
-                    } else {
-                        return $model['code'];
-                    }
-                },
+                'attribute'=>'id',
                 'headerOptions'=>['width'=>$codeWidth . 'px','class'=>'text-center'],
                 'contentOptions'=>['width'=>$codeWidth . 'px','class'=>'text-center'],
             ],
@@ -72,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-pajx'=>'0',
                             'title'=>$model['name'],
                             'data-toggle'=>'modal',
-                            'data-target'=>'#task-done-dailog'
+                            'data-target'=>'#task-dailog'
                         ]);
                     }
             ],
@@ -87,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-pajx'=>'0',
                             'title'=>$model['name'],
                             'data-toggle'=>'modal',
-                            'data-target'=>'#task-done-dailog'
+                            'data-target'=>'#task-dailog'
                         ]);
                 }
             ],
@@ -97,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions'=>['class'=>'text-center'],
                 'contentOptions'=>['class'=>'text-center'],
                 'attribute'=>'status_code',
-                'allStatus'=>TaskStatus::allIdToName('code'),
+                'allStatus'=>$taskStatuses,
                 'value'=>function($model,$key,$index,$column){
                     return Html::a('<span class="glyphicon glyphicon-ok text-success"></span>',
                         ['/task-done/create',
@@ -110,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'data-pajx'=>'0','title'=>'请添加操作日志',
                             'data-toggle'=>'modal',
-                            'data-target'=>'#task-done-dailog'
+                            'data-target'=>'#task-dailog'
                         ]);
                 }
             ],
@@ -123,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return empty($model['last_user_id'])?'': Html::a($users[$model['last_user_id']]
                         ,['/task-done/index','TaskDoneSearch[item_id]'=>$model['id']],[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-done-dailog',
+                        'data-target'=>'#task-dailog',
                     ]);
                 }
             ],
@@ -133,9 +118,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions'=>['width'=>$dbWidth . 'px','class'=>'text-center'],
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column){
-                    return Html::a('变更',['/db-change/modify','plan_id'=>$model['plan_id'],'item_id'=>$model['id']],[
+                    return Html::a('SQL',['/db-change/modify','plan_id'=>$model['plan_id'],'item_id'=>$model['id']],[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-done-dailog',
+                        'data-target'=>'#task-dailog',
                     ]);
                 }
             ],
@@ -147,15 +132,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); 
     ?>
-    <?php 
-    FixedTableHeader::widget(['options'=>['id'=>'fixed-table-header']]);
-    ToolTips::widget(['options'=>['id'=>'task-item-table [data-toggle="tooltip"]']]);
-    SimpleModal::begin([
-        'size'=>'modal-lg',
-        'header'=>'任务更新状态记录',
-        'options'=>['id'=>'task-done-dailog']
-    ]);
-    echo "没有记录";
-    SimpleModal::end();
-    ?>
+
 </div>

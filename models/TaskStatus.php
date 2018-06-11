@@ -9,7 +9,7 @@ namespace app\models;
  * @property string $code 编码
  * @property string $name 名称
  * @property string $status_type 名称
- * @property string $description 状态描述
+ * @property string $intro 状态描述
  * @property int $sort 排序
  */
 class TaskStatus extends BaseModel
@@ -22,7 +22,8 @@ class TaskStatus extends BaseModel
         return 'task_status';
     }
     
-    public function init() {
+    public function init(){
+        //默认是task
         $this->status_type = 'task';
     }
 
@@ -36,7 +37,7 @@ class TaskStatus extends BaseModel
             [['sort'], 'integer'],
             [['status_type'], 'string'],
             [['code', 'name'], 'string', 'max' => 32],
-            [['description'], 'string', 'max' => 255], 
+            [['intro'], 'string', 'max' => 255], 
             [['code'], 'unique'],
         ];
     }
@@ -50,7 +51,7 @@ class TaskStatus extends BaseModel
             'code' => '编码',
             'name' => '名称',
             'status_type' => '状态类型',
-            'description' => '描述',
+            'intro' => '描述',
             'sort' => '排序',
         ];
     }

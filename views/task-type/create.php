@@ -4,10 +4,10 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TaskStatus */
+/* @var $model app\models\TaskType */
 
-$this->title = '添加Task Status';
-$this->params['breadcrumbs'][] = ['label' => 'Task Statuses', 'url' => ['index']];
+$this->title = '添加Task Type';
+$this->params['breadcrumbs'][] = ['label' => 'Task Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="modal-header">

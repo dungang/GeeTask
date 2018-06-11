@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\RequirementContent */
 
 $this->title = '历史内容';
+
 ?>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"

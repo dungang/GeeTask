@@ -3,26 +3,25 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\TaskPlan;
-use app\models\TaskPlanSearch;
+use app\models\TaskType;
+use app\models\TaskTypeSearch;
 use yii\web\NotFoundHttpException;
 
 /**
- * TaskPlanController implements the CRUD actions for TaskPlan model.
+ * TaskTypeController implements the CRUD actions for TaskType model.
  */
-class TaskPlanController extends BaseController
+class TaskTypeController extends BaseController
 {
-    
- 
+
     /**
-     * Lists all TaskPlan models.
+     * Lists all TaskType models.
      * @return mixed
      */
     public function actionIndex()
     {
-        
-        $searchModel = new TaskPlanSearch();
+        $searchModel = new TaskTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -30,7 +29,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Displays a single TaskPlan model.
+     * Displays a single TaskType model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -43,16 +42,15 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Creates a new TaskPlan model.
+     * Creates a new TaskType model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new TaskPlan();
+        $model = new TaskType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",添加成功！");
             return $this->redirect(\Yii::$app->request->referrer);
         }
 
@@ -62,7 +60,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Updates an existing TaskPlan model.
+     * Updates an existing TaskType model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -73,7 +71,6 @@ class TaskPlanController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash("success","计划：".$model->name.",更新成功！");
             return $this->redirect(\Yii::$app->request->referrer);
         }
 
@@ -83,7 +80,7 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Deletes an existing TaskPlan model.
+     * Deletes an existing TaskType model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -97,15 +94,15 @@ class TaskPlanController extends BaseController
     }
 
     /**
-     * Finds the TaskPlan model based on its primary key value.
+     * Finds the TaskType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TaskPlan the loaded model
+     * @return TaskType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TaskPlan::findOne($id)) !== null) {
+        if (($model = TaskType::findOne($id)) !== null) {
             return $model;
         }
 

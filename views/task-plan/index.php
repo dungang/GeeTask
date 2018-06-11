@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Team;
-use app\widgets\SimpleModal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskPlanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -32,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('添加计划', ['create'], [
             'class' => 'btn btn-success',
             'data-toggle'=>'modal',
-            'data-target'=>'#task-plan-dailog',
+            'data-target'=>'#task-dailog',
         ]) ?>
     </p>
 
@@ -93,22 +92,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttonsOptions'=>[
                     'update'=>[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-plan-dailog',
+                        'data-target'=>'#task-dailog',
                     ],
                     'view'=>[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-plan-dailog',
+                        'data-target'=>'#task-dailog',
                     ],
                 ]
             ],
         ],
     ]); ?>
-        <?php 
-            SimpleModal::begin([
-                'header'=>'更新计划',
-                'options'=>['id'=>'task-plan-dailog']
-            ]);
-            echo "没有记录";
-            SimpleModal::end();
-        ?>
 </div>

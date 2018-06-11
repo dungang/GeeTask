@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TaskStatus */
+/* @var $model app\models\TaskType */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Task Statuses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Task Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="modal-header">
@@ -21,11 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'code',
             'name',
-            'status_type',
+            'type_code',
             'intro',
-            'sort',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

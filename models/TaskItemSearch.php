@@ -72,7 +72,7 @@ class TaskItemSearch extends TaskItem
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'code' => SORT_DESC
+                    'id' => SORT_DESC
                 ]
             ]
         ]);

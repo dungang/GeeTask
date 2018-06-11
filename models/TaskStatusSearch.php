@@ -16,7 +16,7 @@ class TaskStatusSearch extends TaskStatus
     public function rules()
     {
         return [
-            [['code', 'name','description'], 'safe'],
+            [['code', 'name','intro','status_type'], 'safe'],
             [['sort'], 'integer'],
         ];
     }
@@ -42,7 +42,6 @@ class TaskStatusSearch extends TaskStatus
         $query = TaskStatus::find();
 
         // add conditions that should always apply here
-        $query->andWhere(['status_type'=>'task']);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,12 +63,12 @@ class TaskStatusSearch extends TaskStatus
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'sort' => $this->sort,
+            'status_type' => $this->status_type,
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
         ->andFilterWhere(['like', 'name', $this->name])
-        ->andFilterWhere(['like', 'description', $this->description]);
+        ->andFilterWhere(['like', 'intro', $this->intro]);
 
         return $dataProvider;
     }

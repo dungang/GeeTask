@@ -2,13 +2,13 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model app\models\TaskStatus */
+/* @var $model app\models\TaskType */
 
-$this->title = '添加Task Status';
-$this->params['breadcrumbs'][] = ['label' => 'Task Statuses', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Update Task Type: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Task Types', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
@@ -19,4 +19,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+
 </div>

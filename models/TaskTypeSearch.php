@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * BugStatusSearch represents the model behind the search form of `app\models\BugStatus`.
+ * TaskTypeSearch represents the model behind the search form of `app\models\TaskType`.
  */
-class BugStatusSearch extends BugStatus
+class TaskTypeSearch extends TaskType
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,8 @@ class BugStatusSearch extends BugStatus
     public function rules()
     {
         return [
-            [['code', 'name', 'status_type', 'intro'], 'safe'],
-            [['sort'], 'integer'],
+            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'type_code', 'intro'], 'safe'],
         ];
     }
 
@@ -39,19 +39,12 @@ class BugStatusSearch extends BugStatus
      */
     public function search($params)
     {
-        $query = BugStatus::find();
+        $query = TaskType::find();
 
         // add conditions that should always apply here
-        $query->andWhere(['status_type'=>'bug']);
-        
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination'=>false,
-            'sort'=>[
-                'defaultOrder'=>[
-                    'sort'=>SORT_ASC
-                ]
-            ]
         ]);
 
         $this->load($params);
@@ -64,11 +57,13 @@ class BugStatusSearch extends BugStatus
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'sort' => $this->sort,
+            'id' => $this->id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'type_code', $this->type_code])
             ->andFilterWhere(['like', 'intro', $this->intro]);
 
         return $dataProvider;
