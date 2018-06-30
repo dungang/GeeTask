@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Team;
+use app\models\TaskType;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskPlanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -40,6 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
+                'attribute'=>'task_type',
+                'headerOptions'=>['width'=>'60px','class'=>'text-center'],
+                'filter'=>TaskType::allIdToName('type_code'),
+                'value'=>function($model,$key,$index,$column) {
+                    return $column->filter[$model['task_type']];
+                }
+            ],
+            [
                 'attribute'=>'name',
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column) {
@@ -62,6 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'plan_status',
                 'filter'=>['0'=>'关闭','1'=>'活动'],
+                'headerOptions'=>['width'=>'80px','class'=>'text-center'],
                 'format'=>'raw',
                 'value'=>function($model,$key,$index,$column) {
                     return Html::tag('span',$model['plan_status']?'活动':'关闭',['class'=>$model['plan_status']?'text-success':'text-danger']) ;
@@ -80,11 +90,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions'=>['width'=>'120px','class'=>'text-center'],
             ],
             [
-                'label'=>'SQL变更',
-                'headerOptions'=>['width'=>'90px','class'=>'text-center'],
+                'label'=>'SQL',
+                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
                 'format'=>'raw',
                 'value' => function($model,$key,$index,$column){
-                    return Html::a('查看',['/db-change','DbChangeSearch[task_plan_id]'=>$model->id]);
+                    return Html::a('SQL',['/db-change','DbChangeSearch[task_plan_id]'=>$model->id]);
                 }
             ],
             [

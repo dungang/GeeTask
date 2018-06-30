@@ -1,131 +1,170 @@
 <?php
-
 use yii\helpers\Html;
-use app\models\Project;
-use app\widgets\SimpleModal;
 use yii\grid\GridView;
-use app\models\User;
 use app\components\StatusDataColumn;
-use app\models\BugStatus;
-use app\models\ProjectVersion;
-
+use app\models\User;
+use app\models\TaskType;
+use app\widgets\LinkageSelect;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\RequirementSearch */
+/* @var $searchModel app\models\TaskItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->params['breadcrumbs'][] = [
-    'label'=>'项目BUG',
-    'url'=>['project']
-];
-
-if(($projectName = \Yii::$app->request->get('project_name')) && ($version = \Yii::$app->request->get('version'))) {
-    $this->title = $projectName . ' ' . $version;
-} else {
-    $version = ProjectVersion::findOne(['id'=>$searchModel->version_id]);
-    $project = Project::findOne(['id'=>$searchModel->project_id]);
-    $this->title = $project->name . ' ' . $version->name;
-}
+$this->title = $plan->name . ' - BUG';
+$this->params['breadcrumbs'][] = ['label' => '项目BUG', 'url' => ['/bug/project']];
 $this->params['breadcrumbs'][] = $this->title;
+$taskTypes = TaskType::allIdToName('type_code');
 ?>
-<div class="requirement-index">
+<div class="task-item-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php  echo $this->render('_search', ['model' => $searchModel,'taskStatuses'=>$taskStatuses]); ?>
 
     <p>
-        <?= Html::a('添加BUG', ['create','pid'=>'0','project_id'=>$searchModel->project_id,'version_id'=>$searchModel->version_id], [
-            'class' => 'btn btn-success',
-            'data-toggle'=>'modal',
-            'data-target'=>'#bug-dailog',
-        ]) ?>
+        <?= Html::a('添加任务项', ['create',
+            'TaskItem[plan_id]'=>$searchModel->plan_id,
+            'TaskItem[task_type_code]'=>$searchModel->task_type_code,
+            'TaskItem[project_id]'=>$searchModel->project_id,
+            'TaskItem[project_version_id]'=>$searchModel->project_version_id,
+        ],
+            ['class' => 'btn btn-success',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#task-dailog']) ?>
     </p>
-<?php 
-$users = User::allIdToName('id','nick_name');
-$tableWidth = 1140;
-$codeWidth = 65;
-$userWidth = 60;
-$titleWidth= 260;
-$dateWidth = 150;
-$actionWidth = 80;
-$statusWidth = $tableWidth - $codeWidth - $userWidth - $titleWidth - $dateWidth - $actionWidth;
-?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute'=>'id',
-                'headerOptions'=>['width'=>$codeWidth . 'px','class'=>'text-center'],
-                'contentOptions'=>['width'=>$codeWidth . 'px','class'=>'text-center'],
-            ],
-            [
-                'attribute'=>'user_id',
-                'headerOptions'=>['width'=>$userWidth . 'px','class'=>'text-center'],
-                'contentOptions'=>['width'=>$userWidth . 'px','class'=>'text-center'],
-                'format'=>'raw',
-                'value' => function($model,$key,$index,$column)use($users){
-                    return $users[$model['user_id']];
-                }
-            ],
-            [
-                'attribute'=>'title',
-                'label'=>'BUG',
-                'format'=>'raw',
-                'headerOptions'=>['width'=>$titleWidth . 'px','class'=>'text-center'],
-                'contentOptions'=>['width'=>$titleWidth . 'px','class'=>'text-center'],
-                'value'=>function($model,$key,$index,$column){
-                    $actions = [];
-                    $actions[] = Html::a($model['title'],['view','id'=>$key]);
-                    $actions[] = Html::a('编辑内容',['/bug-content/create',
-                        'bug_id'=>$key,
-                        'project_id'=>$model['project_id'],
-                        'version_id'=>$model['version_id'],
-                        'title'=>$model['title']],[
-                        'class'=>'h6 text-muted',
-                    ]);
-                    return  implode(" ", $actions);
-                }
-            ],
-            [
-                'class'=>StatusDataColumn::className(),
-                'width'=>$statusWidth,
-                'headerOptions'=>['class'=>'text-center'],
-                'contentOptions'=>['class'=>'text-center'],
-                'attribute'=>'status_code',
-                'allStatus'=>BugStatus::allIdToName('code'),
-                'value'=>function($model,$key,$index,$column){
-                return Html::a('<span class="glyphicon glyphicon-ok text-success"></span>',
-                    ['/bug-content-done/create',
-                        'BugContentDone[status_code]'=>$model['status_code'],
-                        'bug_id'=>$model['id'],
-                        'title'=>$model['title']
-                        
+	<?php 
+	   $users = User::allIdToName('id','nick_name');
+	   $tableWidth = 1140;
+	   
+	   $colWidth = [
+	       'code'=> 65, //编码
+	       'charger'=> 60, //被指派人
+	       'taskName'=> 260, //任务名称
+	       'targetDate'=>100, //目标日期
+	       'updater'=>60, //最后更新人
+	       'sql'=>50, //SQL
+	       'typeCode'=>50, //任务模型类型
+	   ];
+	   //状态
+	   $statusWidth = $tableWidth;
+	   foreach ($colWidth as $col=>$width) {
+	       $statusWidth -= $width;
+	   }
+	   if(empty($taskStatuses)) {
+// 	       $avgWidth = round($statusWidth / count($colWidth),2);
+	       
+// 	       foreach ($colWidth as $col => $width) {
+// 	           $colWidth[$col] = $width + $avgWidth;
+// 	       }
+          $colWidth['taskName'] += $statusWidth;
+	       
+	   }
+	   
+	?>
+    <?=  GridView::widget([
+        'headerRowOptions'=>['id'=>'fixed-table-header'],
+            'options'=>['id'=>'task-item-table','class' => 'grid-view'],
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                    [
+                        'attribute'=>'id',
+                        'headerOptions'=>['width'=>$colWidth['code'] . 'px','class'=>'text-center'],
+                        'contentOptions'=>['width'=>$colWidth['code'] . 'px','class'=>'text-center'],
                     ],
                     [
-                        'data-pajx'=>'0','title'=>'请添加操作日志',
-                        'data-toggle'=>'modal',
-                        'data-target'=>'#bug-dailog'
-                    ]);
-                }
+                        'attribute'=>'user_id',
+                        'headerOptions'=>['width'=>$colWidth['charger'] . 'px','class'=>'text-center'],
+                        'contentOptions'=>['width'=>$colWidth['charger'] . 'px','class'=>'text-center'],
+                        'format'=>'raw',
+                        'value' => function($model,$key,$index,$column)use($users){
+                        return Html::a($users[$model['user_id']],['update','id'=>$model['id']],
+                            [
+                                'data-pajx'=>'0',
+                                'title'=>$model['name'],
+                                'data-toggle'=>'modal',
+                                'data-target'=>'#task-dailog'
+                            ]);
+                        }
+                    ],
+                    [
+                        'attribute'=>'task_type_code',
+                        'headerOptions'=>['width'=>$colWidth['typeCode'] . 'px','class'=>'text-center'],
+                        'contentOptions'=>['width'=>$colWidth['typeCode'] . 'px','class'=>'text-center'],
+                        'format'=>'raw',
+                        'value' => function($model,$key,$index,$column)use($taskTypes){
+                            return $taskTypes[$model['task_type_code']];
+                        }
+                    ],
+                    [
+                        'attribute'=>'name',
+                        'headerOptions'=>['width'=>$colWidth['taskName'] . 'px'],
+                        'contentOptions'=>['width'=>$colWidth['taskName'] . 'px'],
+                        'format'=>'raw',
+                        'value' => function($model,$key,$index,$column){
+                            return Html::a($model['name'],['view','id'=>$model['id']],
+                                [
+                                    'data-pajx'=>'0',
+                                    'title'=>$model['name'],
+                                    'data-toggle'=>'modal',
+                                    'data-target'=>'#task-dailog'
+                                ]);
+                        }
+                    ],
+                    [
+                        'class'=>StatusDataColumn::className(),
+                        'width'=>$statusWidth,
+                        'headerOptions'=>['class'=>'text-center'],
+                        'contentOptions'=>['class'=>'text-center'],
+                        'attribute'=>'status_code',
+                        'allStatus'=>$taskStatuses,
+                        'value'=>function($model,$key,$index,$column){
+                            return Html::a('<span class="glyphicon glyphicon-ok text-success"></span>',
+                                ['process-done',
+                                    'TaskDone[status_code]'=>$model['status_code'],
+                                    'TaskDone[plan_id]'=>$model['plan_id'],
+                                    'TaskDone[item_id]'=>$model['id'],
+                                    'task_type'=>$model['task_type_code'],
+                                    'title'=>$model['name']
+                                   
+                                ],
+                                [
+                                    'data-pajx'=>'0','title'=>'请添加操作日志',
+                                    'data-toggle'=>'modal',
+                                    'data-target'=>'#task-dailog'
+                                ]);
+                        }
+                    ],
+                    [
+                        'attribute'=>'last_user_id',
+                        'format'=>'raw',
+                        'headerOptions'=>['width'=>$colWidth['updater'] . 'px','class'=>'text-center'],
+                        'headerOptions'=>['width'=>$colWidth['updater'] . 'px','class'=>'text-center'],
+                        'value'=>function($model,$key,$index,$column) use($users){
+                            return empty($model['last_user_id'])?'': Html::a($users[$model['last_user_id']]
+                                ,['process-logs','TaskDoneSearch[item_id]'=>$model['id'],'task_type'=>$model['task_type_code']],[
+                                'data-toggle'=>'modal',
+                                'data-target'=>'#task-dailog',
+                            ]);
+                        }
+                    ],
+                    [
+                        'label'=>'SQL',
+                        'headerOptions'=>['width'=>$colWidth['sql'] . 'px','class'=>'text-center'],
+                        'contentOptions'=>['width'=>$colWidth['sql'] . 'px','class'=>'text-center'],
+                        'format'=>'raw',
+                        'value'=>function($model,$key,$index,$column){
+                            return Html::a('SQL',['/db-change/modify','plan_id'=>$model['plan_id'],'item_id'=>$model['id']],[
+                                'data-toggle'=>'modal',
+                                'data-target'=>'#task-dailog',
+                            ]);
+                        }
+                    ],
+                    [
+                        'attribute'=>'target_date',
+                        'headerOptions'=>['width'=>$colWidth['targetDate'] . 'px','class'=>'text-center'],
+                        'contentOptions'=>['width'=>$colWidth['targetDate'] . 'px','class'=>'text-center'],
+                    ],
             ],
-            [
-                'attribute'=>'created_at',
-                'format'=>'datetime',
-                'headerOptions'=>['width'=>$dateWidth . 'px','class'=>'text-center'],
-                'contentOptions'=>['width'=>$dateWidth . 'px','class'=>'text-center'],
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions'=>['width'=>$actionWidth . 'px','class'=>'text-center'],
-                'contentOptions'=>['width'=>$actionWidth . 'px','class'=>'text-center'],
-            ],
-        ],
-    ]); ?>
-    
-    <?php 
-    SimpleModal::begin([
-        'header'=>'BUG文档',
-        'options'=>['id'=>'bug-dailog']
-    ]);
-    echo "没有记录";
-    SimpleModal::end();
+    ]); 
     ?>
+
+	<?php LinkageSelect::widget();?>
 </div>

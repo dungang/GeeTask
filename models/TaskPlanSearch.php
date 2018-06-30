@@ -17,7 +17,7 @@ class TaskPlanSearch extends TaskPlan
     public function rules()
     {
         return [
-            [['id', 'team_id','plan_status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'team_id','plan_status','task_type', 'created_at', 'updated_at'], 'integer'],
             [['name','target_version', 'target_date', 'test_date', 'prod_date'], 'safe'],
         ];
     }

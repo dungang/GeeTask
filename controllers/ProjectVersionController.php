@@ -11,7 +11,34 @@ use app\models\ProjectSearch;
  */
 class ProjectVersionController extends BaseController
 {
+    public function init() {
+        $this->userActions = ['versions','release-versions'];
+    }
+    
+    /**
+     * 获取项目的版本
+     * @param number $project_id
+     * @return string 
+     */
+    public function actionVersionsData($project_id) {
+        return json_encode([
+            'code'=>0,
+            'data'=>ProjectVersion::allIdToName('id','name',['project_id'=>$project_id])
+        ]);
+    }
 
+    /**
+     * 获取项目发布的版本
+     * @param number $project_id
+     * @return string
+     */
+    public function actionReleaseVersionsData($project_id) {
+        return json_encode([
+            'code'=>0,
+            'data'=>ProjectVersion::allIdToName('id','name',['is_release'=>1,'project_id'=>$project_id])
+        ]);
+    }
+    
     /**
      * 管理项目版本
      * @return string

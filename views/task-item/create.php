@@ -20,6 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::encode($this->title) ?>
 </div>
 <div class="modal-body">
-    <?=$this->render('_form', ['model' => $model])?>
+    <?=$this->render('_form', ['model' => $model,'taskStatuses'=>$taskStatuses,'content'=>$content])?>
 
 </div>

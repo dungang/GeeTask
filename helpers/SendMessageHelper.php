@@ -68,7 +68,7 @@ class SendMessageHelper
                         $robot = ImRobot::findOne([
                             'id' => $team->im_robot_id
                         ]);
-                        if (count($recievers) > 0) {
+                        if (count($recievers) > 0 && empty($robot->webhook)==false) {
                             /*@var $robotObj \app\components\Robot */
                             $robotObj = \Yii::createObject([
                                 'class' => $robot->code_full_class,

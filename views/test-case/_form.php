@@ -1,37 +1,63 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\TaskPlan;
+use app\models\User;
+use app\widgets\LinkageSelect;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TestCase */
+/* @var $model app\models\TaskItem */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="test-case-form">
+<div class="task-item-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'project_id')->textInput() ?>
-
-    <?= $form->field($model, 'version_id')->textInput() ?>
-
-    <?= $form->field($model, 'pid')->textInput() ?>
-
-    <?= $form->field($model, 'source_type')->dropDownList([ 'requirement' => 'Requirement', 'bug' => 'Bug', 'case' => 'Case', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+            <?= $form->field($model, 'project_id')->hiddenInput()->label(false) ?>
+            <?= $form->field($model, 'project_version_id')->hiddenInput()->label(false)?>
+    <div class="form-group">
+        <?php if(!$model->isNewRecord) echo Html::a('删除', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]); ?>
+        <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>
+    </div>
+	<div class="row">
+	
+		<div class="col-md-12">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+		</div>
+		<div class="col-md-6">
+            <?= $form->field($model, 'plan_id')->dropDownList(TaskPlan::allIdToName('id','name',['task_type'=>$model->task_type_code])) ?>
+		</div>
+		<div class="col-md-6">
+            <?= $form->field($model, 'user_id')->dropDownList(User::allIdToName('id','nick_name')) ?>
+		</div>
+		<div class="col-md-12">
+		    <?= $form->field($content, 'content')->widget(\dungang\ueditor\widgets\Editor::className(),[
+                'serverUrl'=>['/tools/ueditor'],
+                //（可选）增加编辑器按钮，1维数组（之支持一行显示，没有必要多行显示），官方是二维数组（多行工具）
+                'toolBars'=>[
+                    'forecolor', 'backcolor', '|' ,'insertimage', 
+                ]
+            ]) ?>
+		</div>
+	</div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?php if(!$model->isNewRecord) echo Html::a('删除', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]); ?>
+        <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
+	<?php LinkageSelect::widget();?>
 </div>

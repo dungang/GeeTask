@@ -37,7 +37,7 @@ class TaskItem extends BaseModel
     public function rules()
     {
         return [
-            [['name','plan_id', 'status_code', 'user_id', 'creator_id'], 'required'],
+            [['name','plan_id', 'status_code', 'user_id'], 'required'],
             [['pid', 'plan_id', 'user_id', 'creator_id', 'project_id', 'project_version_id', 'code', 'last_user_id', 'created_at', 'updated_at'], 'integer'],
             [['target_date'], 'safe'],
             [['task_type_code', 'status_code'], 'string', 'max' => 32],
@@ -56,7 +56,7 @@ class TaskItem extends BaseModel
             'plan_id' => '计划',
             'task_type_code' => '类型',
             'status_code' => '状态',
-            'user_id' => '被指派',
+            'user_id' => '负责人',
             'creator_id' => '创建者',
             'name' => '名称',
             'project_id' => '项目',

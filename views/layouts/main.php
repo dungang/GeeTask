@@ -65,7 +65,7 @@ AppAsset::register($this);
             [
                 'label' => '计划',
                 'url' => [
-                    '/task-plan'
+                    '/task-plan/index'
                 ]
             ],
             [
@@ -83,13 +83,13 @@ AppAsset::register($this);
             [
                 'label' => '阿里云日志',
                 'url' => [
-                    '/aliyun-log-project'
+                    '/aliyun-log-project/index'
                 ]
             ],
             [
                 'label' => '会议',
                 'url' => [
-                    '/meet'
+                    '/meet/index'
                 ]
             ],
             [
@@ -104,7 +104,7 @@ AppAsset::register($this);
                     [
                         'label' => '数据库变更',
                         'url' => [
-                            '/db-name'
+                            '/db-name/index'
                         ]
                     ]
                 ]
@@ -115,7 +115,7 @@ AppAsset::register($this);
                     [
                         'label' => '项目',
                         'url' => [
-                            '/project'
+                            '/project/index'
                         ]
                     ],
                     [
@@ -133,25 +133,25 @@ AppAsset::register($this);
                     [
                         'label' => '团队',
                         'url' => [
-                            '/team'
+                            '/team/index'
                         ]
                     ],
                     [
                         'label' => '任务类型',
                         'url' => [
-                            '/task-type'
+                            '/task-type/index'
                         ]
                     ],
                     [
                         'label' => '任务状态',
                         'url' => [
-                            '/task-status'
+                            '/task-status/index'
                         ]
                     ],
                     [
                         'label' => 'IM机器人',
                         'url' => [
-                            '/im-robot'
+                            '/im-robot/index'
                         ]
                     ]
                 ]

@@ -2,23 +2,24 @@
 
 namespace app\controllers;
 
-use app\models\Bug;
-use app\models\BugSearch;
-use app\models\BugContent;
-
 /**
  * BugController implements the CRUD actions for Bug model.
  */
-class BugController extends AbstractTaskSourceController
+class BugController extends BaseController
 {
-
-    public function  init() {
-        parent::init();
-        $this->taskSourceIdName = 'bug_id';
-        $this->taskSourceModelClass = Bug::className();
-        $this->taskSourceSearchModelClass = BugSearch::className();
-        $this->taskSourceContentModelClass = BugContent::className();
-        $this->taskSourceContentCreateRoute = '/bug-content/create';
+    public function actions(){
+        return [
+            'project'=>'app\actions\ProjectListAction',
+            'index'=>[
+                'class'=>'app\actions\TaskItemListAction',
+                'initParams'=>['task_type_code'=>'bug']
+            ],
+            'create'=>'app\actions\TaskItemCreateSimpleAction',
+            'update'=>'app\actions\TaskItemUpdateSimpleAction',
+            'edit'=>'app\actions\TaskItemUpdateAction',
+            'view'=>'app\actions\TaskItemViewAction',
+            'process-done'=>'app\actions\TaskItemProcessDoneAction',
+            'process-logs'=>'app\actions\TaskItemProcessLogsAction',
+        ];
     }
-
 }

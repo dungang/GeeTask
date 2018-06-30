@@ -13,25 +13,27 @@
 		return options;
 	}
 	
-	$(document).on('load',function(){
-		$('select[data-linkage]').each(function(){
-			var $select = $(this);
-			var data = $select.data();
-			if(data.target) {
-				var target = $(data.target);
-				var targetData = target.data();
-				if(target && target.url) {
-					$select.on('change',function(){
-						$.get(target.url,function(res){
-							if(res.code == 0 ) {
-								target.remove().append(assembleOptions(res.data,target.val()));
-							}
-						});
-					});
-				}
+	function process(){
+		var $select = $(this);
+		var data = $select.data();
+		var name = data.name;
+		if(data.target && data.name ) {
+			var target = $(data.target).empty();
+			var targetData = target.data();
+			if(target && targetData.url && $select.val() != '') {
+				var param = {};
+				param[name] = $select.val();
+				$.getJSON(targetData.url,param,function(res){
+					if(res.code == 0 ) {
+						target.append(assembleOptions(res.data,targetData.value));
+					}
+				});
 			}
-		});
-	});
+		}
+	}
 
-	
+	$.fn.linkageSelect = function(){
+		$(document).off('change.site.linkage').on('change.site.linkage','select[data-linkage]',process);
+		$('select[data-linkage]').each(process);
+	}
 }(jQuery);
