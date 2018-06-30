@@ -2,34 +2,62 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+use yii\bootstrap\Tabs;
+use app\models\TaskType;
+
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TaskStatusSearch */
+/* @var $searchModel \app\models\TaskStatusSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '任务状态';
+$this->title = 'Task Statuses';
 $this->params['breadcrumbs'][] = $this->title;
+$taskTypes = TaskType::allIdToName('type_code');
+$items = [];
+foreach($taskTypes as $code=>$text){
+    $active = false;
+    if($searchModel->status_type == $code) {
+        $active = true;
+    }
+    $items[] = [
+        'label'=>$text,
+        'url'=>['index','TaskStatusSearch[status_type]'=>$code],
+        'active'=>$active
+    ];
+}
 ?>
 <div class="task-status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('添加任务状态', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加Task Status', ['create','type'=>$searchModel->status_type], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#task-dailog']) ?>
     </p>
-
+   <?=Tabs::widget([
+       'items'=>$items
+       
+   ]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'layout'=>'{items}',
         'columns' => [
-            [
-                'attribute'=>'sort',
-                'headerOptions'=>['width'=>'50px','class'=>'text-center'],
-                'contentOptions'=>['width'=>'50px','class'=>'text-center'],
-            ],
-            'name',
             'code',
-            'description:ntext',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            'name',
+            'status_type',
+            'intro',
+
+            [
+                'class' => '\app\components\ActionColumn',
+                'buttonsOptions'=>[
+                    'update'=>[
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#task-dailog',
+                    ],
+                    'view'=>[
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#task-dailog',
+                    ],
+                ]
+        	]
+       ]
     ]); ?>
 </div>

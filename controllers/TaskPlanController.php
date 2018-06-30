@@ -12,16 +12,17 @@ use yii\web\NotFoundHttpException;
  */
 class TaskPlanController extends BaseController
 {
-
+    
+ 
     /**
      * Lists all TaskPlan models.
      * @return mixed
      */
     public function actionIndex()
     {
+        
         $searchModel = new TaskPlanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

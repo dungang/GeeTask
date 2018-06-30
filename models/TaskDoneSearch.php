@@ -16,7 +16,7 @@ class TaskDoneSearch extends TaskDone
     public function rules()
     {
         return [
-            [['id', 'user_id', 'item_id', 'created_at'], 'integer'],
+            [['id', 'user_id', 'creator_id','item_id', 'created_at'], 'integer'],
             [['status_code', 'remark'], 'safe'],
         ];
     }
@@ -65,6 +65,7 @@ class TaskDoneSearch extends TaskDone
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'creator_id' => $this->creator_id,
             'item_id' => $this->item_id,
             'created_at' => $this->created_at,
         ]);

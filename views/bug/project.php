@@ -10,7 +10,6 @@ use app\models\ProjectVersion;
 
 $this->title = '项目BUG';
 $this->params['breadcrumbs'][] = $this->title;
-$versionLimit = 5; //每个项目的最多显示最近的5个版本
 ?>
 <div class="project-index">
 
@@ -21,14 +20,14 @@ $versionLimit = 5; //每个项目的最多显示最近的5个版本
         'columns' => [
             'name',
             [
-                'label'=>'发布版本',
+                'label'=>'项目发布版本',
                 'format'=>'raw',
-                'value'=>function($model,$key,$index,$column) use ($versionLimit) {
-                if($versions = ProjectVersion::findAllReleaseVerions(['project_id'=>$model['id']],$versionLimit)){
+                'value'=>function($model,$key,$index,$column){
+                    if($versions = ProjectVersion::findAllReleaseVerions(['project_id'=>$model['id']])){
                         return implode(" ", array_map(function($version)use($model){
                             return Html::a($version['name'],['index',
-                                'BugSearch[version_id]'=>$version['id'],
-                                'BugSearch[project_id]'=>$version['project_id'],
+                                'TaskItemSearch[project_version_id]'=>$version['id'],
+                                'TaskItemSearch[project_id]'=>$version['project_id'],
                                 'project_name'=>$model['name'],
                                 'version'=>$version['name']
                             ]);

@@ -3,6 +3,7 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * TaskItemSearch represents the model behind the search form of `app\models\TaskItem`.
@@ -62,20 +63,20 @@ class TaskItemSearch extends TaskItem
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$providerConfig=[])
     {
         $query = TaskItem::find();
         
         // add conditions that should always apply here
         
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider(ArrayHelper::merge([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'code' => SORT_DESC
+                    'id' => SORT_DESC
                 ]
             ]
-        ]);
+        ], $providerConfig));
         
         $this->load($params);
         
@@ -99,6 +100,7 @@ class TaskItemSearch extends TaskItem
             'project_id' => $this->project_id,
             'project_version_id' => $this->project_version_id,
             'code' => $this->code,
+            'task_type_code' => $this->task_type_code,
             'target_date' => $this->target_date,
             'last_user_id' => $this->last_user_id,
             'created_at' => $this->created_at,
@@ -106,11 +108,6 @@ class TaskItemSearch extends TaskItem
         ]);
         
         $query->andFilterWhere([
-            'like',
-            'task_type_code',
-            $this->task_type_code
-        ])
-            ->andFilterWhere([
             'like',
             'status_code',
             $this->status_code

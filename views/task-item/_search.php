@@ -4,6 +4,8 @@ use yii\widgets\ActiveForm;
 use app\models\TaskPlan;
 use app\models\TaskStatus;
 use app\models\User;
+use app\models\Project;
+use app\models\TaskType;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TaskItemSearch */
@@ -29,7 +31,7 @@ use app\models\User;
 		<div class="col-md-2">
     		<?= $form->field($model, 'code') ?>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-4">
     		<?= $form->field($model, 'name') ?>
 		</div>
 		<div class="col-md-2">
@@ -39,7 +41,28 @@ use app\models\User;
     		<?= $form->field($model, 'user_id')->dropDownList(User::allIdToName('id','nick_name'),['prompt'=>'请选择']) ?>
 		</div>
 		<div class="col-md-2">
-    		<?= $form->field($model, 'status_code')->dropDownList(TaskStatus::allIdToName('code'),['prompt'=>'请选择']) ?>
+    		<?= $form->field($model, 'status_code')->dropDownList($taskStatuses,['prompt'=>'请选择']) ?>
+		</div>
+		<div class="col-md-2">
+    		<?= $form->field($model, 'project_id')->dropDownList(Project::allIdToName(),[
+    		    'prompt'=>'请选择',
+    		    'data-linkage'=>'select',
+    		    'data-name'=>'project_id',
+    		    'data-target'=>'#version-in-search'
+    		]) ?>
+		</div>
+		<div class="col-md-2">
+    		<?= $form->field($model, 'project_version_id')->dropDownList([],[
+    		    'prompt'=>'请选择',
+    		    'id'=>'version-in-search',
+    		    'data-linkage'=>'select',
+    		    'data-value'=>$model->project_version_id,
+    		    'data-url'=>\Yii::$app->urlManager->createUrl(['/project-version/versions-data'])
+    		    
+    		]) ?>
+		</div>
+		<div class="col-md-2">
+    		<?= $form->field($model, 'task_type_code')->dropDownList(TaskType::allIdToName('type_code'),['prompt'=>'请选择']) ?>
 		</div>
 		<div class="col-md-2">
 			<label>&nbsp;</label>

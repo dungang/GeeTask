@@ -26,5 +26,5 @@ $this->params['breadcrumbs'][] = '更新';
 <?= Html::encode($this->title) ?>
 </div>
 <div class="modal-body">
-    <?=$this->render('_form', ['model' => $model])?>
+    <?=$this->render('_form', ['model' => $model,'content'=>$content,'taskStatuses'=>$taskStatuses])?>
 </div>

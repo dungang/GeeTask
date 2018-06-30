@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\TaskType;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TaskStatus */
@@ -16,7 +17,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'status_type')->dropDownList(TaskType::allIdToName('type_code'), ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'intro')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'sort')->textInput() ?>
 

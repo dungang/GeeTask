@@ -7,8 +7,9 @@ namespace app\models;
  * This is the model class for table "task_done".
  *
  * @property int $id
- * @property int $user_id 处理用户
- * @property int $plan_id 计划 
+ * @property int $user_id 负责人
+ * @property int $creator_id 创建人
+ * @property int $plan_id 计划
  * @property int $item_id 任务项
  * @property string $status_code 变更任务状态
  * @property string $remark 备注
@@ -31,7 +32,7 @@ class TaskDone extends BaseModel
     public function rules()
     {
         return [
-            [['user_id', 'plan_id', 'item_id', 'status_code','remark'], 'required'],
+            [['user_id','creator_id', 'plan_id', 'item_id', 'status_code','remark'], 'required'],
             [['user_id', 'plan_id', 'item_id', 'created_at'], 'integer'],
             [['remark'], 'string'],
             [['status_code'], 'string', 'max' => 32]
@@ -45,8 +46,9 @@ class TaskDone extends BaseModel
     {
         return [
             'id' => 'ID',
-            'user_id' => '处理用户',
-            'plan_id' => '计划', 
+            'user_id' => '负责人',
+            'creator_id' => '创建人',
+            'plan_id' => '计划',
             'item_id' => '任务项',
             'status_code' => '变更任务状态',
             'remark' => '备注',
