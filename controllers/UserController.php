@@ -5,7 +5,7 @@ use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use yii\web\NotFoundHttpException;
-use app\models\UserForm;
+use app\forms\UserForm;
 use yii\helpers\ArrayHelper;
 use app\models\AuthAssignment;
 use yii\db\Query;

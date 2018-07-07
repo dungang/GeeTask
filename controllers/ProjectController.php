@@ -1,13 +1,5 @@
 <?php
-
 namespace app\controllers;
-
-use Yii;
-use app\models\Project;
-use app\models\ProjectSearch;
-use yii\web\NotFoundHttpException;
-use app\models\ProjectVersion;
-use yii\data\ArrayDataProvider;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -15,122 +7,348 @@ use yii\data\ArrayDataProvider;
 class ProjectController extends BaseController
 {
 
-    /**
-     * Lists all Project models.
-     * @return mixed
-     */
-    public function actionIndex()
+    public function actions()
     {
-        $searchModel = new ProjectSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Project model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        //发布版本
-        $releaseVersions = [];
-        //项目版本
-        $projectVersions = [];
+        return [
+            'desktop' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Project'
+                ]
+            ],
+            'index' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\ProjectSearch'
+                ]
+            ],
+            'create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Project'
+                ]
+            ],
+            'update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Project'
+                ]
+            ],
+            'view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Project'
+                ]
+            ],
+            'delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\Project'
+                ]
+            ],
+            // >>>Product Backlog start
+            'product-backlog' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStorySearch',
+                    'category' => 'ProductBacklog'
+                ]
+            ],
+            // <<< Product Backlog end
+            // >>>新鲜故事开始
+            'fresh-story' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStorySearch'
+                ]
+            ],
+            'userstory-batch-create'=>[
+                'class' => 'app\actions\BatchCreateAction',
+                'formName'=>'UserStory',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory'
+                ]
+            ],
+            'userstory-batch-update'=>[
+                'class' => 'app\actions\BatchUpdateAction',
+                'formName'=>'UserStory',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory'
+                ]
+            ],
+            'story-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => 'app\models\Story'
+            ],
+            'story-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => 'app\models\Story'
+            ],
+            'story-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => 'app\models\Story'
+            ],
+            'story-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => 'app\models\Story'
+            ],
+            
+            'bug-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Bug'
+                ]
+            ],
+            'bug-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Bug'
+                ]
+            ],
+            'bug-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Bug'
+                ]
+            ],
+            'bug-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\Bug'
+                ]
+            ],
+            
+            'spike-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Spike'
+                ]
+            ],
+            'spike-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Spike'
+                ]
+            ],
+            'spike-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Spike'
+                ]
+            ],
+            'spike-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\Spike'
+                ]
+            ],
+            // <<<新鲜故事结束
+            
+            // >>>任务开始
+            'task' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\TaskSearch'
+                ]
+            ],
+            // <<<任务结束
+            // >>>迭代开始
+            'sprint' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\SprintSearch'
+                ]
+            ],
+            'sprint-kanban' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Sprint'
+                ]
+            ],
+            'sprint-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Sprint'
+                ]
+            ],
+            'sprint-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Sprint'
+                ]
+            ],
+            'sprint-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Sprint'
+                ]
+            ],
+            'sprint-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\Sprint'
+                ]
+            ],
+            // <<<迭代结束
+            // >>>发布开始
+            'release' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\ReleaseSearch'
+                ]
+            ],
+            // <<<发布结束
+            // >>>团队开始
+            'team' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\TeamSearch'
+                ]
+            ],
+            // <<<团队结束
+            // >>>虚拟用户
+            'virtual-user' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\VirtualUserSearch'
+                ]
+            ],
+            'virtual-user-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\VirtualUser'
+                ]
+            ],
+            'virtual-user-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\VirtualUser'
+                ]
+            ],
+            'virtual-user-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\VirtualUser'
+                ]
+            ],
+            'virtual-user-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\VirtualUser'
+                ]
+            ],
+            // <<<虚拟用户
+            // >>>活动骨架
+            'epic-feature' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStoryMappingActivitySearch'
+                ]
+            ],
+            'epic-feature-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStoryMappingActivity'
+                ]
+            ],
+            'epic-feature-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStoryMappingActivity'
+                ]
+            ],
+            'epic-feature-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStoryMappingActivity'
+                ]
+            ],
+            'epic-feature-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStoryMappingActivity'
+                ]
+            ],
+            // <<<活动骨架
+            // >>>头脑风暴
+            'brain-storm' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStormSearch'
+                ]
+            ],
+            'brain-storm-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm'
+                ]
+            ],
+            'brain-storm-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm'
+                ]
+            ],
+            'brain-storm-wall' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm'
+                ]
+            ],
+            'brain-storm-update' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm'
+                ]
+            ],
+            'brain-storm-close' => [
+                'class' => 'app\actions\UpdateAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm',
+                    'status'=>'close',
+                    'scenario'=>'Close'
+                ]
+            ],
+            'brain-storm-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\BrainStorm'
+                ]
+            ],
+            'brain-idea' => [
+                'class' => 'app\actions\ListAction',
+                'modelClass' => [
+                    'class' => 'app\models\IdeaSearch'
+                ]
+            ],
+            'brain-idea-create' => [
+                'class' => 'app\actions\CreateAction',
+                'modelClass' => [
+                    'class' => 'app\models\Idea'
+                ]
+            ],
+            
+            'brain-idea-fetch' => [
+                'class' => 'app\actions\LongPollAction',
+                'longPollingHandlerClass' => 'app\components\UserStoryWallLongPollHandler'
+            ],
+            'brain-idea-view' => [
+                'class' => 'app\actions\ViewAction',
+                'modelClass' => [
+                    'class' => 'app\models\Idea'
+                ]
+            ],
+            'brain-idea-delete' => [
+                'class' => 'app\actions\DeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\Idea'
+                ]
+            ],
+            'brain-idea-convert' => [
+                'class' => 'app\actions\idea\ConvertAction',
+            ],
+            // <<<头脑风暴
         
-        if($versions = ProjectVersion::findAll(['project_id'=>$id])) {
-            foreach ($versions as $version) {
-                if($version->is_release == 0) {
-                    array_push($projectVersions, $version);
-                } else {
-                    array_push($releaseVersions, $version);
-                }
-            }
-        }
-        
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'releaseVersionProvider'=>new ArrayDataProvider([
-                'allModels'=>$releaseVersions,
-                'pagination'=>false,
-            ]),
-            'projectVersionProvider'=>new ArrayDataProvider([
-                'allModels'=>$projectVersions,
-                'pagination'=>false,
-            ]),
-        ]);
-    }
-
-    /**
-     * Creates a new Project model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Project();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Project model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Project model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Project model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Project the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Project::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        ];
     }
 }

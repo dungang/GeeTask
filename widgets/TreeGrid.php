@@ -38,7 +38,7 @@ class TreeGrid extends Widget
      * @var array the HTML attributes for the container tag of the grid view.
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
-    public $options = ['class' => 'table table-striped table-bordered'];
+    public $options = ['class' => 'table table-hover table-bordered'];
     
     /**
      * @var array The plugin options
@@ -129,12 +129,12 @@ class TreeGrid extends Widget
     /**
      * @var string name of key column used to build tree
      */
-    public $keyColumnName;
+    public $keyColumnName = 'id';
     
     /**
      * @var string name of parent column used to build tree
      */
-    public $parentColumnName;
+    public $parentColumnName = 'pid';
     
     /**
      * @var mixed parent column value of root elements from data

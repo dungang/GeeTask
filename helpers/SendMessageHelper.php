@@ -1,8 +1,6 @@
 <?php
 namespace app\helpers;
 
-use app\models\TaskPlan;
-use app\models\Team;
 use app\models\ImRobot;
 
 class SendMessageHelper
@@ -17,30 +15,30 @@ class SendMessageHelper
      */
     public static function sendMailerToTeamByPlanId($plan_id, $subject, $content)
     {
-        if ($plan = TaskPlan::findOne([
-            'id' => $plan_id
-        ])) {
-            if ($team = Team::findOne([
-                'id' => $plan->team_id
-            ])) {
-                if ($users = $team->getChildren()->all()) {
-                    $recievers = [];
-                    foreach ($users as $user) {
-                        $recievers[$user->email] = $user->nick_name;
-                    }
-                    if (count($recievers) > 0) {
-                        \Yii::$app->mailer->compose()
-                            ->setFrom([
-                            '项目进度表扬通知' => 'noreply@ndabooking.com'
-                        ])
-                            ->setTo($recievers)
-                            ->setSubject($subject)
-                            ->setHtmlBody($content)
-                            ->send();
-                    }
-                }
-            }
-        }
+//         if ($plan = TaskPlan::findOne([
+//             'id' => $plan_id
+//         ])) {
+//             if ($team = Team::findOne([
+//                 'id' => $plan->team_id
+//             ])) {
+//                 if ($users = $team->getChildren()->all()) {
+//                     $recievers = [];
+//                     foreach ($users as $user) {
+//                         $recievers[$user->email] = $user->nick_name;
+//                     }
+//                     if (count($recievers) > 0) {
+//                         \Yii::$app->mailer->compose()
+//                             ->setFrom([
+//                             '项目进度表扬通知' => 'noreply@ndabooking.com'
+//                         ])
+//                             ->setTo($recievers)
+//                             ->setSubject($subject)
+//                             ->setHtmlBody($content)
+//                             ->send();
+//                     }
+//                 }
+//             }
+//         }
     }
 
     /**
@@ -51,39 +49,39 @@ class SendMessageHelper
      */
     public static function sendDingMsgToTeamByPlanId($plan_id, $title, $content)
     {
-        if ($plan = TaskPlan::findOne([
-            'id' => $plan_id
-        ])) {
-            if ($team = Team::findOne([
-                'id' => $plan->team_id
-            ])) {
-                if (($users = $team->getChildren()->all()) !== null) {
+//         if ($plan = TaskPlan::findOne([
+//             'id' => $plan_id
+//         ])) {
+//             if ($team = Team::findOne([
+//                 'id' => $plan->team_id
+//             ])) {
+//                 if (($users = $team->getChildren()->all()) !== null) {
                     
-                    $recievers = [];
-                    foreach ($users as $user) {
-                        if (! empty($user->mobile))
-                            $recievers[] = $user->mobile;
-                    }
-                    if (! empty($team->im_robot_id)) {
-                        $robot = ImRobot::findOne([
-                            'id' => $team->im_robot_id
-                        ]);
-                        if (count($recievers) > 0 && empty($robot->webhook)==false) {
-                            /*@var $robotObj \app\components\Robot */
-                            $robotObj = \Yii::createObject([
-                                'class' => $robot->code_full_class,
-                                'webhook' => $robot->webhook
-                            ]);
-                            $msg = [];
-                            $msg[] = "> **团队**: " . $team->name;
-                            $msg[] = "> **计划**: " . $plan->name;
-                            $content = implode("\n\n", $msg) . "\n\n" . $content;
-                            $robotObj->sendMessage($title, $content, $recievers);
-                        }
-                    }
-                }
-            }
-        }
+//                     $recievers = [];
+//                     foreach ($users as $user) {
+//                         if (! empty($user->mobile))
+//                             $recievers[] = $user->mobile;
+//                     }
+//                     if (! empty($team->im_robot_id)) {
+//                         $robot = ImRobot::findOne([
+//                             'id' => $team->im_robot_id
+//                         ]);
+//                         if (count($recievers) > 0 && empty($robot->webhook)==false) {
+//                             /*@var $robotObj \app\components\Robot */
+//                             $robotObj = \Yii::createObject([
+//                                 'class' => $robot->code_full_class,
+//                                 'webhook' => $robot->webhook
+//                             ]);
+//                             $msg = [];
+//                             $msg[] = "> **团队**: " . $team->name;
+//                             $msg[] = "> **计划**: " . $plan->name;
+//                             $content = implode("\n\n", $msg) . "\n\n" . $content;
+//                             $robotObj->sendMessage($title, $content, $recievers);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
     }
 
     /**

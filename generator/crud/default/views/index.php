@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 
     <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('添加 ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#task-dailog']) ?>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('添加 ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
     </p>
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
@@ -43,6 +43,18 @@ $count = 0;
 if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($generator->getColumnNames() as $name) {
         if (++$count < 6) {
+            if($count == 1){
+                echo <<<AAA
+            [
+                'attribute' => '$name',
+                'format'=>'raw',
+                'value'=>function(\$model,\$key,\$index,\$column){
+                    return Html::a(\$model['$name'],['view','id'=>\$model['$name']],['data-toggle'=>'modal','data-target'=>'#modal-dailog']);
+                }
+        	],\n
+AAA;
+     
+            } else 
             echo "            '" . $name . "',\n";
         } else {
             echo "            //'" . $name . "',\n";
@@ -52,6 +64,18 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($tableSchema->columns as $column) {
         $format = $generator->generateColumnFormat($column);
         if (++$count < 6) {
+            if($count == 1){
+                echo <<<AAA
+            [
+                'attribute' => '$column->name',
+                'format'=>'raw',
+                'value'=>function(\$model,\$key,\$index,\$column){
+                    return Html::a(\$model['$column->name'],['view','id'=>\$model['$column->name']],['data-toggle'=>'modal','data-target'=>'#modal-dailog']);
+                }
+        	],\n
+AAA;
+                
+            } else 
             echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         } else {
             echo "            //'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
@@ -65,11 +89,11 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 'buttonsOptions'=>[
                     'update'=>[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-dailog',
+                        'data-target'=>'#modal-dailog',
                     ],
                     'view'=>[
                         'data-toggle'=>'modal',
-                        'data-target'=>'#task-dailog',
+                        'data-target'=>'#modal-dailog',
                     ],
                 ]
         	]
@@ -80,7 +104,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model-><?= $nameAttribute ?>), ['view', <?= $urlParams ?>]);
+            return Html::a(Html::encode($model-><?= $nameAttribute ?>), ['view', <?= $urlParams ?>],[
+                'data-toggle'=>'modal',
+                'data-target'=>'#modal-dailog',
+            ]);
         },
     ]) ?>
 <?php endif; ?>

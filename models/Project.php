@@ -2,24 +2,27 @@
 
 namespace app\models;
 
+use Yii;
 
 /**
- * This is the model class for table "project".
+ * This is the model class for table "gt_project".
  *
  * @property int $id
  * @property string $name 名称
  * @property string $intro 介绍
  * @property int $created_at 添加时间
- * @property string $updated_at 更新时间
+ * @property int $updated_at 更新时间
+ * @property int $is_achived 归档
+ * @property int $is_del
  */
-class Project extends BaseModel
+class Project extends \app\models\BaseModel
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'project';
+        return 'gt_project';
     }
 
     /**
@@ -28,11 +31,10 @@ class Project extends BaseModel
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [[ 'created_at'], 'integer'],
+            [['name', 'intro'], 'required'],
             [['intro'], 'string'],
+            [['created_at', 'updated_at', 'is_achived', 'is_del'], 'integer'],
             [['name'], 'string', 'max' => 64],
-            [['updated_at'], 'string', 'max' => 45],
         ];
     }
 
@@ -47,6 +49,8 @@ class Project extends BaseModel
             'intro' => '介绍',
             'created_at' => '添加时间',
             'updated_at' => '更新时间',
+            'is_achived' => '归档',
+            'is_del' => 'Is Del',
         ];
     }
 

@@ -3,7 +3,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Response;
-use app\models\LoginForm;
+use app\forms\LoginForm;
 
 class SiteController extends BaseController
 {
@@ -45,7 +45,7 @@ class SiteController extends BaseController
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null
-            ]
+            ],
         ];
     }
 
@@ -57,7 +57,7 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         return $this->redirect([
-            '/task-item'
+        '/task-item'
         ]);
     }
 

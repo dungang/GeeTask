@@ -57,6 +57,7 @@ $config = [
             'timeFormat' => 'HH:mm:ss'
         ],
         'assetManager' => [
+            'appendTimestamp'=>true,
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'baseUrl' => '@web/css/',
@@ -106,7 +107,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         'generators'=>[
             'crud'=> [
-                'class' => 'yii\gii\generators\crud\Generator',
+                'class' => 'app\generator\crud\GtGenerator',
                 'templates'=>[
                     'geetask'=>dirname(dirname(__FILE__)) . '/generator/crud/default'
                 ],

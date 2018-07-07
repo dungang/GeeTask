@@ -2,23 +2,25 @@
 
 namespace app\models;
 
+use Yii;
+use yii\helpers\ArrayHelper;
+use yii\db\Query;
+
 /**
- * This is the model class for table "team".
+ * This is the model class for table "gt_team".
  *
- * @property int $id
- * @property string $name 名称
- * @property int $project_id 项目 
- * @property int $im_robot_id IM机器人
- * @property int $created_at
+ * @property int $project_id 项目
+ * @property int $user_id 成员
+ * @property string $role 角色
  */
-class Team extends BaseModel
+class Team extends \app\models\BaseModel
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'team';
+        return 'gt_team';
     }
 
     /**
@@ -27,9 +29,10 @@ class Team extends BaseModel
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['project_id', 'im_robot_id', 'created_at'], 'integer'],
-            [['name'], 'string', 'max' => 64],  
+            [['project_id', 'user_id'], 'required'],
+            [['project_id', 'user_id'], 'integer'],
+            [['role'], 'string'],
+            [['project_id', 'user_id'], 'unique', 'targetAttribute' => ['project_id', 'user_id']],
         ];
     }
 
@@ -39,11 +42,9 @@ class Team extends BaseModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => '名称',
             'project_id' => '项目',
-            'im_robot_id' => 'IM机器人',
-            'created_at' => '添加日期',
+            'user_id' => '成员',
+            'role' => '角色',
         ];
     }
 
@@ -56,19 +57,13 @@ class Team extends BaseModel
         return new TeamQuery(get_called_class());
     }
     
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getChildren()
+    public static function allIdToName($key = 'id', $val = 'nick_name')
     {
-        return $this->hasMany(User::className(), [
-            'id' => 'user_id'
-        ])->viaTable(TeamUser::tableName(), [
-            'team_id' => 'id'
-        ]);
+        $models = (new Query())->from(['u'=>User::tableName()])->leftJoin(['t'=>self::tableName()],'user_id=u.id')->where('user_id=u.id or u.is_admin=1')->all();
+        //$models = self::find()->select("$key,$val")->leftJoin(['u'=>User::tableName()],'user_id=u.id or u.is_admin=1')->where($where)->orderBy($orderBy)->asArray()->all();
+        if (is_array($models)) {
+            return ArrayHelper::map($models, $key, $val);
+        }
+        return $models;
     }
-    
-    
-    
 }

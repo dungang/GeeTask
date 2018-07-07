@@ -6,16 +6,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
 
-$this->title = '添加项目';
-$this->params['breadcrumbs'][] = ['label' => '项目', 'url' => ['index']];
+$this->title = '添加Project';
+$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="project-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-hidden="true">&times;</button>
+		<strong><?= Html::encode($this->title) ?></strong>
+</div>
+<div class="modal-body">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

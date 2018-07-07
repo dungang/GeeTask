@@ -63,106 +63,42 @@ AppAsset::register($this);
                 ]
             ],
             [
-                'label' => '计划',
+                'label' => '项目',
                 'url' => [
-                    '/task-plan/index'
+                    '/project/index'
                 ]
             ],
             [
-                'label' => 'BUG',
+                'label' => '迭代',
                 'url' => [
-                    '/bug/project'
+                    '/sprint/index'
                 ]
             ],
             [
-                'label' => '测试用例',
+                'label' => '虚拟用户',
                 'url' => [
-                    '/test-case/project'
+                    '/virtual-user/index'
                 ]
             ],
             [
-                'label' => '阿里云日志',
-                'url' => [
-                    '/aliyun-log-project/index'
-                ]
-            ],
-            [
-                'label' => '会议',
-                'url' => [
-                    '/meet/index'
-                ]
-            ],
-            [
-                'label' => '文档',
+                'label' => '工具',
                 'items' => [
                     [
-                        'label' => '需求文档',
+                        'label' => '阿里云日志',
                         'url' => [
-                            '/requirement/project'
+                            '/aliyun-log-project/index'
                         ]
                     ],
                     [
-                        'label' => '数据库变更',
+                        'label' => '会议',
                         'url' => [
-                            '/db-name/index'
-                        ]
-                    ]
-                ]
-            ],
-            [
-                'label' => '项目管理',
-                'items' => [
-                    [
-                        'label' => '项目',
-                        'url' => [
-                            '/project/index'
+                            '/meet/index'
                         ]
                     ],
-                    [
-                        'label' => '项目版本',
-                        'url' => [
-                            '/project-version/project-versions'
-                        ]
-                    ],
-                    [
-                        'label' => '项目发布版本',
-                        'url' => [
-                            '/project-version/release-versions'
-                        ]
-                    ],
-                    [
-                        'label' => '团队',
-                        'url' => [
-                            '/team/index'
-                        ]
-                    ],
-                    [
-                        'label' => '任务类型',
-                        'url' => [
-                            '/task-type/index'
-                        ]
-                    ],
-                    [
-                        'label' => '任务状态',
-                        'url' => [
-                            '/task-status/index'
-                        ]
-                    ],
-                    [
-                        'label' => 'IM机器人',
-                        'url' => [
-                            '/im-robot/index'
-                        ]
-                    ]
-                ]
-            ],
-            [
-                'label' => '知识',
-                'items' => [
                     [
                         'label' => '知识库',
                         'url' => [
-                            '/knowledge'
+                            '/knowledge/index'
                         ]
                     ],
                     [
@@ -170,9 +106,10 @@ AppAsset::register($this);
                         'url' => [
                             '/knowledge-category'
                         ]
-                    ]
+                    ],
                 ]
             ],
+            
             [
                 'label' => '统计',
                 'items' => [
@@ -252,6 +189,12 @@ AppAsset::register($this);
                         'url' => [
                             '/auth-rule'
                         ]
+                    ],
+                    [
+                        'label' => 'IM机器人',
+                        'url' => [
+                            '/im-robot/index'
+                        ]
                     ]
                 ]
             ],
@@ -295,7 +238,7 @@ AppAsset::register($this);
                 'size' => 'modal-lg',
                 'header' => '对话框',
                 'options' => [
-                    'id' => 'task-dailog'
+                    'id' => 'modal-dailog'
                 ]
             ]);
             echo "没有记录";

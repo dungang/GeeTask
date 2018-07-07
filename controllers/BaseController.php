@@ -41,7 +41,7 @@ abstract class BaseController extends Controller
         return $defaultBehaviors;
     }
 
-    public function render($view,$params) {
+    public function render($view,$params=[]) {
         if(\Yii::$app->request->isAjax) {
             return parent::renderAjax($view,$params);
         }

@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use app\models\Project;
 
 /**
  * ProjectSearch represents the model behind the search form of `app\models\Project`.
@@ -16,8 +18,8 @@ class ProjectSearch extends Project
     public function rules()
     {
         return [
-            [['id','created_at'], 'integer'],
-            [['name', 'intro', 'updated_at'], 'safe'],
+            [['id', 'created_at', 'updated_at', 'is_achived', 'is_del'], 'integer'],
+            [['name', 'intro'], 'safe'],
         ];
     }
 
@@ -59,11 +61,13 @@ class ProjectSearch extends Project
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'is_achived' => $this->is_achived,
+            'is_del' => $this->is_del,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'intro', $this->intro])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'intro', $this->intro]);
 
         return $dataProvider;
     }
