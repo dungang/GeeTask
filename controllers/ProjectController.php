@@ -76,6 +76,12 @@ class ProjectController extends BaseController
                     'class' => 'app\models\UserStory'
                 ]
             ],
+            'userstory-batch-delete'=>[
+                'class' => 'app\actions\BatchDeleteAction',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory'
+                ]
+            ],
             'story-create' => [
                 'class' => 'app\actions\CreateAction',
                 'modelClass' => 'app\models\Story'

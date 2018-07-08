@@ -46,6 +46,11 @@ class UserStorySearch extends UserStory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder'=>[
+                    'priority'=>SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);

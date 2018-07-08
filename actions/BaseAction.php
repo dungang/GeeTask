@@ -98,7 +98,7 @@ abstract class BaseAction extends Action
 
     protected function findModels($ids)
     {
-        $model = null;
+        $models = null;
         if ($this->modelClass) {
             if (is_string($this->modelClass)) {
                 $models = call_user_func(array(

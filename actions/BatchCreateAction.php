@@ -2,6 +2,7 @@
 namespace app\actions;
 use Yii;
 use yii\base\Model;
+
 class BatchCreateAction extends BaseAction
 {
     public $formName;
@@ -19,7 +20,7 @@ class BatchCreateAction extends BaseAction
             $models[] =$models;
         }
         
-        if (Model::loadMultiple($models, Yii::$app->request->post()) && Model::validateMultiple($models)) {
+        if (($loaded = Model::loadMultiple($models, Yii::$app->request->post())) && Model::validateMultiple($models)) {
             Yii::$app->db->transaction(function($db) use ($models) {
                 foreach ($models as $model) {
                     $model->save(false);

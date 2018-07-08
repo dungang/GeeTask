@@ -6,6 +6,7 @@ use app\models\VirtualUser;
 use app\models\User;
 use yii\grid\CheckboxColumn;
 use app\widgets\BatchLoad;
+use app\widgets\BatchDelete;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -34,8 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo  Html::a('添加 Story', ['story-create','Story[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
         <?php echo  Html::a('添加 BUG', ['bug-create','Bug[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
         <?php echo  Html::a('添加 Spike', ['spike-create','Spike[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
+
         <?php echo  Html::a('批量添加', ['userstory-batch-create','UserStory[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
         <?php echo  Html::a('批量修改', ['userstory-batch-update','UserStory[project_id]'=>$project->id], ['id'=>'batch-update','class' => 'btn btn-success','data-target'=>'#modal-dailog']) ?>
+        <?php echo  Html::a('批量删除', ['userstory-batch-delete','UserStory[project_id]'=>$project->id], ['id'=>'batch-delete','class' => 'btn btn-danger']) ?>
+    
     </p>
 
     <?php
@@ -129,9 +133,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ]
-    ]);
+        ]);
     BatchLoad::widget([
         'id'=>'batch-update',
+    ]);
+    BatchDelete::widget([
+        'id'=>'batch-delete',
     ]);
     ?>
 </div>

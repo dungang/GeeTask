@@ -30,7 +30,8 @@
 		"kartik-v/yii2-editable" : "*",
 		"kartik-v/yii2-nav-x" : "*",
 		"kartik-v/yii2-widget-select2" : "*",
-		"kartik-v/yii2-widget-datepicker" : "^1.4@dev"
+		"kartik-v/yii2-widget-datepicker" : "^1.4@dev",
+		"wbraganca/yii2-dynamicform": "^2.0"
 	},
 	"require-dev" : {
 		"yiisoft/yii2-debug" : "~2.0.0",
