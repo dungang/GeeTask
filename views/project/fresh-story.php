@@ -5,8 +5,7 @@ use app\models\Project;
 use app\models\VirtualUser;
 use app\models\User;
 use yii\grid\CheckboxColumn;
-use app\widgets\BatchLoad;
-use app\widgets\BatchDelete;
+use app\widgets\BatchProcess;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -37,20 +36,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo  Html::a('添加 Spike', ['spike-create','Spike[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
 
         <?php echo  Html::a('批量添加', ['userstory-batch-create','UserStory[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
-        <?php echo  Html::a('批量修改', ['userstory-batch-update','UserStory[project_id]'=>$project->id], ['id'=>'batch-update','class' => 'btn btn-success','data-target'=>'#modal-dailog']) ?>
-        <?php echo  Html::a('批量删除', ['userstory-batch-delete','UserStory[project_id]'=>$project->id], ['id'=>'batch-delete','class' => 'btn btn-danger']) ?>
+        <?php echo  Html::a('批量修改', ['userstory-batch-update','UserStory[project_id]'=>$project->id], ['id'=>'batch-update','class' => 'batch-process btn btn-success','data-target'=>'#modal-dailog']) ?>
+        <?php echo  Html::a('批量删除', ['userstory-batch-delete','UserStory[project_id]'=>$project->id], ['id'=>'batch-delete','class' => 'batch-process btn btn-danger']) ?>
+        <?php echo  Html::a('批量转 Product Backlog', ['userstory-batch-convert','UserStory[project_id]'=>$project->id], ['id'=>'batch-convert','class' => 'batch-process btn btn-danger','data-param'=>'{"UserStory[category]":"ProductBacklog"}']) ?>
     
     </p>
 
     <?php
-    
+
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class'=>CheckboxColumn::className(),
-                'name'=>'id'
+                'class' => CheckboxColumn::className(),
+                'name' => 'id'
             ],
             [
                 'attribute' => 'id',
@@ -133,12 +133,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ]
-        ]);
-    BatchLoad::widget([
-        'id'=>'batch-update',
     ]);
-    BatchDelete::widget([
-        'id'=>'batch-delete',
+    // BatchLoad::widget([
+    // 'id'=>'batch-update',
+    // ]);
+    BatchProcess::widget([
+        'id' => 'batch-update',
+        'clientOptions' => [
+            'mode' => 'modal',
+            'needConfirm' => false
+        ]
+    ]);
+    BatchProcess::widget([
+        'id' => 'batch-delete',
+        'clientOptions' => [
+            'mode' => 'delete'
+        ]
+    ]);
+    BatchProcess::widget([
+        'id' => 'batch-convert',
+        'clientOptions' => [
+            'mode' => 'quiet',
+            'confirm'=>'确定转到Product Backlog中？'
+        ]
     ]);
     ?>
 </div>

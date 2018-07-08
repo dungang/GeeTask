@@ -4,6 +4,8 @@ use yii\grid\GridView;
 use app\models\Project;
 use app\models\VirtualUser;
 use app\models\User;
+use yii\grid\CheckboxColumn;
+use app\widgets\BatchProcess;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,13 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= $this->render('desktop-menu',['project'=>$project])?>
 	</div>
 	<div class="col-md-10">
-
+		<p>
+		<?php echo  Html::a('批量转 Sprint Backlog', ['userstory-batch-convert','UserStory[project_id]'=>$project->id], ['id'=>'batch-convert','class' => 'batch-process btn btn-danger','data-param'=>'{"UserStory[category]":"SprintBacklog"}']) ?>
+    </p>
     <?php
-    
+
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            [
+                'class' => CheckboxColumn::className(),
+                'name' => 'id'
+            ],
             [
                 'attribute' => 'id',
                 'headerOptions' => [
@@ -55,12 +63,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '作为用户',
                 'attribute' => 'virtual_user_id',
-                'filter' => VirtualUser::allIdToName('id','name',['project_id'=>$project->id]),
+                'filter' => VirtualUser::allIdToName('id', 'name', [
+                    'project_id' => $project->id
+                ]),
                 'headerOptions' => [
                     'width' => '100px'
                 ],
                 'content' => function ($model, $key, $index, $column) {
-                    return $column->filter[$key];
+                    return $column->filter[$model->virtual_user_id];
                 }
             ],
             [
@@ -102,6 +112,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]
             ]
+        ]
+    ]);
+    
+    BatchProcess::widget([
+        'id' => 'batch-convert',
+        'clientOptions' => [
+            'mode' => 'quiet',
+            'confirm'=>'确定转到Sprint Backlog中？'
         ]
     ]);
     ?>

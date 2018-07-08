@@ -69,18 +69,6 @@ AppAsset::register($this);
                 ]
             ],
             [
-                'label' => '迭代',
-                'url' => [
-                    '/sprint/index'
-                ]
-            ],
-            [
-                'label' => '虚拟用户',
-                'url' => [
-                    '/virtual-user/index'
-                ]
-            ],
-            [
                 'label' => '工具',
                 'items' => [
                     [

@@ -59,7 +59,8 @@ class ProjectController extends BaseController
             'fresh-story' => [
                 'class' => 'app\actions\ListAction',
                 'modelClass' => [
-                    'class' => 'app\models\UserStorySearch'
+                    'class' => 'app\models\UserStorySearch',
+                    'category'=>'NoPlan',
                 ]
             ],
             'userstory-batch-create'=>[
@@ -72,6 +73,12 @@ class ProjectController extends BaseController
             'userstory-batch-update'=>[
                 'class' => 'app\actions\BatchUpdateAction',
                 'formName'=>'UserStory',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory'
+                ]
+            ],
+            'userstory-batch-convert'=>[
+                'class' => 'app\actions\BatchUpdateSameAction',
                 'modelClass' => [
                     'class' => 'app\models\UserStory'
                 ]
