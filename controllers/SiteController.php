@@ -56,9 +56,10 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->redirect([
-        '/task-item'
-        ]);
+//         return $this->redirect([
+//         '/task-item'
+//         ]);
+        return $this->render("index");
     }
 
     /**

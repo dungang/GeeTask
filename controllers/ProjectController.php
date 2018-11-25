@@ -54,36 +54,52 @@ class ProjectController extends BaseController
                     'category' => 'ProductBacklog'
                 ]
             ],
+            'product-backlog-update' => [
+                'class' => 'app\actions\BatchUpdateAction',
+                'formName' => 'UserStory',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory',
+                    'category' => 'ProductBacklog'
+                ]
+            ],
+            'product-backlog-break' => [
+                'class' => 'app\actions\BatchCreateAction',
+                'formName' => 'UserStory',
+                'modelClass' => [
+                    'class' => 'app\models\UserStory',
+                    'category' => 'ProductBacklog'
+                ]
+            ],
             // <<< Product Backlog end
             // >>>新鲜故事开始
             'fresh-story' => [
                 'class' => 'app\actions\ListAction',
                 'modelClass' => [
                     'class' => 'app\models\UserStorySearch',
-                    'category'=>'NoPlan',
+                    'category' => 'NoPlan'
                 ]
             ],
-            'userstory-batch-create'=>[
+            'userstory-batch-create' => [
                 'class' => 'app\actions\BatchCreateAction',
-                'formName'=>'UserStory',
+                'formName' => 'UserStory',
                 'modelClass' => [
                     'class' => 'app\models\UserStory'
                 ]
             ],
-            'userstory-batch-update'=>[
+            'userstory-batch-update' => [
                 'class' => 'app\actions\BatchUpdateAction',
-                'formName'=>'UserStory',
+                'formName' => 'UserStory',
                 'modelClass' => [
                     'class' => 'app\models\UserStory'
                 ]
             ],
-            'userstory-batch-convert'=>[
+            'userstory-batch-convert' => [
                 'class' => 'app\actions\BatchUpdateSameAction',
                 'modelClass' => [
                     'class' => 'app\models\UserStory'
                 ]
             ],
-            'userstory-batch-delete'=>[
+            'userstory-batch-delete' => [
                 'class' => 'app\actions\BatchDeleteAction',
                 'modelClass' => [
                     'class' => 'app\models\UserStory'
@@ -105,7 +121,7 @@ class ProjectController extends BaseController
                 'class' => 'app\actions\DeleteAction',
                 'modelClass' => 'app\models\Story'
             ],
-            
+
             'bug-create' => [
                 'class' => 'app\actions\CreateAction',
                 'modelClass' => [
@@ -130,7 +146,7 @@ class ProjectController extends BaseController
                     'class' => 'app\models\Bug'
                 ]
             ],
-            
+
             'spike-create' => [
                 'class' => 'app\actions\CreateAction',
                 'modelClass' => [
@@ -156,7 +172,7 @@ class ProjectController extends BaseController
                 ]
             ],
             // <<<新鲜故事结束
-            
+
             // >>>任务开始
             'task' => [
                 'class' => 'app\actions\ListAction',
@@ -318,8 +334,8 @@ class ProjectController extends BaseController
                 'class' => 'app\actions\UpdateAction',
                 'modelClass' => [
                     'class' => 'app\models\BrainStorm',
-                    'status'=>'close',
-                    'scenario'=>'Close'
+                    'status' => 'close',
+                    'scenario' => 'Close'
                 ]
             ],
             'brain-storm-delete' => [
@@ -340,7 +356,7 @@ class ProjectController extends BaseController
                     'class' => 'app\models\Idea'
                 ]
             ],
-            
+
             'brain-idea-fetch' => [
                 'class' => 'app\actions\LongPollAction',
                 'longPollingHandlerClass' => 'app\components\UserStoryWallLongPollHandler'
@@ -358,10 +374,9 @@ class ProjectController extends BaseController
                 ]
             ],
             'brain-idea-convert' => [
-                'class' => 'app\actions\idea\ConvertAction',
-            ],
+                'class' => 'app\actions\idea\ConvertAction'
+            ]
             // <<<头脑风暴
-        
         ];
     }
 }

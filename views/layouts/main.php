@@ -24,6 +24,114 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <style type="text/css">
+/* Author：mingyuhisoft@163.com
+ * Github:https://github.com/imingyu/jquery.mloading
+ * Npm:npm install jquery.mloading.js
+ * Date：2016-7-4
+ */
+.mloading-container {
+	position: relative;
+	min-height: 70px;
+	-webkit-transition: height 0.6s ease-in-out;
+	-o-transition: height 0.6s ease-in-out;
+	transition: height 0.6s ease-in-out;
+}
+
+.mloading {
+	position: absolute;
+	background: #E9E9E8;
+	font: normal 12px/22px "Microsoft Yahei", "微软雅黑", "宋体";
+	display: none;
+	z-index: 1600;
+	background: rgba(233, 233, 232, 0);
+}
+
+.mloading.active {
+	display: block;
+}
+
+.mloading.mloading-mask {
+	background: rgba(233, 233, 232, 0.75);
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75);
+}
+
+.mloading-full {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.mloading-container>.mloading {
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.mloading-body {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.mloading-bar {
+	width: 250px;
+	min-height: 22px;
+	text-align: center;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
+	border-radius: 7px;
+	padding: 20px 15px;
+	font-size: 14px;
+	color: #999;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -140px;
+	margin-top: -30px;
+	word-break: break-all;
+}
+
+@media ( max-width : 300px) {
+	.mloading-bar {
+		width: 62px;
+		height: 56px;
+		margin-left: -30px !important;
+		margin-top: -30px !important;
+		padding: 0;
+		line-height: 56px;
+	}
+	.mloading-bar>.mloading-text {
+		display: none;
+	}
+}
+
+.mloading-bar-sm {
+	width: 62px;
+	height: 56px;
+	margin-left: -30px !important;
+	margin-top: -30px !important;
+	padding: 0;
+	line-height: 56px;
+}
+
+.mloading-bar-sm>.mloading-text {
+	display: none;
+}
+
+.mloading-icon {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.mloading-text {
+	margin-left: 10px;
+}
+</style>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -246,6 +354,37 @@ AppAsset::register($this);
 	</footer>
 
 <?php $this->endBody() ?>
+
+	<script type="text/javascript" src="/loglass/web/js/mloading.js"></script>
+	<script type="text/javascript" src="/loglass/web/js/uploader.js" charset="utf-8"></script>
+	<script type="text/javascript" th:inline="javascript">
+		//生成时间戳
+		var timestamp = Math.round(new Date().getTime() / 1000);
+		$('#filePicker').uploader({
+			url : '/loglass/web/?r=tools/upload-image',
+			chunked: true,
+			onCompletedAll:function(){
+				console.log(this.files);
+			},
+			onBeforeFileUpload : function(file, deferred) {
+				$.ajax({
+					method : 'post',
+					url : '/loglass/web/?r=tools/upload-init',
+					dataType : 'json',
+					data : {
+						name : file.name,
+						type : file.type,
+						timestamp : timestamp
+					}
+				}).done(function(res) {
+					console.log(res);
+					file.uploadId = res.uploadId
+					file.key = res.key;
+					deferred.resolve();
+				});
+			}
+		});
+	</script>
 </body>
 </html>
 <?php $this->endPage() ?>

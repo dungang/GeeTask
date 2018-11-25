@@ -29,9 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= $this->render('desktop-menu',['project'=>$project])?>
 	</div>
 	<div class="col-md-10">
-		<p>
-		<?php echo  Html::a('批量转 Sprint Backlog', ['userstory-batch-convert','UserStory[project_id]'=>$project->id], ['id'=>'batch-convert','class' => 'batch-process btn btn-danger','data-param'=>'{"UserStory[category]":"SprintBacklog"}']) ?>
-    </p>
+		<p> 
+		<?php echo  Html::a('故事拆分', ['product-backlog-break','UserStory[project_id]'=>$project->id], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#modal-dailog']) ?>
+        <?php echo  Html::a('批量修改', ['product-backlog-update','UserStory[project_id]'=>$project->id], ['id'=>'batch-update','class' => 'batch-process btn btn-success','data-target'=>'#modal-dailog']) ?>
+        </p>
     <?php
 
     echo GridView::widget([
@@ -98,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => [
                     'width' => '80px'
                 ],
-                'actionSuffix' => function ($model) {
+                'actionPrefix' => function ($model) {
                     return strtolower($model->story_type);
                 },
                 'buttonsOptions' => [
@@ -114,12 +115,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ]
     ]);
-    
+
     BatchProcess::widget([
-        'id' => 'batch-convert',
+        'id' => 'batch-update',
         'clientOptions' => [
-            'mode' => 'quiet',
-            'confirm'=>'确定转到Sprint Backlog中？'
+            'mode' => 'modal',
+            'needConfirm' => false
+        ]
+    ]);
+    BatchProcess::widget([
+        'id' => 'batch-delete',
+        'clientOptions' => [
+            'mode' => 'delete'
         ]
     ]);
     ?>

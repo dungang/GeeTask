@@ -134,9 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ]
     ]);
-    // BatchLoad::widget([
-    // 'id'=>'batch-update',
-    // ]);
+
     BatchProcess::widget([
         'id' => 'batch-update',
         'clientOptions' => [

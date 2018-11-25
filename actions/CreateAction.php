@@ -5,13 +5,14 @@ namespace app\actions;
  * 创建action
  *
  * @author dungang
- *        
+ *       
  */
 class CreateAction extends BaseAction
 {
 
     public function run()
     {
+        /* @var $model \yii\base\Model */
         $model = \Yii::createObject($this->modelClass);
         $model->load(\Yii::$app->request->queryParams);
         if (($loaded = $model->load(\Yii::$app->request->post())) && $model->save()) {
